@@ -27,6 +27,7 @@ ph = PasswordHasher()
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
+HIDDEN_USER_MAGIC_VALUE = "#/HIDDEN/#"
 
 def read_env_variable(key, default=None):
     """Read environment variable from .env file with proper defaults"""
@@ -69,6 +70,23 @@ def load_users():
 def save_users(users):
     with open('users.json', 'w') as file:
         json.dump(users, file, indent=4)
+
+def get_user_groups(username: str):
+    users = load_users()
+
+    # Get the current user's data from the session
+    current_user = next((user for user in users if user['username'] == session['username']), None)
+    return current_user.get('groups', []) if current_user else []
+
+def has_group_in_common(user_groups: list[str], other_user_groups: list[str]) -> bool:
+    return any(group in other_user_groups for group in user_groups)
+
+def hide_gift_ideas_buyers_not_in_common_group(gift_ideas: list[dict], user_groups: list[str]):
+    for gift_idea in gift_ideas:
+        if bought_buy := gift_idea.get('bought_by'):
+            buyer_groups = get_user_groups(bought_buy)
+            if not has_group_in_common(user_groups, buyer_groups):
+                gift_idea['bought_by'] = HIDDEN_USER_MAGIC_VALUE
 
 
 # Define a decorator for requiring authentication
@@ -604,7 +622,7 @@ def add2():
                 field_num = key.split('_')[-1]
                 field_key = request.form.get(f'custom_field_key_{field_num}', '').strip()
                 field_value = request.form.get(f'custom_field_value_{field_num}', '').strip()
-                
+
                 if field_key and field_value:  # Only add if both key and value are provided
                     custom_fields[field_key] = field_value
 
@@ -695,7 +713,7 @@ def add_idea(selected_user_id):
                 field_num = key.split('_')[-1]
                 field_key = request.form.get(f'custom_field_key_{field_num}', '').strip()
                 field_value = request.form.get(f'custom_field_value_{field_num}', '').strip()
-                
+
                 if field_key and field_value:  # Only add if both key and value are provided
                     custom_fields[field_key] = field_value
 
@@ -847,13 +865,12 @@ def dashboard():
     
     # Initialize visible_users
     visible_users = []
-
-    # Initialize groups, that current user is a member of (to be filled down below)
+# Initialize groups, that current user is a member of (to be filled down below)
     member_groups = []
-    
+
     # Get boolean setting from user, if the dashboard should show the users grouped
     show_groups = (current_user.get('dashboard_user_grouping', 'false') == 'true')
-    
+
     if is_guest:
         # Handle guest user access
         access_type = current_user.get('access_type', 'family')
@@ -880,24 +897,24 @@ def dashboard():
         # If current user has no groups, show all non-guest users
         if not current_user_groups:
             visible_users = [user for user in users if not user.get('guest')]
-            
+
             if show_groups:
                 # Get ALL groups from ALL users
                 all_groups = set()
                 for user in visible_users:
                     all_groups.update(user.get('groups', []))
-                
+
                 # Create groups current user appears in ALL groups
                 member_groups = []
-                
+
                 for group in all_groups:
                     # Get users who belong to this group
                     group_members = [user for user in visible_users if group in user.get('groups', [])]
-                    
+
                     # Add current user to EVERY group
                     if current_user not in group_members:
                         group_members.append(current_user)
-                    
+
                     if group_members:
                         member_groups.append({
                             "name": group,
@@ -911,29 +928,29 @@ def dashboard():
                     if (not user.get('groups') or any(group in current_user_groups for group in user.get('groups', [])))
                     and not user.get('guest')
                 ]
-                
+
                 # Now create groups users with no groups should appear in ALL groups
                 member_groups = []
-                
+
                 for group in current_user_groups:
                     # Get users who belong to this specific group
                     group_members = []
-                    
+
                     for user in visible_users:
                         user_groups = user.get('groups', [])
-                        
+
                         # User belongs to this group if:
                         # 1. They have this group in their groups list, OR
                         # 2. They have no groups at all (appear in all groups)
                         if group in user_groups or not user_groups:
                             group_members.append(user)
-                    
+
                     if group_members:  # Only add group if it has members
                         member_groups.append({
                             "name": group,
                             "members": group_members
                         })
-                    
+
             else:
                 # If current user has groups but does not want grouping on the dashboard
                 # Show users who share groups OR have no groups
@@ -1155,18 +1172,20 @@ def user_gift_ideas(selected_user_id):
     if not user_gift_ideas:
         flash('No hay ideas de regalo para este usuario.', 'info')
         return redirect(url_for('noidea'))
-    
-    # Ensure each idea has custom_fields and last_updated fields for template
+# Ensure each idea has custom_fields and last_updated fields for template
     for idea in user_gift_ideas:
         if 'custom_fields' not in idea:
             idea['custom_fields'] = {}
-
     users = load_users()
     shared_list = next((user for user in users if user['username'] == selected_user_id and user.get('shared_list')), None)
     is_shared_list_member = shared_list and connected_user in shared_list.get('list_members', [])
     # Call get_full_name function to fetch the user's full name directly in the route
     user_namels = get_full_name(selected_user_id)  # Get the full name based on the selected user ID
     imgenabled = read_env_variable('IMGENABLED', 'true').lower() == 'true'
+
+    # Get the groups of this user and hide the buyers that the user should not know about
+    user_groups = get_user_groups(connected_user)
+    hide_gift_ideas_buyers_not_in_common_group(user_gift_ideas, user_groups)
     return render_template('user_gift_ideas.html', user_gift_ideas=user_gift_ideas, user_namels=user_namels, imgenabled=imgenabled, is_shared_list_member=is_shared_list_member)
 
 
@@ -1312,24 +1331,24 @@ def edit_idea(idea_id):
 
                 # Process custom fields (handle optional)
                 custom_fields = {}
-                
+
                 # Track which existing fields should be kept
                 existing_keys_to_keep = []
-                
+
                 # Get all field indices from the form
                 for key in request.form.keys():
                     if key.startswith('existing_custom_key_'):
                         field_id = key.split('_')[-1]
                         existing_keys_to_keep.append(field_id)
-                
+
                 # Process only the existing fields that are still in the form
                 for field_id in existing_keys_to_keep:
                     field_key = request.form.get(f'existing_custom_key_{field_id}', '').strip()
                     field_value = request.form.get(f'existing_custom_value_{field_id}', '').strip()
-                    
+
                     if field_key:  # Only add if key exists (even if value is empty)
                         custom_fields[field_key] = field_value
-                
+
                 # Handle new custom fields
                 new_field_count = 0
                 for key in request.form.keys():
@@ -1337,17 +1356,17 @@ def edit_idea(idea_id):
                         field_num = key.split('_')[-1]
                         field_key = request.form.get(f'new_custom_field_key_{field_num}', '').strip()
                         field_value = request.form.get(f'new_custom_field_value_{field_num}', '').strip()
-                        
+
                         if field_key:  # Only add if key exists
                             custom_fields[field_key] = field_value
                             new_field_count += 1
-                
+
                 # Update custom fields (this will remove any deleted fields)
                 idea['custom_fields'] = custom_fields
-                
+
                 # Update last_updated timestamp
                 idea['last_updated'] = datetime.now().isoformat()
-                
+
                 # Save the updated gift ideas data back to the JSON file
                 save_gift_ideas(gift_ideas_data)
 
@@ -1387,7 +1406,7 @@ def create_secret_santa_assignments(participants, exclusions):
   #  Returns (assignments, error_message) or (None, error) if impossible.
 
     participants = list(participants)
-    
+
     # Build bidirectional exclusion set
     excluded = set()
     for pair in exclusions:
@@ -1397,32 +1416,32 @@ def create_secret_santa_assignments(participants, exclusions):
             if a and b and a in participants and b in participants:
                 excluded.add((a, b))
                 excluded.add((b, a))
-    
+
     # Quick feasibility check
     for person in participants:
-        possible = [p for p in participants 
+        possible = [p for p in participants
                    if p != person and (person, p) not in excluded]
         if not possible:
             person = get_full_name(person)
             return None, f"{person} has no possible recipients"
-    
+
     # Try to find valid assignments (maximum 50,000 attempts)
     for attempt in range(50000):
         # Shuffle and create circular assignment
         receivers = participants[:]
         random.shuffle(receivers)
-        
+
         # Check if this permutation works
         assignments = {}
         valid = True
-        
+
         for giver, receiver in zip(participants, receivers):
             # No self-gifting and no excluded pairs
             if giver == receiver or (giver, receiver) in excluded:
                 valid = False
                 break
             assignments[giver] = receiver
-        
+
         # If valid and everyone has unique assignments
         if valid and len(set(assignments.values())) == len(participants):
             # Final verification
@@ -1430,7 +1449,7 @@ def create_secret_santa_assignments(participants, exclusions):
                 if (giver, receiver) in excluded:
                     return None, f"Unexpected exclusion violation: {giver} → {receiver}"
             return assignments, None
-    
+
     return None, "Could not find valid assignments after many attempts"
 
 @app.route('/secret_santa', methods=['GET', 'POST'])
@@ -1438,42 +1457,42 @@ def create_secret_santa_assignments(participants, exclusions):
 @login_required
 def secret_santa():
     users = load_users()
-    
+
     # Get existing pools
     existing_pools = set()
     for user in users:
         if 'assigned_users' in user:
             existing_pools.update(user['assigned_users'].keys())
-    
+
     if request.method == 'POST':
         # Handle deletion
         if 'pool_name_to_delete' in request.form:
             pool_name = request.form['pool_name_to_delete']
-            
+
             if not is_valid_pool_name(pool_name):
                 flash('Invalid pool name', 'error')
                 return redirect(url_for('secret_santa'))
-            
+
             deleted = False
             for user in users:
                 if 'assigned_users' in user and pool_name in user['assigned_users']:
                     del user['assigned_users'][pool_name]
                     deleted = True
-            
+
             if deleted:
                 os.remove(f'santa_inst_{pool_name}.txt')
                 save_users(users)
                 flash(f'Pool "{pool_name}" deleted', 'success')
             else:
                 flash(f'Pool "{pool_name}" not found', 'error')
-            
+
             return redirect(url_for('secret_santa'))
-        
+
         # CREATE NEW POOL
         pool_name = request.form.get('pool_name', '').strip()
         participants = request.form.getlist('participants')
         instructions = request.form.get('instructions', '')
-        
+
         # Parse exclusions from JSON (sent by frontend)
         exclusions = []
         exclusions_json = request.form.get('all_exclusions', '[]')
@@ -1490,26 +1509,26 @@ def secret_santa():
                         receiver = request.form[receiver_key].strip()
                         if giver and receiver and giver != receiver:
                             exclusions.append(f"{giver}-{receiver}")
-        
+
         # Validation - store errors to show on page
         errors = []
-        
+
         if not pool_name:
             errors.append('Pool name required')
-        
+
         if pool_name and not is_valid_pool_name(pool_name):
             errors.append('Invalid pool name (letters, numbers, dashes, underscores only)')
-        
+
         if len(participants) < 2:
             errors.append('Need at least 2 participants')
-        
+
         if len(set(participants)) != len(participants):
             errors.append('Duplicate participants selected')
-        
+
         # If basic validation errors, show them on the page
         if errors:
-            return render_template('secret_santa.html', 
-                                 users=users, 
+            return render_template('secret_santa.html',
+                                 users=users,
                                  existing_pools=sorted(existing_pools),
                                  form_data={
                                      'pool_name': pool_name,
@@ -1518,10 +1537,10 @@ def secret_santa():
                                      'exclusions': exclusions
                                  },
                                  errors=errors)
-        
+
         # Create assignments
         assignments, error = create_secret_santa_assignments(participants, exclusions)
-        
+
         if assignments is None:
             # Show error on the same page with form data preserved
             return render_template('secret_santa.html',
@@ -1535,7 +1554,7 @@ def secret_santa():
                                  },
                                  errors=[f' {error}'])
 
-        
+
         # Verify no exclusions are violated (double-check)
         exclusion_violations = []
         for exclusion in exclusions:
@@ -1544,7 +1563,7 @@ def secret_santa():
                 a, b = a.strip(), b.strip()
                 if assignments.get(a) == b or assignments.get(b) == a:
                     exclusion_violations.append(f'Assignment violates {a} ↔ {b}')
-        
+
         if exclusion_violations:
             return render_template('secret_santa.html',
                                  users=users,
@@ -1556,7 +1575,7 @@ def secret_santa():
                                      'exclusions': exclusions
                                  },
                                  errors=[f' Critical error: {exclusion_violations[0]}'])
-        
+
         try:
             # Save to users
             for user in users:
@@ -1564,16 +1583,16 @@ def secret_santa():
                     if 'assigned_users' not in user:
                         user['assigned_users'] = {}
                     user['assigned_users'][pool_name] = assignments[user['username']]
-            
+
             save_users(users)
-            
+
             # Save instructions
             with open(f'santa_inst_{pool_name}.txt', 'w') as f:
                 f.write(instructions)
-            
+
             flash(f' Pool "{pool_name}" created', 'success')
             return redirect(url_for('secret_santa'))
-            
+
         except Exception as e:
             print(f"Error saving: {e}")
             return render_template('secret_santa.html',
@@ -1586,10 +1605,10 @@ def secret_santa():
                                      'exclusions': exclusions
                                  },
                                  errors=[f' Error saving: {str(e)}'])
-    
+
     # GET request - just show empty form
-    return render_template('secret_santa.html', 
-                         users=users, 
+    return render_template('secret_santa.html',
+                         users=users,
                          existing_pools=sorted(existing_pools),
                          form_data={},
                          errors=[])
