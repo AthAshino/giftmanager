@@ -1,0 +1,2181 @@
+# Spanish translations for Giftmanager.
+# Copyright (C) 2026 Giftmanager
+# This file is distributed under the same license as the Giftmanager
+# project.
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-10-07 15:28+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: es\n"
+"Language-Team: es <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: src/app.py:246 src/app.py:264 src/app.py:294
+msgid "Please log in first."
+msgstr "Necesita iniciar sesión."
+
+#: src/app.py:253
+msgid "This feature is not available for guest users."
+msgstr "Esta función no está disponible para usuarios invitados."
+
+#: src/app.py:275
+msgid "Admin access required."
+msgstr "Se requiere permiso de administración."
+
+#: src/app.py:355 src/app.py:381 src/app.py:538
+msgid "User not found."
+msgstr "Usuario no encontrado."
+
+#: src/app.py:361
+msgid "Email updated successfully."
+msgstr "Correo electrónico actualizado con éxito."
+
+#: src/app.py:453
+msgid "Authorization failed: invalid state."
+msgstr "Error de autorización: estado inválido."
+
+#: src/app.py:460
+msgid "OIDC authorization failed."
+msgstr "Error de autorización OIDC."
+
+#: src/app.py:470
+msgid "Failed to parse user information."
+msgstr "Error al analizar la información del usuario."
+
+#: src/app.py:502
+msgid "Login successful with OIDC!"
+msgstr "¡Inicio de sesión exitoso con OIDC!"
+
+#: src/app.py:518
+msgid "New profile created. Please complete your profile setup."
+msgstr "Nuevo perfil creado. Por favor, completa tu configuración de perfil."
+
+#: src/app.py:521
+msgid "User not found and auto-registration is disabled."
+msgstr "Usuario no encontrado y el registro está desactivado."
+
+#: src/app.py:543
+msgid "Profile setup not required. Avatar already set."
+msgstr ""
+"La configuración del perfil no es necesaria. La imagen de perfil ya "
+"estaba configurada."
+
+#: src/app.py:564
+msgid "Profile setup complete!"
+msgstr "¡Configuración del perfil completada!"
+
+#: src/app.py:593 src/app.py:647
+#, python-format
+msgid "Error reading users.json: %(error)s"
+msgstr "Error al leer users.json: %(error)s"
+
+#: src/app.py:610 src/app.py:2206
+msgid "No account? Contact a family member to create an account."
+msgstr ""
+"¿No tienes cuenta? Contacta con un miembro de tu familia para crear una "
+"cuenta."
+
+#: src/app.py:627 src/app.py:645
+msgid "User does not exist"
+msgstr "El usuario no existe"
+
+#: src/app.py:638
+msgid "Login successful!"
+msgstr "¡Sesión iniciada correctamente!"
+
+#: src/app.py:641
+msgid "Wrong password"
+msgstr "Contraseña incorrecta"
+
+#: src/app.py:662
+msgid "Self-registration is not enabled. Please contact an administrator."
+msgstr ""
+"El registro de nuevos usuarios no está activado. Póngase en contacto con "
+"un administrador."
+
+#: src/app.py:681
+msgid "Invalid joining code. Please check with your family."
+msgstr "Código de invitación incorrecto. Compruébelo de nuevo."
+
+#: src/app.py:686
+msgid "Please fill in all required fields."
+msgstr "Por favor, rellena todos los campos obligatorios."
+
+#: src/app.py:690
+msgid "Passwords do not match."
+msgstr "Las contraseñas no coinciden."
+
+#: src/app.py:700
+msgid "Username already exists. Please choose a different one."
+msgstr "El nombre de usuario ya existe. Por favor, elije un nombre diferente."
+
+#: src/app.py:705
+msgid "Email already registered. Please use a different email or contact support."
+msgstr ""
+"Correo electrónico ya registrado. Por favor, utilice un correo "
+"electrónico diferente o póngase en contacto con el soporte técnico."
+
+#: src/app.py:725
+msgid "Registration successful! You can now log in."
+msgstr "¡Registro realizado correctamente! Ya puedes iniciar sesión."
+
+#: src/app.py:744 src/app.py:836
+msgid "Current user not found."
+msgstr "Usuario no encontrado."
+
+#: src/app.py:909
+#, python-format
+msgid "Idea \"%(name)s\" added for user %(user)s by %(added_by)s!"
+msgstr "¡Idea \"%(name)s\" añadida para el usuario %(user)s por %(added_by)s!"
+
+#: src/app.py:938
+msgid "IDEAS DELETED"
+msgstr "IDEAS ELIMINADAS"
+
+#: src/app.py:948
+msgid "You are not authorized to delete this idea."
+msgstr "No estás autorizado a eliminar esta idea."
+
+#: src/app.py:950 src/app.py:1270 src/app.py:1299 src/app.py:1759
+msgid "Idea not found"
+msgstr "Idea no encontrada"
+
+#: src/app.py:973
+#, python-format
+msgid "This idea, %(name)s, has been deleted but you already bought it."
+msgstr "Esta idea, %(name)s, ha sido eliminada, pero ya la compraste."
+
+#: src/app.py:1026
+msgid "User data not found"
+msgstr "Datos de usuario no encontrados"
+
+#: src/app.py:1207 src/app.py:1543 src/app.py:2914
+msgid "User not found"
+msgstr "Usuario no encontrado"
+
+#: src/app.py:1212
+msgid "Current password is incorrect"
+msgstr "La contraseña es incorrecta"
+
+#: src/app.py:1217
+msgid "New password and confirmation do not match"
+msgstr "Las contraseñas no coinciden"
+
+#: src/app.py:1226
+msgid "Password successfully changed"
+msgstr "La contraseña se cambió correctamente"
+
+#: src/app.py:1259
+#, python-format
+msgid "Marked \"%(name)s\" as bought!"
+msgstr "¡\"%(name)s\" marcado como comprado!"
+
+#: src/app.py:1266
+#, python-format
+msgid "\"%(name)s\" has already been bought by an anonymous user."
+msgstr "\"%(name)s\" ya ha sido comprado por un usuario anónimo."
+
+#: src/app.py:1268
+#, python-format
+msgid "\"%(name)s\" has already been bought by %(buyer)s."
+msgstr "\"%(name)s\" ya ha sido comprado por %(buyer)s."
+
+#: src/app.py:1292
+#, python-format
+msgid "Marked \"%(name)s\" as not bought."
+msgstr "\"%(name)s\" marcado como no comprado."
+
+#: src/app.py:1297
+#, python-format
+msgid "You did not buy \"%(name)s\", so you cannot mark it as not bought."
+msgstr "No compraste \"%(name)s\", por lo que no puedes marcarlo como no comprado."
+
+#: src/app.py:1349
+msgid "No gift ideas for this user."
+msgstr "No hay ideas de regalo para este usuario."
+
+#: src/app.py:1366 src/templates/user_gift_ideas.html:304
+msgid "Anonymous"
+msgstr "Cancela la compra"
+
+# | msgid "You haven\\'t added any gift ideas."
+#: src/app.py:1400
+#, fuzzy
+msgid "You haven't added any gift ideas."
+msgstr "Aún no has añadido ninguna idea de regalo."
+
+#: src/app.py:1434
+msgid "Order updated successfully!"
+msgstr "¡Orden actualizado con éxito!"
+
+#: src/app.py:1596
+msgid "Avatar file not found!"
+msgstr "¡No se encontró el archivo de avatar!"
+
+#: src/app.py:1636
+msgid ""
+"Generated user avatar timed out and was deleted! Try again to add the new"
+" user."
+msgstr ""
+"El avatar generado del usuario expiró y fue eliminado. ¡Inténtelo de "
+"nuevo para añadir al nuevo usuario!"
+
+#: src/app.py:1644
+msgid "Username already exists!"
+msgstr "¡El nombre de usuario ya existe!"
+
+#: src/app.py:1665
+msgid "User added successfully!"
+msgstr "¡Usuario añadido con éxito!"
+
+#: src/app.py:1748
+msgid "Idea updated successfully!"
+msgstr "¡Idea actualizada con éxito!"
+
+#: src/app.py:1757
+msgid "You are not authorized to edit this idea."
+msgstr "No tienes permiso para editar esta idea."
+
+#: src/app.py:1801
+#, python-format
+msgid "%(person)s has no possible recipients"
+msgstr "%(person)s no tiene posibles destinatarios"
+
+#: src/app.py:1825
+#, python-format
+msgid "Unexpected exclusion violation: %(giver)s → %(receiver)s"
+msgstr "Violación de exclusión inesperada: %(giver)s → %(receiver)s"
+
+#: src/app.py:1828
+msgid "Could not find valid assignments after many attempts"
+msgstr "No se pudieron encontrar asignaciones válidas tras muchos intentos"
+
+#: src/app.py:1848
+msgid "Invalid pool name"
+msgstr "Nombre de grupo no válido"
+
+#: src/app.py:1860
+#, python-format
+msgid "Pool \"%(name)s\" deleted"
+msgstr "Grupo \"%(name)s\" eliminado"
+
+#: src/app.py:1862
+#, python-format
+msgid "Pool \"%(name)s\" not found"
+msgstr "Grupo \"%(name)s\" no encontrado"
+
+#: src/app.py:1892
+msgid "Pool name required"
+msgstr "Se requiere el nombre del grupo"
+
+#: src/app.py:1895
+msgid "Invalid pool name (letters, numbers, dashes, underscores only)"
+msgstr "Nombre de grupo no válido (solo letras, números, guiones y guiones bajos)"
+
+#: src/app.py:1898
+msgid "Need at least 2 participants"
+msgstr "Se necesitan al menos 2 participantes"
+
+#: src/app.py:1901
+msgid "Duplicate participants selected"
+msgstr "Participantes duplicados seleccionados"
+
+#: src/app.py:1930
+#, python-format
+msgid " %(error)s"
+msgstr " %(error)s"
+
+#: src/app.py:1940
+#, python-format
+msgid "Assignment violates %(a)s ↔ %(b)s"
+msgstr "La asignación viola %(a)s ↔ %(b)s"
+
+#: src/app.py:1952
+#, python-format
+msgid " Critical error: %(error)s"
+msgstr " Error crítico: %(error)s"
+
+#: src/app.py:1968
+#, python-format
+msgid "Pool \"%(name)s\" created"
+msgstr "Grupo \"%(name)s\" creado"
+
+#: src/app.py:1982
+#, python-format
+msgid " Error saving: %(error)s"
+msgstr " Error al guardar: %(error)s"
+
+#: src/app.py:2007
+msgid "You don't have any Secret Santa assignments yet."
+msgstr "Aún no tienes ningún Amigo Invisible."
+
+#: src/app.py:2017
+msgid "No specific instructions provided."
+msgstr "No se proporcionaron instrucciones específicas."
+
+#: src/app.py:2053
+msgid "User deleted successfully!"
+msgstr "¡Usuario eliminado con éxito!"
+
+#: src/app.py:2064
+msgid "Admin status updated successfully!"
+msgstr "¡Estado de administrador actualizado!"
+
+#: src/app.py:2092
+msgid "Avatar uploaded successfully!"
+msgstr "¡Avatar subido con éxito!"
+
+#: src/app.py:2094
+#, python-format
+msgid "Error uploading avatar: %(error)s"
+msgstr "Error al subir el avatar: %(error)s"
+
+#: src/app.py:2110
+msgid "Generated avatar timed out and was deleted! Please generate a new one."
+msgstr "El avatar generado expiró y fue eliminado. ¡Genere uno nuevo!"
+
+#: src/app.py:2129
+msgid "User updated successfully!"
+msgstr "¡Usuario actualizado con éxito!"
+
+#: src/app.py:2181
+msgid "Email settings updated successfully!"
+msgstr "¡Ajustes de correo electrónico actualizados!"
+
+#: src/app.py:2183
+#, python-format
+msgid "An error occurred: %(error)s"
+msgstr "Se ha producido un error: %(error)s"
+
+#: src/app.py:2199
+msgid "Login message updated successfully!"
+msgstr "¡Mensaje de inicio de sesión actualizado con éxito!"
+
+#: src/app.py:2201
+#, python-format
+msgid "Error updating login message: %(error)s"
+msgstr "Error al actualizar el mensaje de inicio de sesión: %(error)s"
+
+#: src/app.py:2203
+msgid "Message cannot be empty."
+msgstr "El mensaje no puede estar vacío."
+
+#: src/app.py:2263
+#, python-format
+msgid ""
+"%(count)s gift ideas older than the threshold have been successfully "
+"deleted."
+msgstr ""
+"Se han eliminado correctamente %(count)s ideas de regalo más antiguas que"
+" el umbral."
+
+#: src/app.py:2269
+#, python-format
+msgid "Error deleting old gift ideas: %(error)s"
+msgstr "Error al eliminar las ideas de regalo antiguas: %(error)s"
+
+#: src/app.py:2290
+#, python-format
+msgid "The number of days to delete old gift ideas has been updated to %(days)s."
+msgstr ""
+"El número de días para eliminar ideas de regalo antiguas se ha "
+"actualizado a %(days)s."
+
+#: src/app.py:2294
+msgid "Invalid number of days entered. Please enter a valid number."
+msgstr "Número no válido de días introducidos. Introduce un número válido."
+
+#: src/app.py:2296
+msgid "Please provide a value for the number of days."
+msgstr "Por favor, proporcione un valor para el número de días."
+
+#: src/app.py:2309
+msgid "Users are already configured. Setup page is unavailable."
+msgstr "Usuarios ya configurados. Página de configuración no disponible."
+
+#: src/app.py:2340
+msgid ""
+"Admin account created successfully. Please configure the environment "
+"variables."
+msgstr ""
+"Cuenta de administrador creada correctamente. Por favor, configure las "
+"variables de entorno."
+
+#: src/app.py:2350
+msgid "You must access this page from the setupadmin route."
+msgstr "Debe acceder a esta página desde la ruta setupadmin."
+
+#: src/app.py:2376
+msgid "Settings saved successfully!"
+msgstr "¡Variables de entorno guardadas con éxito!"
+
+#: src/app.py:2404
+#, python-format
+msgid "Missing required fields: %(fields)s"
+msgstr "Faltan campos obligatorios: %(fields)s"
+
+#: src/app.py:2415
+msgid "OIDC settings saved successfully!"
+msgstr "¡Ajustes OIDC guardados!"
+
+#: src/app.py:2418
+#, python-format
+msgid "Error saving OIDC settings: %(error)s"
+msgstr "Error al guardar los ajustes OIDC: %(error)s"
+
+#: src/app.py:2462
+msgid "New group added successfully!"
+msgstr "Archivo de entorno no encontrado. Creando uno nuevo."
+
+#: src/app.py:2489
+msgid "Group assignments updated successfully!"
+msgstr "¡Tareas de grupo actualizadas con éxito!"
+
+#: src/app.py:2554
+#, python-format
+msgid "Successfully removed %(count)s gift ideas."
+msgstr "Se eliminaron correctamente %(count)s ideas de regalo."
+
+# | msgid "Error occurred while running delete_old_gift_ideas:
+# %(error)s\\n\\n"
+#: src/app.py:2560
+#, fuzzy, python-format
+msgid ""
+"Error occurred while running delete_old_gift_ideas: %(error)s\n"
+"\n"
+msgstr "Se produjo un error al ejecutar delete_old_gift_ideas: %(error)s\\n\\n"
+
+#: src/app.py:2605
+msgid "URL parameter is required"
+msgstr "El parámetro URL es obligatorio"
+
+#: src/app.py:2611
+msgid "No OG image found"
+msgstr "No se encontró ninguna imagen OG"
+
+#: src/app.py:2653
+msgid "Guest user created successfully!"
+msgstr "¡Usuario invitado creado!"
+
+#: src/app.py:2702
+#, python-format
+msgid ""
+"Guest user %(username)s deleted successfully! %(count)s purchased gift "
+"ideas deleted."
+msgstr ""
+"¡Usuario invitado %(username)s eliminado con éxito! Se eliminaron "
+"%(count)s ideas de regalo compradas."
+
+#: src/app.py:2704
+msgid "Guest user not found."
+msgstr "Usuario invitado no encontrado."
+
+#: src/app.py:2719
+msgid "Guest login successful!"
+msgstr "¡Iniciada sesión como invitado!"
+
+#: src/app.py:2722
+msgid "Invalid guest password"
+msgstr "¡Contraseña de invitado incorrecta!"
+
+#: src/app.py:2744
+msgid "Currency settings updated! Please restart to see changes"
+msgstr "¡Ajustes de moneda actualizados! Por favor, reinicie para ver los cambios"
+
+#: src/app.py:2757
+msgid "Self-registration settings updated successfully!"
+msgstr "¡Ajustes de registro actualizados!"
+
+#: src/app.py:2800
+#, python-format
+msgid "Shared list \"%(name)s\" created successfully!"
+msgstr "¡Lista compartida \"%(name)s\" creada con éxito!"
+
+#: src/app.py:2837 src/app.py:2865
+msgid "Shared list not found."
+msgstr "Lista compartida no encontrada."
+
+#: src/app.py:2842
+msgid "Only the list owner can delete this shared list."
+msgstr "Solo el dueño de la lista puede eliminar esta lista compartida."
+
+#: src/app.py:2853
+#, python-format
+msgid "Shared list \"%(name)s\" deleted successfully!"
+msgstr "¡Lista compartida \"%(name)s\" eliminada con éxito!"
+
+#: src/app.py:2870
+msgid "Only the list owner can edit members."
+msgstr "Solo el dueño de la lista puede editar miembros."
+
+#: src/app.py:2882
+#, python-format
+msgid "Members updated for \"%(name)s\"!"
+msgstr "¡Miembros actualizados para \"%(name)s\"!"
+
+#: src/app.py:2894
+msgid "Link sharing settings updated!"
+msgstr "¡Ajustes para compartir enlaces actualizados!"
+
+#: src/app.py:2906
+msgid "Link sharing feature is currently disabled by administrator."
+msgstr "La función de compartir enlaces está deshabilitada por el administrador."
+
+#: src/app.py:2922
+msgid "Target not found"
+msgstr "Objetivo no encontrado"
+
+#: src/app.py:2929
+msgid "You are not a member of this shared list"
+msgstr "No eres miembro de esta lista compartida"
+
+#: src/app.py:2934
+msgid "You can only manage your own sharing settings"
+msgstr "Solo puedes administrar tus propias opciones de compartir"
+
+#: src/app.py:2961
+msgid "New share link created!"
+msgstr "¡Nuevo enlace para compartir creado!"
+
+#: src/app.py:2971
+#, python-format
+msgid "Share link %(status)s!"
+msgstr "¡Enlace de compartir %(status)s!"
+
+#: src/app.py:2985
+#, python-format
+msgid "Share link extended by %(days)s days! New expiry: %(expiry)s"
+msgstr ""
+"¡Enlace de compartir ampliado por %(days)s días! Nueva expiración: "
+"%(expiry)s"
+
+#: src/app.py:2996
+msgid "Share link deleted!"
+msgstr "¡Enlace para compartir eliminado!"
+
+#: src/app.py:3090 src/app.py:3156
+msgid "Share link not found or expired"
+msgstr "Enlace de compartir no encontrado o caducado"
+
+#: src/app.py:3093
+msgid "Purchases not allowed for this share link"
+msgstr "No se permiten compras para este enlace de compartir"
+
+#: src/app.py:3098 src/app.py:3161
+msgid "Gift idea not found"
+msgstr "Idea de regalo no encontrada"
+
+#: src/app.py:3103
+msgid "Visitor name is required"
+msgstr "Se requiere el nombre del visitante"
+
+#: src/app.py:3129
+msgid "Item marked as purchased"
+msgstr "Artículo marcado como comprado"
+
+#: src/app.py:3133
+msgid "Item already purchased"
+msgstr "Artículo ya comprado"
+
+#: src/app.py:3166
+msgid "Visitor ID required"
+msgstr "Se requiere el ID del visitante"
+
+#: src/app.py:3184
+msgid "Purchase cancelled"
+msgstr "Compra cancelada"
+
+#: src/app.py:3186
+msgid "You can only cancel your own purchases"
+msgstr "Solo puedes cancelar tus propias compras"
+
+#: src/templates/add2.html:6 src/templates/add_idea.html:6
+msgid "New Ideas"
+msgstr "Nuevas Ideas"
+
+#: src/templates/add2.html:236 src/templates/add_idea.html:236
+#: src/templates/add_user.html:121 src/templates/bought_items.html:121
+#: src/templates/manage_shared_lists.html:134
+#: src/templates/manage_sharing.html:109 src/templates/my_ideas.html:245
+#: src/templates/noideas.html:158 src/templates/register.html:120
+#: src/templates/user_gift_ideas.html:232
+msgid "Back"
+msgstr "Atrás"
+
+#: src/templates/add2.html:242 src/templates/add_idea.html:242
+#: src/templates/user_gift_ideas.html:233
+msgid "Add Ideas"
+msgstr "Añadir Ideas"
+
+#: src/templates/add2.html:245 src/templates/add_idea.html:245
+msgid "Add to:"
+msgstr "Añadir a:"
+
+#: src/templates/add2.html:247
+msgid "-- Choose here --"
+msgstr "--Elegir--"
+
+#: src/templates/add2.html:254 src/templates/add_idea.html:253
+msgid "Title:"
+msgstr "Nombre:"
+
+#: src/templates/add2.html:258 src/templates/add_idea.html:257
+#: src/templates/edit_idea.html:222
+msgid "Description (Optional):"
+msgstr "Descripción (Opcional):"
+
+#: src/templates/add2.html:262 src/templates/add_idea.html:261
+#: src/templates/edit_idea.html:228
+msgid "Link (Optional):"
+msgstr "Enlace (Opcional):"
+
+#: src/templates/add2.html:268 src/templates/add_idea.html:267
+#: src/templates/edit_idea.html:241
+msgid "Enter Image URL (Optional):"
+msgstr "URL de la Imagen (Opcional):"
+
+#: src/templates/add2.html:274 src/templates/add_idea.html:273
+#: src/templates/edit_idea.html:250
+msgid "Estimated Value (Optional):"
+msgstr "Valor Aproximado(Opcional):"
+
+#: src/templates/add2.html:275 src/templates/add_idea.html:274
+msgid "Estimated Value"
+msgstr "Valor Aproximado"
+
+#: src/templates/add2.html:279 src/templates/add_idea.html:278
+#: src/templates/edit_idea.html:254
+msgid "Custom Fields (Optional):"
+msgstr "Campos Adicionales (Opcional):"
+
+#: src/templates/add2.html:286 src/templates/add_idea.html:285
+#: src/templates/edit_idea.html:285
+msgid "+ Add Custom Field"
+msgstr "+ Añadir Campo"
+
+#: src/templates/add2.html:289 src/templates/add_idea.html:288
+msgid "Submit"
+msgstr "Enviar"
+
+#: src/templates/add_user.html:6 src/templates/add_user.html:127
+msgid "New User"
+msgstr "Añadir Usuario"
+
+#: src/templates/add_user.html:130 src/templates/register.html:140
+#: src/templates/setupadmin.html:17
+msgid "Username for login:"
+msgstr "Nombre Inicio de Sesión:"
+
+#: src/templates/add_user.html:134 src/templates/manage_guest_users.html:338
+#: src/templates/register.html:148 src/templates/setup_profile.html:34
+#: src/templates/setupadmin.html:21
+msgid "Password:"
+msgstr "Contraseña:"
+
+#: src/templates/add_user.html:138 src/templates/register.html:144
+msgid "Complete name:"
+msgstr "Nombre Completo:"
+
+#: src/templates/add_user.html:142 src/templates/dashboard.html:401
+#: src/templates/setup_profile.html:43 src/templates/setupadmin.html:33
+msgid "Birthday:"
+msgstr "Cumpleaños:"
+
+#: src/templates/add_user.html:146 src/templates/setup_profile.html:29
+#: src/templates/setupadmin.html:25
+msgid "Email:"
+msgstr "Correo Electrónico:"
+
+#: src/templates/add_user.html:152
+msgid "Select an avatar"
+msgstr "Imagen de Perfil:"
+
+#: src/templates/add_user.html:155 src/templates/dashboard.html:431
+#: src/templates/manage_users.html:263 src/templates/manage_users.html:282
+#: src/templates/manage_users.html:345 src/templates/manage_users.html:350
+msgid "Avatar"
+msgstr "Opción 3"
+
+#: src/templates/add_user.html:160 src/templates/dashboard.html:436
+msgid "Random avatar"
+msgstr "Nueva Contraseña"
+
+#: src/templates/add_user.html:164 src/templates/dashboard.html:440
+msgid "Upload image"
+msgstr "Repita Nueva Contraseña"
+
+#: src/templates/add_user.html:171
+msgid "Add"
+msgstr "Opción 4"
+
+#: src/templates/admin_dashboard.html:6 src/templates/admin_dashboard.html:183
+#: src/templates/advanced.html:229 src/templates/dashboard.html:508
+#: src/templates/delete_old_gift_ideas.html:190
+#: src/templates/edit_email_settings.html:190
+#: src/templates/edit_login_message.html:190
+#: src/templates/manage_groups.html:209
+#: src/templates/manage_guest_users.html:250
+#: src/templates/manage_users.html:181 src/templates/secret_santa.html:377
+#: src/templates/setup_oidc.html:190
+msgid "Admin Dashboard"
+msgstr "Panel de Administración"
+
+#: src/templates/admin_dashboard.html:189 src/templates/advanced.html:235
+#: src/templates/delete_old_gift_ideas.html:196
+#: src/templates/edit_email_settings.html:196
+#: src/templates/edit_login_message.html:196
+#: src/templates/manage_groups.html:215
+#: src/templates/manage_guest_users.html:256
+#: src/templates/manage_users.html:187 src/templates/secret_santa.html:383
+#: src/templates/setup_oidc.html:196
+msgid "Management"
+msgstr "Gestión"
+
+#: src/templates/admin_dashboard.html:191 src/templates/advanced.html:237
+#: src/templates/dashboard.html:548
+#: src/templates/delete_old_gift_ideas.html:198
+#: src/templates/edit_email_settings.html:198
+#: src/templates/edit_login_message.html:198
+#: src/templates/manage_groups.html:217
+#: src/templates/manage_guest_users.html:258
+#: src/templates/manage_users.html:189 src/templates/secret_santa.html:385
+#: src/templates/setup_oidc.html:198
+msgid "Users"
+msgstr "Usuarios"
+
+#: src/templates/admin_dashboard.html:194 src/templates/advanced.html:240
+#: src/templates/delete_old_gift_ideas.html:201
+#: src/templates/edit_email_settings.html:201
+#: src/templates/edit_login_message.html:201
+#: src/templates/manage_groups.html:220
+#: src/templates/manage_guest_users.html:261
+#: src/templates/manage_users.html:192 src/templates/secret_santa.html:388
+#: src/templates/setup_oidc.html:201
+msgid "Secret Santa"
+msgstr "Amigo Invisible"
+
+#: src/templates/admin_dashboard.html:197 src/templates/advanced.html:243
+#: src/templates/delete_old_gift_ideas.html:204
+#: src/templates/edit_email_settings.html:204
+#: src/templates/edit_login_message.html:204
+#: src/templates/manage_groups.html:223
+#: src/templates/manage_guest_users.html:264
+#: src/templates/manage_users.html:195 src/templates/secret_santa.html:391
+#: src/templates/setup_oidc.html:204
+msgid "Add User"
+msgstr "Añadir Usuario"
+
+#: src/templates/admin_dashboard.html:200 src/templates/advanced.html:246
+#: src/templates/delete_old_gift_ideas.html:207
+#: src/templates/edit_email_settings.html:207
+#: src/templates/edit_login_message.html:207
+#: src/templates/manage_groups.html:226
+#: src/templates/manage_guest_users.html:267
+#: src/templates/manage_users.html:198 src/templates/secret_santa.html:394
+#: src/templates/setup_oidc.html:207
+msgid "Families"
+msgstr "Familias"
+
+#: src/templates/admin_dashboard.html:203 src/templates/advanced.html:249
+#: src/templates/delete_old_gift_ideas.html:210
+#: src/templates/edit_email_settings.html:210
+#: src/templates/edit_login_message.html:210
+#: src/templates/manage_groups.html:229
+#: src/templates/manage_guest_users.html:270
+#: src/templates/manage_users.html:201 src/templates/secret_santa.html:397
+#: src/templates/setup_oidc.html:210
+msgid "Guest Users"
+msgstr "Usuarios Invitados"
+
+#: src/templates/admin_dashboard.html:208 src/templates/advanced.html:254
+#: src/templates/delete_old_gift_ideas.html:215
+#: src/templates/edit_email_settings.html:215
+#: src/templates/edit_login_message.html:215
+#: src/templates/manage_groups.html:234
+#: src/templates/manage_guest_users.html:275
+#: src/templates/manage_users.html:206 src/templates/secret_santa.html:402
+#: src/templates/setup_oidc.html:215
+msgid "Configuration & Maintenance"
+msgstr "Configuración y mantenimiento"
+
+#: src/templates/admin_dashboard.html:210 src/templates/advanced.html:256
+#: src/templates/delete_old_gift_ideas.html:217
+#: src/templates/delete_old_gift_ideas.html:243
+#: src/templates/edit_email_settings.html:217
+#: src/templates/edit_login_message.html:217
+#: src/templates/manage_groups.html:236
+#: src/templates/manage_guest_users.html:277
+#: src/templates/manage_users.html:208 src/templates/secret_santa.html:404
+#: src/templates/setup_oidc.html:217
+msgid "Deletion Script"
+msgstr "Borrado Automático de Ideas"
+
+#: src/templates/admin_dashboard.html:213 src/templates/advanced.html:259
+#: src/templates/delete_old_gift_ideas.html:220
+#: src/templates/edit_email_settings.html:220
+#: src/templates/edit_login_message.html:220
+#: src/templates/manage_groups.html:239
+#: src/templates/manage_guest_users.html:280
+#: src/templates/manage_users.html:211 src/templates/secret_santa.html:407
+#: src/templates/setup_oidc.html:220
+msgid "Email Settings"
+msgstr "Ajustes de Email"
+
+#: src/templates/admin_dashboard.html:216 src/templates/advanced.html:262
+#: src/templates/delete_old_gift_ideas.html:223
+#: src/templates/edit_email_settings.html:223
+#: src/templates/edit_login_message.html:223
+#: src/templates/manage_groups.html:242
+#: src/templates/manage_guest_users.html:283
+#: src/templates/manage_users.html:214 src/templates/secret_santa.html:410
+#: src/templates/setup_oidc.html:223
+msgid "Login Settings"
+msgstr "Configuración de inicio de sesión"
+
+#: src/templates/admin_dashboard.html:219 src/templates/advanced.html:265
+#: src/templates/delete_old_gift_ideas.html:226
+#: src/templates/edit_email_settings.html:226
+#: src/templates/edit_login_message.html:226
+#: src/templates/manage_groups.html:245
+#: src/templates/manage_guest_users.html:286
+#: src/templates/manage_users.html:217 src/templates/secret_santa.html:413
+#: src/templates/setup_oidc.html:226
+msgid "OIDC Settings"
+msgstr "Ajustes OICD"
+
+#: src/templates/admin_dashboard.html:222 src/templates/advanced.html:268
+#: src/templates/delete_old_gift_ideas.html:229
+#: src/templates/edit_email_settings.html:229
+#: src/templates/edit_login_message.html:229
+#: src/templates/manage_groups.html:248
+#: src/templates/manage_guest_users.html:289
+#: src/templates/manage_users.html:220 src/templates/secret_santa.html:416
+#: src/templates/setup_oidc.html:229
+msgid "Advanced"
+msgstr "Ajustes Avanzados"
+
+#: src/templates/admin_dashboard.html:234 src/templates/advanced.html:279
+#: src/templates/delete_old_gift_ideas.html:240
+#: src/templates/edit_email_settings.html:240
+#: src/templates/edit_login_message.html:241
+#: src/templates/manage_groups.html:259
+#: src/templates/manage_guest_users.html:300
+#: src/templates/manage_users.html:231 src/templates/secret_santa.html:428
+#: src/templates/setup_oidc.html:240
+msgid "Toggle menu"
+msgstr "Alternar menú"
+
+#: src/templates/admin_dashboard.html:237
+msgid "Welcome!"
+msgstr "¡Hola!"
+
+#: src/templates/admin_dashboard.html:240 src/templates/advanced.html:284
+#: src/templates/delete_old_gift_ideas.html:245
+#: src/templates/edit_email_settings.html:245
+#: src/templates/edit_login_message.html:246
+#: src/templates/manage_groups.html:264
+#: src/templates/manage_guest_users.html:305
+#: src/templates/manage_users.html:236 src/templates/secret_santa.html:434
+#: src/templates/setup_oidc.html:245
+msgid "To Dashboard"
+msgstr "Volver al Panel Principal"
+
+#: src/templates/admin_dashboard.html:248
+msgid "Dashboard Overview"
+msgstr "General"
+
+#: src/templates/admin_dashboard.html:249
+msgid ""
+"This is the admin dashboard where you can manage users, configure "
+"settings, and more."
+msgstr ""
+"Este es el panel de administración. Aquí puedes gestionar usuarios, "
+"configurar diferentes ajustes y más."
+
+#: src/templates/advanced.html:6 src/templates/advanced.html:282
+msgid "Advanced Settings"
+msgstr "Ajustes Avanzados"
+
+#: src/templates/advanced.html:305
+msgid "Hide the identity of the user, who purchased a specific gift."
+msgstr "Permitir reordenar ideas."
+
+#: src/templates/advanced.html:306
+msgid "Hide purchaser identity"
+msgstr "Botón de reordenación"
+
+#: src/templates/advanced.html:308
+msgid "Apply to everyone (global)"
+msgstr "Activar"
+
+#: src/templates/advanced.html:309
+msgid "Disabled"
+msgstr "Desactivar"
+
+#: src/templates/advanced.html:310
+msgid "User choice"
+msgstr "Guardar"
+
+#: src/templates/advanced.html:313
+msgid "• Global: All purchases are always anonymous"
+msgstr "Permitir imágenes en ideas"
+
+#: src/templates/advanced.html:314
+msgid "• Disabled: Purchaser identity is always shown"
+msgstr "Imágenes"
+
+#: src/templates/advanced.html:315
+msgid "• User choice: Each user decides whether to purchase anonymously"
+msgstr "Activar"
+
+#: src/templates/advanced.html:321 src/templates/advanced.html:340
+#: src/templates/advanced.html:359 src/templates/manage_shared_lists.html:272
+#: src/templates/setup_profile.html:77
+msgid "Save"
+msgstr "Opción 6"
+
+#: src/templates/advanced.html:330
+msgid "Enable reordering button on the myideas page."
+msgstr "Guardar"
+
+#: src/templates/advanced.html:331
+msgid "Reordering button"
+msgstr "Ajustes de Moneda"
+
+#: src/templates/advanced.html:333 src/templates/advanced.html:352
+#: src/templates/setup_oidc.html:328 src/templates/setup_oidc.html:339
+#: src/templates/setupenv.html:61
+msgid "True"
+msgstr "Por defecto: email"
+
+#: src/templates/advanced.html:334 src/templates/advanced.html:353
+#: src/templates/setup_oidc.html:329 src/templates/setup_oidc.html:340
+#: src/templates/setupenv.html:62
+msgid "False"
+msgstr "Campo OIDC secundario:"
+
+#: src/templates/advanced.html:349
+msgid "Enable images"
+msgstr "Posición del Símbolo"
+
+#: src/templates/advanced.html:350
+msgid "Images"
+msgstr "Antes del número ($50)"
+
+#: src/templates/advanced.html:368
+msgid "Currency Settings"
+msgstr "Guardar Ajustes de Moneda"
+
+#: src/templates/advanced.html:373
+msgid "Currency Symbol"
+msgstr "Ajustes de Registro"
+
+#: src/templates/advanced.html:381
+msgid "e.g., $, €, £, ¥"
+msgstr "Permitir Registro"
+
+#: src/templates/advanced.html:382
+msgid "Enter the currency symbol (max 5 characters)"
+msgstr "Permitir registro para nuevos usuarios"
+
+#: src/templates/advanced.html:388
+msgid "Symbol Position"
+msgstr "Código de Invitación (Opcional)"
+
+#: src/templates/advanced.html:394
+msgid "Before amount (e.g., $50)"
+msgstr "Dejar en blanco para permitir que cualquiera se registre"
+
+#: src/templates/advanced.html:399
+msgid "After amount (e.g., 50€)"
+msgstr ""
+"Si existe, los nuevos usuarios tendrán que proporcionar este código para "
+"poder registrarse. Dejar en blanco para permitir que cualquiera se "
+"registre."
+
+#: src/templates/advanced.html:406
+msgid "Preview:"
+msgstr "Guardar Ajustes de Registro"
+
+#: src/templates/advanced.html:408
+msgid "This is how gift values will appear"
+msgstr "Ajustes Enlaces Compartidos"
+
+#: src/templates/advanced.html:415
+msgid "Save Currency Settings"
+msgstr "Permitir Enlaces Compartidos"
+
+#: src/templates/advanced.html:425
+msgid "Self-Registration Settings"
+msgstr ""
+"Permitir a los usuarios crear enlaces públicos para sus listas de ideas. "
+"Si está desactivado"
+
+#: src/templates/advanced.html:432
+msgid "Enable Self Registration"
+msgstr "Guardar Ajustes de Enlaces Compartidos"
+
+#: src/templates/advanced.html:434
+msgid "Allow new users to create their own accounts"
+msgstr "Permitir que los nuevos usuarios creen sus propias cuentas"
+
+#: src/templates/advanced.html:440
+msgid "Joining Code (Optional)"
+msgstr "Código de invitación (opcional)"
+
+#: src/templates/advanced.html:447
+msgid "Leave empty to allow anyone to register"
+msgstr "Déjelo vacío para permitir que cualquiera se registre"
+
+#: src/templates/advanced.html:449
+msgid ""
+"If set, users must provide this code to register. Leave empty for open "
+"registration."
+msgstr ""
+"Si se define, los usuarios deberán proporcionar este código para "
+"registrarse. Déjelo vacío para un registro abierto."
+
+#: src/templates/advanced.html:457
+msgid "Save Registration Settings"
+msgstr "Guardar ajustes de registro"
+
+#: src/templates/advanced.html:467
+msgid "Link Sharing Settings"
+msgstr "Ajustes de compartir enlaces"
+
+#: src/templates/advanced.html:474
+msgid "Enable Link Sharing Feature"
+msgstr "Habilitar la función de compartir enlaces"
+
+#: src/templates/advanced.html:477
+msgid ""
+"Allow users to create public share links for their gift lists. When "
+"disabled, \n"
+"                                    the \"Share My List\" feature will be"
+" hidden from all users."
+msgstr ""
+
+#: src/templates/advanced.html:486
+msgid "Save Link Sharing Settings"
+msgstr "Guardar ajustes de compartir enlaces"
+
+#: src/templates/bought_items.html:7
+msgid "Bought Items"
+msgstr "Regalos Comprados"
+
+#: src/templates/bought_items.html:126
+msgid "Object bought by me:"
+msgstr "Regalos comprados por mí:"
+
+#: src/templates/bought_items.html:131
+msgid "For:"
+msgstr "Para:"
+
+#: src/templates/bought_items.html:132
+msgid "Description:"
+msgstr "Descripción"
+
+#: src/templates/bought_items.html:134
+msgid "Link:"
+msgstr "Enlace:"
+
+#: src/templates/dashboard.html:6
+msgid "Gift Dashboard"
+msgstr "Panel de Regalos"
+
+#: src/templates/dashboard.html:382
+msgid "Menu"
+msgstr "Menú"
+
+#: src/templates/dashboard.html:399
+msgid "Info"
+msgstr "Información"
+
+#: src/templates/dashboard.html:400
+msgid "Name:"
+msgstr "Nombre:"
+
+#: src/templates/dashboard.html:412
+msgid "Group users on dashboard"
+msgstr "Agrupar usuarios"
+
+#: src/templates/dashboard.html:422 src/templates/dashboard.html:447
+msgid "Change Avatar"
+msgstr "Cambiar Contraseña"
+
+#: src/templates/dashboard.html:455 src/templates/dashboard.html:469
+msgid "Change Password"
+msgstr "Cerrar sesión"
+
+#: src/templates/dashboard.html:460
+msgid "Current Password"
+msgstr "Nuevo correo electrónico"
+
+#: src/templates/dashboard.html:463 src/templates/manage_users.html:340
+msgid "New Password"
+msgstr "Opción 1"
+
+#: src/templates/dashboard.html:466
+msgid "Repeat New Password"
+msgstr "Cerrar Sesión"
+
+#: src/templates/dashboard.html:477 src/templates/dashboard.html:485
+msgid "Change Email"
+msgstr "&nbsp; Tema"
+
+#: src/templates/dashboard.html:482
+msgid "New Email"
+msgstr "Enlaces públicos"
+
+#: src/templates/dashboard.html:495 src/templates/dashboard.html:496
+msgid "Logout"
+msgstr "Panel de Administración"
+
+#: src/templates/dashboard.html:499 src/templates/manage_shared_lists.html:6
+#: src/templates/manage_shared_lists.html:135
+msgid "Shared Lists"
+msgstr "Listas Compartidas"
+
+#: src/templates/dashboard.html:501
+msgid "Public links"
+msgstr "Enlaces públicos"
+
+#: src/templates/dashboard.html:504
+msgid "Theme"
+msgstr "Tema"
+
+#: src/templates/dashboard.html:511
+msgid "Giftmanager"
+msgstr "Giftmanager"
+
+#: src/templates/dashboard.html:534
+msgid "View your Secret Santa assignment"
+msgstr "Ver tu Amigo Invisible"
+
+#: src/templates/dashboard.html:535
+msgid "Secret Santa Icon"
+msgstr "Icono de Amigo Invisible"
+
+#: src/templates/dashboard.html:541 src/templates/my_ideas.html:247
+#: src/templates/noideas.html:166
+msgid "Add ideas"
+msgstr "Añadir Ideas"
+
+#: src/templates/delete_old_gift_ideas.html:6
+msgid "Manage Gift Ideas"
+msgstr "Gestión de Ideas"
+
+#: src/templates/delete_old_gift_ideas.html:263
+msgid "Delete Old Gift Ideas"
+msgstr "Borrar Ideas Antiguas"
+
+#: src/templates/delete_old_gift_ideas.html:266
+msgid "Delete Gift Ideas Older Than"
+msgstr "Borrar ideas más antiguas a"
+
+#: src/templates/delete_old_gift_ideas.html:266
+msgid "Days"
+msgstr "días"
+
+#: src/templates/delete_old_gift_ideas.html:273
+msgid "Change Days for Deleting Old Gift Ideas"
+msgstr "Cambiar número de días para borrar ideas"
+
+#: src/templates/delete_old_gift_ideas.html:275
+msgid "New Number of Days:"
+msgstr "Nuevo número de días:"
+
+#: src/templates/delete_old_gift_ideas.html:279
+msgid "Update Days"
+msgstr "Actualizar Días"
+
+#: src/templates/edit_email_settings.html:6
+#: src/templates/edit_email_settings.html:243
+#: src/templates/edit_email_settings.html:252
+msgid "Edit Email Settings"
+msgstr "Ajustes de Correo Electrónico"
+
+#: src/templates/edit_email_settings.html:255 src/templates/setupenv.html:19
+msgid "System Email:"
+msgstr "Llave API de Mailjet:"
+
+#: src/templates/edit_email_settings.html:268 src/templates/edit_idea.html:291
+#: src/templates/manage_groups.html:340 src/templates/manage_users.html:384
+#: src/templates/setup_oidc.html:347
+msgid "Save Changes"
+msgstr "Activar"
+
+#: src/templates/edit_idea.html:6
+msgid "- Edit an idea"
+msgstr "- Editar una idea"
+
+#: src/templates/edit_idea.html:237 src/templates/my_ideas.html:292
+#: src/templates/shared_list_public.html:216
+#: src/templates/user_gift_ideas.html:266
+msgid "OG Image"
+msgstr "Imagen OG"
+
+#: src/templates/edit_idea.html:251
+msgid "Enter estimated value in dollars"
+msgstr "Introduzca un valor aproximado"
+
+#: src/templates/edit_idea.html:264
+msgid "Field name (e.g., Shoe Size)"
+msgstr "Nombre"
+
+#: src/templates/edit_idea.html:269
+msgid "Value (e.g., 6)"
+msgstr "Valor"
+
+#: src/templates/edit_idea.html:293 src/templates/manage_shared_lists.html:276
+#: src/templates/manage_sharing.html:304 src/templates/manage_users.html:379
+#: src/templates/shared_list_public.html:275
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: src/templates/edit_login_message.html:6
+#: src/templates/edit_login_message.html:244
+#: src/templates/edit_login_message.html:252
+msgid "Edit Login Message"
+msgstr "Editar Mensaje de Inicio de Sesión"
+
+#: src/templates/edit_login_message.html:269
+msgid "Update Message"
+msgstr "Actualizar Mensaje"
+
+#: src/templates/login.html:9 src/templates/login.html:207
+msgid "Login"
+msgstr "Iniciar sesión"
+
+#: src/templates/login.html:225 src/templates/manage_guest_users.html:406
+#: src/templates/manage_users.html:260 src/templates/setup_oidc.html:305
+#: src/templates/setup_oidc.html:316
+msgid "Username"
+msgstr "Nombre Completo"
+
+#: src/templates/login.html:227
+msgid "Password"
+msgstr "Contraseña"
+
+#: src/templates/login.html:229
+msgid "SIGN IN"
+msgstr "Inicia sesión"
+
+#: src/templates/login.html:232 src/templates/login.html:243
+#: src/templates/oidc_only.html:141
+msgid "or"
+msgstr "ó"
+
+#: src/templates/login.html:237
+msgid "Create New Account"
+msgstr "Crear Nueva Cuenta"
+
+#: src/templates/login.html:248 src/templates/oidc_only.html:144
+msgid "I have a guest password"
+msgstr "Tengo una contraseña de invitado"
+
+#: src/templates/login.html:255 src/templates/oidc_only.html:137
+msgid "Login with OIDC"
+msgstr "Iniciar sesión con OIDC"
+
+#: src/templates/login.html:259
+msgid "Contact the administrator to reset your password."
+msgstr "Póngase en contacto con el administrador para restablecer su contraseña."
+
+#: src/templates/login.html:264
+msgid "Guest Login"
+msgstr "Inicio de sesión como invitado"
+
+#: src/templates/login.html:266
+msgid "Enter your guest password to access limited features"
+msgstr ""
+"Introduzca su contraseña de invitado para acceder con funcionalidad "
+"limitada"
+
+#: src/templates/login.html:281
+msgid "Guest Password"
+msgstr "Contraseña de Invitado"
+
+#: src/templates/login.html:283 src/templates/oidc_only.html:150
+msgid "Enter guest password"
+msgstr "Introduzca contraseña de invitado"
+
+#: src/templates/login.html:285
+msgid "LOGIN AS GUEST"
+msgstr "Iniciar sesión como invitado"
+
+#: src/templates/login.html:288
+msgid "Back to regular login"
+msgstr "Volver al inicio de sesión de usuario registrado"
+
+#: src/templates/login.html:291
+msgid "Contact the administrator for guest access."
+msgstr "Contacte al administrador para obtener acceso de invitado."
+
+#: src/templates/manage_groups.html:6 src/templates/manage_groups.html:262
+#: src/templates/manage_groups.html:270
+msgid "Manage Groups"
+msgstr "Gestión de Grupos"
+
+#: src/templates/manage_groups.html:275
+msgid "Add a New Group"
+msgstr "Añadir un Grupo Nuevo"
+
+#: src/templates/manage_groups.html:280
+msgid "Enter new group name"
+msgstr "Introduce el nuevo nombre del grupo"
+
+#: src/templates/manage_groups.html:285
+msgid "Assign to Users:"
+msgstr "Asignar a:"
+
+#: src/templates/manage_groups.html:302
+msgid "Add Group"
+msgstr "Añadir Grupo"
+
+#: src/templates/manage_groups.html:309
+msgid "Manage Existing Groups"
+msgstr "Administrar Grupos Existentes"
+
+#: src/templates/manage_groups.html:314
+msgid "User"
+msgstr "Usuario"
+
+#: src/templates/manage_guest_users.html:6
+#: src/templates/manage_guest_users.html:303
+#: src/templates/manage_guest_users.html:322
+msgid "Manage Guest Users"
+msgstr "Administrar Usuarios Invitados"
+
+#: src/templates/manage_guest_users.html:327
+msgid "Create New Guest User"
+msgstr "Crear Nuevo Invitado"
+
+#: src/templates/manage_guest_users.html:331
+msgid "Display Name:"
+msgstr "Nombre:"
+
+#: src/templates/manage_guest_users.html:334
+msgid "e.g., Uncle John"
+msgstr "por ejemplo, Tío Juan"
+
+#: src/templates/manage_guest_users.html:335
+msgid "This name will be shown when guest marks items as bought"
+msgstr ""
+"Este será el nombre que se mostrará cuando un Invitado marque una idea "
+"como comprada"
+
+#: src/templates/manage_guest_users.html:345
+msgid "Access Type:"
+msgstr "Tipo de Acceso:"
+
+#: src/templates/manage_guest_users.html:350
+msgid "Access by Family"
+msgstr "Acceso a Familias"
+
+#: src/templates/manage_guest_users.html:355
+msgid "Access Specific People"
+msgstr "Acceso a Personas"
+
+#: src/templates/manage_guest_users.html:362
+msgid "Select Families:"
+msgstr "Seleccionar Familias:"
+
+#: src/templates/manage_guest_users.html:378
+msgid "Select People:"
+msgstr "Seleccionar Personas:"
+
+#: src/templates/manage_guest_users.html:393
+msgid "Create Guest User"
+msgstr "Crear"
+
+#: src/templates/manage_guest_users.html:400
+msgid "Existing Guest Users"
+msgstr "Usuarios Invitados Existentes"
+
+#: src/templates/manage_guest_users.html:407
+msgid "Display Name"
+msgstr "Nombre de Visualización"
+
+#: src/templates/manage_guest_users.html:408
+msgid "Access Type"
+msgstr "Tipo de Acceso"
+
+#: src/templates/manage_guest_users.html:409
+msgid "Access Details"
+msgstr "Detalles de Acceso"
+
+#: src/templates/manage_guest_users.html:410
+#: src/templates/manage_users.html:265
+msgid "Actions"
+msgstr "Acciones"
+
+#: src/templates/manage_guest_users.html:420
+msgid "Family Access"
+msgstr "Acceso a Familias"
+
+#: src/templates/manage_guest_users.html:422
+msgid "People Access"
+msgstr "Acceso a Personas"
+
+#: src/templates/manage_guest_users.html:428
+msgid "Families:"
+msgstr "Familias:"
+
+#: src/templates/manage_guest_users.html:432
+msgid "People:"
+msgstr "Personas::"
+
+#: src/templates/manage_guest_users.html:444
+#: src/templates/manage_shared_lists.html:243
+#: src/templates/manage_sharing.html:247 src/templates/manage_users.html:310
+msgid "Delete"
+msgstr "Borrar"
+
+#: src/templates/manage_guest_users.html:456
+msgid "No guest users configured yet."
+msgstr "No hay usuarios invitados."
+
+#: src/templates/manage_shared_lists.html:153
+msgid "Create New Shared List"
+msgstr "Crear Nueva Lista Compartida"
+
+#: src/templates/manage_shared_lists.html:157
+msgid "List Name:"
+msgstr "Nombre de la Lista:"
+
+#: src/templates/manage_shared_lists.html:160
+msgid "e.g., Family Vacation, Office Party"
+msgstr "p.ej: Vacaciones, Fiesta de Oficina, etc."
+
+#: src/templates/manage_shared_lists.html:164
+msgid "List Avatar:"
+msgstr "Icono de la Lista"
+
+#: src/templates/manage_shared_lists.html:180
+msgid "Select an avatar for your shared list"
+msgstr "Selecciona un icono para la lista compartida"
+
+#: src/templates/manage_shared_lists.html:185
+msgid "Add Members:"
+msgstr "Añadir Miembros:"
+
+#: src/templates/manage_shared_lists.html:197
+msgid "Create Shared List"
+msgstr "Crear"
+
+#: src/templates/manage_shared_lists.html:204
+msgid "My Shared Lists"
+msgstr "Mis Listas Compartidas"
+
+#: src/templates/manage_shared_lists.html:215
+msgid "List Avatar"
+msgstr "Icono de la Lista"
+
+#: src/templates/manage_shared_lists.html:224
+msgid "Members:"
+msgstr "Miembros:"
+
+#: src/templates/manage_shared_lists.html:233
+msgid "View"
+msgstr "Ver"
+
+#: src/templates/manage_shared_lists.html:238
+#: src/templates/manage_users.html:300
+msgid "Edit"
+msgstr "Editar"
+
+#: src/templates/manage_shared_lists.html:248
+msgid "Member"
+msgstr "Miembro"
+
+#: src/templates/manage_shared_lists.html:257
+msgid "Edit Members"
+msgstr "Editar Miembros"
+
+#: src/templates/manage_shared_lists.html:286
+msgid "No shared lists yet."
+msgstr "Aún no hay listas compartidas."
+
+#: src/templates/manage_shared_lists.html:292
+#: src/templates/manage_sharing.html:319
+#: src/templates/secret_santa_assignment.html:144
+msgid "Back to Dashboard"
+msgstr "Volver al Panel"
+
+#: src/templates/manage_sharing.html:6
+msgid "Share List"
+msgstr "Compartir lista"
+
+#: src/templates/manage_sharing.html:112
+msgid "Share:"
+msgstr "Compartir:"
+
+#: src/templates/manage_sharing.html:114
+msgid "Share My List"
+msgstr "Compartir Mi Lista"
+
+#: src/templates/manage_sharing.html:127
+msgid "My Personal List"
+msgstr "Mi Lista Personal"
+
+#: src/templates/manage_sharing.html:154
+msgid "Create Share Link for"
+msgstr "Crear Enlace para Compartir para"
+
+#: src/templates/manage_sharing.html:156
+msgid "Create New Share Link"
+msgstr "Crear Enlace para Compartir"
+
+#: src/templates/manage_sharing.html:163
+msgid "Link Name:"
+msgstr "Nombre del enlace"
+
+#: src/templates/manage_sharing.html:167
+msgid "Give this link a name"
+msgstr "Nombre del enlace"
+
+#: src/templates/manage_sharing.html:170
+msgid "Valid for:"
+msgstr "Válido por:"
+
+#: src/templates/manage_sharing.html:172 src/templates/manage_sharing.html:291
+msgid "7 days"
+msgstr "7 días"
+
+#: src/templates/manage_sharing.html:173 src/templates/manage_sharing.html:292
+msgid "30 days"
+msgstr "30 días"
+
+#: src/templates/manage_sharing.html:174 src/templates/manage_sharing.html:293
+msgid "90 days"
+msgstr "90 días"
+
+#: src/templates/manage_sharing.html:175 src/templates/manage_sharing.html:294
+msgid "1 year"
+msgstr "1 año"
+
+#: src/templates/manage_sharing.html:181
+msgid "Allow visitors to mark items as purchased"
+msgstr "Permitir a los visitantes marcar elementos como comprados"
+
+#: src/templates/manage_sharing.html:183
+msgid "Visitors can enter their name when marking items as bought"
+msgstr ""
+"Los visitantes pueden especificar un nombre cuando marquen elementos como"
+" comprados"
+
+#: src/templates/manage_sharing.html:187
+msgid "Create Share Link"
+msgstr "Crear"
+
+#: src/templates/manage_sharing.html:198
+msgid "Share Links"
+msgstr "Enlaces Compartidos"
+
+#: src/templates/manage_sharing.html:200
+msgid "My Share Links"
+msgstr "Mis Enlaces Compartidos"
+
+#: src/templates/manage_sharing.html:219
+msgid "Expired"
+msgstr "Caducado"
+
+#: src/templates/manage_sharing.html:220
+msgid "Active"
+msgstr "Activo"
+
+#: src/templates/manage_sharing.html:221
+msgid "Inactive"
+msgstr "Inactivo"
+
+#: src/templates/manage_sharing.html:225
+msgid "by"
+msgstr "por"
+
+#: src/templates/manage_sharing.html:255
+msgid "Share URL:"
+msgstr "Enlace:"
+
+#: src/templates/manage_sharing.html:264
+msgid "Created:"
+msgstr "Creado en:"
+
+#: src/templates/manage_sharing.html:268
+msgid "Expires:"
+msgstr "Expira en:"
+
+#: src/templates/manage_sharing.html:271
+msgid "(Expired)"
+msgstr "(Caducado)"
+
+#: src/templates/manage_sharing.html:279
+msgid "↻ Extend Expiration"
+msgstr "↻ Extender validez"
+
+#: src/templates/manage_sharing.html:284
+msgid "Extend Expiration"
+msgstr "Extender validez"
+
+#: src/templates/manage_sharing.html:289
+msgid "Add days:"
+msgstr "Añadir días:"
+
+#: src/templates/manage_sharing.html:300
+msgid "Extend"
+msgstr "Extender"
+
+#: src/templates/manage_sharing.html:313
+msgid "No share links created yet."
+msgstr "Ningún enlace compartido creado aún."
+
+#: src/templates/manage_users.html:6 src/templates/manage_users.html:234
+#: src/templates/manage_users.html:243
+msgid "Manage Users"
+msgstr "Gestionar Usuarios"
+
+#: src/templates/manage_users.html:261
+msgid "Name"
+msgstr "Nombre"
+
+#: src/templates/manage_users.html:262 src/templates/manage_users.html:329
+#: src/templates/setup_oidc.html:304 src/templates/setup_oidc.html:317
+msgid "Email"
+msgstr "Campo secondario de la base de datos:"
+
+#: src/templates/manage_users.html:264
+msgid "Admin"
+msgstr "Administrador"
+
+#: src/templates/manage_users.html:317
+msgid "Edit User:"
+msgstr "Nombre Completo"
+
+#: src/templates/manage_users.html:321 src/templates/setup_oidc.html:306
+#: src/templates/setup_oidc.html:318
+msgid "Full Name"
+msgstr "Nombre de usuario"
+
+#: src/templates/manage_users.html:337
+msgid "New Password (leave empty to keep current)"
+msgstr "Imágen de Perfil"
+
+#: src/templates/manage_users.html:358
+msgid "Random Avatar"
+msgstr "Opción 4"
+
+#: src/templates/manage_users.html:362
+msgid "Upload Image"
+msgstr "Opción 5"
+
+#: src/templates/my_ideas.html:6
+msgid "My Ideas"
+msgstr "Mis Ideas"
+
+#: src/templates/my_ideas.html:252
+msgid "My List of Ideas"
+msgstr "Mi Lista de Ideas"
+
+#: src/templates/my_ideas.html:254
+msgid "Reorder"
+msgstr "Reordenar"
+
+#: src/templates/my_ideas.html:255
+msgid "Save Order"
+msgstr "Guardar orden"
+
+#: src/templates/my_ideas.html:278 src/templates/shared_list_public.html:208
+#: src/templates/user_gift_ideas.html:258
+msgid "Estimated Value:"
+msgstr "Valor Estimado:"
+
+#: src/templates/my_ideas.html:280 src/templates/shared_list_public.html:210
+#: src/templates/user_gift_ideas.html:260
+msgid "Added By:"
+msgstr "Añadido por:"
+
+#: src/templates/my_ideas.html:283 src/templates/user_gift_ideas.html:386
+msgid "Last updated:"
+msgstr "Última actualización:"
+
+#: src/templates/my_ideas.html:300 src/templates/user_gift_ideas.html:274
+msgid "Delete Icon"
+msgstr "Icono de eliminar"
+
+#: src/templates/my_ideas.html:303 src/templates/user_gift_ideas.html:277
+msgid "Edit Icon"
+msgstr "Icono de editar"
+
+#: src/templates/my_ideas.html:312 src/templates/shared_list_public.html:228
+#: src/templates/user_gift_ideas.html:286
+msgid "Open Link Icon"
+msgstr "Icono de enlace abierto"
+
+#: src/templates/noideas.html:6
+msgid "No gift ideas?"
+msgstr "¿Sin ideas de regalo?"
+
+#: src/templates/noideas.html:163
+msgid "This person lacks imagination, help them!"
+msgstr "A esta persona le falta imaginación, ¡ayúdalos!"
+
+#: src/templates/noideas.html:164
+msgid "No gift ideas image"
+msgstr "Imágen de sin ideas"
+
+#: src/templates/oidc_only.html:6 src/templates/oidc_only.html:121
+msgid "OIDC Login Only"
+msgstr "Solo inicio de sesión OIDC"
+
+#: src/templates/oidc_only.html:153
+msgid "Login as Guest"
+msgstr "Iniciar sesión como Invitado"
+
+#: src/templates/oidc_only.html:156
+msgid "Back to OIDC Login"
+msgstr "Volver al inicio de sesión OIDC"
+
+#: src/templates/register.html:6
+msgid "Register - Gift Manager"
+msgstr "Registro - Gift Manager"
+
+#: src/templates/register.html:126 src/templates/register.html:191
+msgid "Register"
+msgstr "Opción 3"
+
+#: src/templates/register.html:152
+msgid "Confirm Password:"
+msgstr "Confirmar Contraseña:"
+
+#: src/templates/register.html:156
+msgid "Email (optional):"
+msgstr "Correo Electrónico (opcional):"
+
+#: src/templates/register.html:160
+msgid "Birthday (optional):"
+msgstr "Cumpleaños (opcional):"
+
+#: src/templates/register.html:166
+msgid "Joining Code:"
+msgstr "Código de Unión:"
+
+#: src/templates/register.html:168
+msgid "Please ask your family for the joining code"
+msgstr "Pregunta a tu familia por el código de unión"
+
+#: src/templates/register.html:173 src/templates/setup_profile.html:48
+msgid "Avatar:"
+msgstr "Imagen de Perfil:"
+
+#: src/templates/register.html:181
+msgid "Default Avatar"
+msgstr "Opción 1"
+
+#: src/templates/register.html:184
+msgid "You can change your avatar later in profile settings"
+msgstr "Opción 2"
+
+#: src/templates/script_output.html:5 src/templates/script_output.html:8
+msgid "Script Output"
+msgstr "Salida del script"
+
+#: src/templates/secret_santa.html:6
+msgid "Secret Santa - Admin"
+msgstr "Amigo Invisible - Administración"
+
+#: src/templates/secret_santa.html:431
+msgid "Secret Santa Manager"
+msgstr "Administrador de Amigo Invisible"
+
+#: src/templates/secret_santa.html:443
+msgid "🎅 Secret Santa"
+msgstr "🎁 Amigo Invisible 🎁"
+
+#: src/templates/secret_santa.html:444
+msgid "Create gift exchanges with exclusions"
+msgstr "Crear intercambios de regalos con excepciones"
+
+#: src/templates/secret_santa.html:449
+msgid "Create New Pool"
+msgstr "Crear nuevo grupo"
+
+#: src/templates/secret_santa.html:452
+msgid "❌ Error"
+msgstr "❌ Error"
+
+#: src/templates/secret_santa.html:461
+msgid "Pool Name"
+msgstr "Nombre del grupo"
+
+#: src/templates/secret_santa.html:463
+msgid "christmas2024"
+msgstr "christmas2024"
+
+#: src/templates/secret_santa.html:464
+msgid "Letters, numbers, dashes, underscores only"
+msgstr "Letras, números, guiones, guiones bajos solo"
+
+#: src/templates/secret_santa.html:469
+msgid "Participants"
+msgstr "Participantes"
+
+#: src/templates/secret_santa.html:482
+msgid "Select at least 2 participants"
+msgstr "Seleccione al menos 2 participantes"
+
+#: src/templates/secret_santa.html:487
+msgid "Exclusions (Optional)"
+msgstr "Excepciones (opcional)"
+
+#: src/templates/secret_santa.html:491 src/templates/secret_santa.html:500
+msgid "Select person..."
+msgstr "Persona..."
+
+#: src/templates/secret_santa.html:498
+msgid "cannot gift to"
+msgstr "no puede regalar a"
+
+#: src/templates/secret_santa.html:511
+msgid "+ Add Exclusion"
+msgstr "+ Añadir excepción"
+
+#: src/templates/secret_santa.html:512
+msgid "Exclusions work both ways"
+msgstr "Las excepciones funcionan en ambos sentidos"
+
+#: src/templates/secret_santa.html:518
+msgid "Instructions (Optional)"
+msgstr "Instrucciones extras"
+
+#: src/templates/secret_santa.html:520
+msgid ""
+"Budget: $50 \n"
+"Exchange date: Dec 24 \n"
+"Theme: Handmade"
+msgstr ""
+
+#: src/templates/secret_santa.html:530
+msgid "Create Pool"
+msgstr "Crear Grupo"
+
+#: src/templates/secret_santa.html:537
+msgid "Existing Pools"
+msgstr "Grupos Existentes"
+
+#: src/templates/secret_santa.html:542
+msgid "Select Pool to Delete"
+msgstr "Selecciones el Grupo a Eliminar"
+
+#: src/templates/secret_santa.html:544
+msgid "Choose a pool..."
+msgstr "Elegir Grupo..."
+
+#: src/templates/secret_santa.html:551
+msgid "Delete Pool"
+msgstr "Borrar Grupo"
+
+#: src/templates/secret_santa.html:557
+msgid "📭 No pools yet"
+msgstr "Aún no hay grupos creados"
+
+#: src/templates/secret_santa_assignment.html:7
+msgid "Secret Santa Assignment"
+msgstr "Asignación de Amigo Invisible"
+
+#: src/templates/secret_santa_assignment.html:121
+msgid "🎅 Secret Santa 🎁"
+msgstr "🎁 Amigo Invisible 🎁"
+
+#: src/templates/secret_santa_assignment.html:122
+msgid "Here are your Secret Santa assignments:"
+msgstr "Estos son tus Amigos Invisibles:"
+
+#: src/templates/secret_santa_assignment.html:127
+msgid "Your Secret Santa Assignments:"
+msgstr "Amigos Invisibles:"
+
+#: src/templates/secret_santa_assignment.html:131
+msgid "Pool:"
+msgstr "Grupo:"
+
+#: src/templates/secret_santa_assignment.html:132
+msgid "Assigned to:"
+msgstr "Asignado a:"
+
+#: src/templates/secret_santa_assignment.html:134
+msgid "Instructions:"
+msgstr "Instrucciones:"
+
+#: src/templates/setup_oidc.html:6 src/templates/setup_oidc.html:243
+msgid "Setup OIDC Configuration"
+msgstr "Configurar OIDC"
+
+#: src/templates/setup_oidc.html:267 src/templates/setupenv.html:29
+msgid "OIDC Server Metadata URL:"
+msgstr "Correo Electrónico del Sistema:"
+
+#: src/templates/setup_oidc.html:276 src/templates/setupenv.html:34
+msgid "OIDC Logout URL:"
+msgstr "Eliminar Días:"
+
+#: src/templates/setup_oidc.html:285 src/templates/setupenv.html:39
+msgid "Primary OIDC Field:"
+msgstr "ID del cliente OIDC:"
+
+#: src/templates/setup_oidc.html:287
+msgid "Enter the primary OIDC field"
+msgstr "URL de cierre de sesión OIDC:"
+
+#: src/templates/setup_oidc.html:293 src/templates/setupenv.html:44
+msgid "Secondary OIDC Field:"
+msgstr "Secreto del cliente OIDC:"
+
+#: src/templates/setup_oidc.html:295
+msgid "Enter the secondary OIDC field"
+msgstr "Introduzca el campo OIDC primario"
+
+#: src/templates/setup_oidc.html:301 src/templates/setupenv.html:49
+msgid "Primary DB Field:"
+msgstr "URL de metadatos del servidor OIDC:"
+
+#: src/templates/setup_oidc.html:313 src/templates/setupenv.html:54
+msgid "Secondary DB Field:"
+msgstr "URL de cierre de sesión OIDC:"
+
+#: src/templates/setup_oidc.html:325 src/templates/setupenv.html:59
+msgid "Enable Auto Registration:"
+msgstr "Campo OIDC principal:"
+
+#: src/templates/setup_oidc.html:336
+msgid "Enable Default Login Form:"
+msgstr "Activar"
+
+#: src/templates/setup_profile.html:6
+msgid "Setup Profile"
+msgstr "Configuración del Perfil"
+
+#: src/templates/setup_profile.html:14
+msgid "Setup Your Profile"
+msgstr "Configura tu Perfil"
+
+#: src/templates/setup_profile.html:17
+msgid "Username:"
+msgstr "Nombre de Usuario:"
+
+#: src/templates/setup_profile.html:22 src/templates/setupadmin.html:29
+msgid "Full Name:"
+msgstr "Nombre Completo:"
+
+#: src/templates/setup_profile.html:38
+msgid "Password is not required because default login is disabled."
+msgstr ""
+"La contraseña no es necesaria porque el inicio de sesión por defecto está"
+" deshabilitado."
+
+#: src/templates/setup_profile.html:56
+msgid "Generated Avatar"
+msgstr "Opción 1"
+
+#: src/templates/setup_profile.html:59
+msgid "✓ Avatar generated successfully"
+msgstr "Opción 2"
+
+#: src/templates/setup_profile.html:60
+msgid "You can change it later in profile settings"
+msgstr "Opción 3"
+
+#: src/templates/setup_profile.html:70
+msgid "Generating avatar..."
+msgstr "Opción 4"
+
+#: src/templates/setup_profile.html:71
+msgid "Please wait a moment"
+msgstr "Opción 5"
+
+#: src/templates/setupadmin.html:6 src/templates/setupadmin.html:14
+msgid "Admin Setup"
+msgstr "Configuración del Administrador"
+
+#: src/templates/setupadmin.html:37
+msgid "Create Admin Account"
+msgstr "Imagen de Perfil:"
+
+#: src/templates/setupenv.html:6
+msgid "Environment Setup"
+msgstr "Configuracion de Entorno"
+
+#: src/templates/setupenv.html:14
+msgid "Environment Variable Setup"
+msgstr "Configuración Variable de Entorno"
+
+#: src/templates/setupenv.html:20
+msgid "System Email"
+msgstr "Llave API de Mailjet"
+
+#: src/templates/setupenv.html:24
+msgid "Delete Days:"
+msgstr "Secreto API Mailjet"
+
+#: src/templates/setupenv.html:25
+msgid "Default: 30"
+msgstr "Secreto API Mailjet"
+
+#: src/templates/setupenv.html:30
+msgid "OIDC Server Metadata URL"
+msgstr "Correo Electrónico del Sistema"
+
+#: src/templates/setupenv.html:35
+msgid "OIDC Logout URL"
+msgstr "Por defecto: 30"
+
+#: src/templates/setupenv.html:40 src/templates/setupenv.html:50
+msgid "Default: email"
+msgstr "URL de metadatos del servidor OIDC"
+
+#: src/templates/setupenv.html:45
+msgid "Default: preferred_username"
+msgstr "Secreto del cliente OIDC"
+
+#: src/templates/setupenv.html:55
+msgid "Default: username"
+msgstr "URL de cierre de sesión OIDC"
+
+#: src/templates/setupenv.html:68
+msgid "Save Configuration"
+msgstr "Por defecto: preferred_username"
+
+#: src/templates/setupenv.html:69
+msgid "Skip for Now"
+msgstr "Campo primario de la base de datos:"
+
+#: src/templates/setupenv.html:70
+msgid "You can configure these settings later in the parameters section."
+msgstr "defecto"
+
+#: src/templates/shared_list_expired.html:6
+#: src/templates/shared_list_expired.html:12
+msgid "Share Link Expired"
+msgstr "Enlace Compartido Caducado"
+
+#: src/templates/shared_list_expired.html:14
+msgid "This share link has either expired or been deactivated by the list owner."
+msgstr ""
+"Este enlace compartido ha caducado o ha sido desactivado por el "
+"propietario de la lista."
+
+#: src/templates/shared_list_expired.html:17
+msgid "Please contact the list owner if you need access to this gift list."
+msgstr ""
+"Póngase en contacto con el dueño de la lista si necesita acceso a esta "
+"lista de regalo."
+
+#: src/templates/shared_list_public.html:6
+#: src/templates/shared_list_public.html:193
+msgid "'s Gift List"
+msgstr "Lista de regalo de"
+
+#: src/templates/shared_list_public.html:194
+msgid "Shared via GiftManager"
+msgstr "Compartido a través de GiftManager"
+
+#: src/templates/shared_list_public.html:199
+msgid "Gift Ideas for"
+msgstr "Ideas de regalo para"
+
+#: src/templates/shared_list_public.html:236
+#: src/templates/shared_list_public.html:245
+#: src/templates/user_gift_ideas.html:293
+msgid "Purchased by:"
+msgstr "Comprado por:"
+
+#: src/templates/shared_list_public.html:241
+msgid "Cancel Purchase"
+msgstr "Cancelar Compra"
+
+#: src/templates/shared_list_public.html:248
+#: src/templates/user_gift_ideas.html:321
+msgid "Available idea"
+msgstr "Idea disponible"
+
+#: src/templates/shared_list_public.html:250
+msgid "I Purchased This"
+msgstr "¡Me lo pido!"
+
+#: src/templates/shared_list_public.html:259
+msgid "Shared on"
+msgstr "Compartido el"
+
+#: src/templates/shared_list_public.html:259
+msgid "• Expires on"
+msgstr "• Caduca el"
+
+#: src/templates/shared_list_public.html:260
+msgid "Powered by GiftManager"
+msgstr "Con tecnología de GiftManager"
+
+#: src/templates/shared_list_public.html:266
+msgid "Enter Your Name"
+msgstr "Introducir Nombre"
+
+#: src/templates/shared_list_public.html:267
+msgid "Please enter your name to mark this item as purchased:"
+msgstr "Por favor, introduce tu nombre para marcar este artículo como comprado:"
+
+#: src/templates/shared_list_public.html:268
+msgid "Your name"
+msgstr "Nombre"
+
+#: src/templates/shared_list_public.html:272
+msgid "Confirm Purchase"
+msgstr "Confirmar"
+
+#: src/templates/user_gift_ideas.html:6
+msgid "Ideas List"
+msgstr "Lista de ideas"
+
+#: src/templates/user_gift_ideas.html:238
+msgid "Ideas list for"
+msgstr "Lista de Ideas para"
+
+#: src/templates/user_gift_ideas.html:306
+msgid "Me ("
+msgstr "Idea disponible"
+
+#: src/templates/user_gift_ideas.html:308
+#: src/templates/user_gift_ideas.html:310
+msgid "(anonymously)"
+msgstr "Última actualización:"
+
+#: src/templates/user_gift_ideas.html:317
+msgid "Cancel the purchase"
+msgstr "Cancelar la compra"
+
+#: src/templates/user_gift_ideas.html:329
+msgid "Purchase (anonymously)"
+msgstr "Comprar (anónimamente)"
+
+#: src/templates/user_gift_ideas.html:337
+#: src/templates/user_gift_ideas.html:347
+msgid "Purchase"
+msgstr "Comprar"
+
+#: src/templates/user_gift_ideas.html:375
+msgid "Purchase anonymously"
+msgstr "Comprar anónimamente"
+
+#~ msgid ""
+#~ "Allow users to create public share "
+#~ "links for their gift lists. When "
+#~ "disabled"
+#~ msgstr ""
+
+#~ msgid "Budget: $5"
+#~ msgstr "Presupuesto: 50"
+
