@@ -1,0 +1,21 @@
+[project]
+name = "giftmanager"
+version = "0.1.0"
+description = "Gift ideas management web app"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "Flask",
+    "Flask-Babel",
+    "python-dotenv",
+    "argon2-cffi",
+    "authlib",
+    "gunicorn",
+    "requests",
+    "beautifulsoup4",
+    "python-avatars",
+    "pillow",
+]
+
+[tool.uv]
+package = false

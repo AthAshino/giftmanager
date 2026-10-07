@@ -1,6 +1,9 @@
 # Ignore the virtual environment directory
 venv/
+.env
 .env/
+
+data/
 
 # Python bytecode files
 __pycache__/

@@ -1,0 +1,26 @@
+# Usage: docker compose -f docker-compose.dev.yml up --build
+services:
+  giftmanager:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: giftmanager:dev
+    container_name: giftmanager-dev
+    env_file:
+      - .env
+    environment:
+      - FLASK_DEBUG=1
+    ports:
+      - "5001:5000"
+    volumes:
+      # Live source mount + keep the image-built venv alive under a named volume
+      - ./src:/app
+      - giftmanager_venv:/app/.venv
+      # Persistent app data (settings.json, users.json, ideas.json, avatars)
+      - ./data:/app/data
+    # Hot reload on local file changes
+    command: gunicorn app:app --workers 1 --threads 2 --bind 0.0.0.0:5000 --reload
+    restart: unless-stopped
+
+volumes:
+  giftmanager_venv:
