@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   giftmanager:
-    image: icbest/giftmanager:latest
+    image: ghcr.io/athashino/giftmanager:latest
     container_name: giftmanager
     ports:
       - "5000:5000"
