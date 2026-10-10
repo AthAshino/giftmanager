@@ -165,6 +165,15 @@ app.config['BABEL_DEFAULT_LOCALE'] = 'en'
 app.config['BABEL_TRANSLATION_DIRECTORIES'] = 'translations'
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
+# Trust proxy headers (X-Forwarded-Proto/Host/Port) so url_for(_external=True)
+# and request.scheme reflect the public URL when running behind a reverse proxy.
+# Bump the numbers if the app sits behind more than one hop.
+from werkzeug.middleware.proxy_fix import ProxyFix
+app.wsgi_app = ProxyFix(
+    app.wsgi_app,
+    x_for=1, x_proto=1, x_host=1, x_port=1,
+)
+
 SUPPORTED_LANGUAGES = ('en', 'es', 'fr', 'nl', 'sv')
 
 def get_locale():
@@ -473,6 +482,21 @@ def utility_processor():
 
 
 #OIDC SUPPORT
+
+def get_external_url(endpoint, **values):
+    """Build the public URL for an endpoint.
+
+    If PUBLIC_URL is set (e.g. https://gift.example.com), it is used verbatim as
+    the base so the OIDC redirect_uri matches exactly what is registered in the
+    IdP (Authentik). Otherwise fall back to the request-derived external URL
+    (corrected by ProxyFix behind a reverse proxy).
+    """
+    public_url = read_env_variable("PUBLIC_URL", "").strip().rstrip("/")
+    if public_url:
+        return f"{public_url}{url_for(endpoint, **values)}"
+    return url_for(endpoint, _external=True, **values)
+
+
 oauth = OAuth(app)
 oauth.register(
     name="keycloak",
@@ -484,12 +508,8 @@ oauth.register(
 
 @app.route('/login_oidc')
 def login_oidc():
-    # Determine the scheme from headers (in case behind reverse proxy)
-    forwarded_proto = request.headers.get('X-Forwarded-Proto', request.scheme)
-    scheme = forwarded_proto.split(',')[0].strip()  # Handle multi-value headers
-
-    # Generate external HTTPS redirect_uri manually
-    redirect_uri = url_for("auth", _external=True, _scheme=scheme)
+    # Generate the external redirect_uri (PUBLIC_URL override > proxy headers)
+    redirect_uri = get_external_url("auth")
 
     # Create nonce and state
     nonce = secrets.token_urlsafe(16)
@@ -3307,12 +3327,7 @@ def mark_shared_not_bought(token, idea_id):
     
 def generate_share_url(token):
     """Generate share URL with proper scheme (HTTPS if available)"""
-    # Determine the scheme from headers (in case behind reverse proxy)
-    forwarded_proto = request.headers.get('X-Forwarded-Proto', request.scheme)
-    scheme = forwarded_proto.split(',')[0].strip()  # Handle multi-value headers
-    
-    # Generate external URL with proper scheme
-    return url_for("shared_list", token=token, _external=True, _scheme=scheme)
+    return get_external_url("shared_list", token=token)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
