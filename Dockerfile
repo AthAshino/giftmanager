@@ -9,6 +9,9 @@ RUN npm ci
 
 # Build the CSS (outputs to ../src/static/css/app.css)
 COPY frontend/input.css frontend/tailwind.config.js ./
+# Tailwind scans ../src/templates and ../src/app.py for classes, so the
+# source must be present in this stage or the generated CSS has no utilities
+COPY src /src
 RUN npm run build
 
 # Use the official Python 3.11 Alpine image
