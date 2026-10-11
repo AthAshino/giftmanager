@@ -1,4 +1,5 @@
 {% extends 'base_simple.html' %}
+{% from '_icons.html' import icon %}
 {% block title %}{{ _('Bought Items') }}{% endblock %}
 {% block page_title %}{{ _('Bought Items') }}{% endblock %}
 
@@ -8,12 +9,41 @@
     {% for item in bought_items %}
     <div class="card p-6">
         <h3 class="mb-4 text-xl font-semibold text-[rgb(var(--text))]">{{ item.gift_name }}</h3>
+        {% if item.get('gifted') %}
+        <span class="badge mb-4 bg-[rgb(var(--success-soft))] text-[rgb(var(--success))]">{{ icon('gift', 'h-4 w-4') }} {{ _('Gifted') }}</span>
+        {% endif %}
         <p class="text-sm text-[rgb(var(--text))]"><strong>{{ _('For:') }}</strong> {{ item.recipient_name }}</p>
         <p class="text-sm text-[rgb(var(--text))]"><strong>{{ _('Description:') }}</strong> {{ item.description }}</p>
         {% if item.link %}
         <p class="break-all text-sm text-[rgb(var(--text))]"><strong>{{ _('Link:') }}</strong> <a href="{{ item.link }}" target="_blank">{{ item.link }}</a></p>
         {% endif %}
+        {% if not item.get('gifted') %}
+        <button class="mark-as-gifted-button mt-4 flex w-full items-center justify-center gap-1 rounded bg-[rgb(var(--success))] px-3 py-2 text-white" data-idea-id="{{ item.gift_idea_id }}">
+            {{ icon('gift', 'h-4 w-4') }} {{ _('Gift offered') }}
+        </button>
+        {% endif %}
     </div>
     {% endfor %}
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.querySelectorAll('.mark-as-gifted-button').forEach(button => {
+        button.addEventListener('click', () => {
+            const ideaId = button.getAttribute('data-idea-id');
+            fetch(`/mark_as_gifted/${ideaId}`, {
+                method: 'POST',
+            })
+            .then(response => {
+                if (response.ok) {
+                    location.reload();
+                }
+            })
+            .catch(error => {
+                console.error('Error marking idea as gifted:', error);
+            });
+        });
+    });
+</script>
 {% endblock %}

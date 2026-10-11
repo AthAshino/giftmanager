@@ -158,6 +158,10 @@
             <span>{{ _('Public links') }}</span>
         </a>
         {% endif %}
+        <a href="/history" class="nav-item">
+            {{ icon('gift') }}
+            <span>{{ _('History') }}</span>
+        </a>
         {% if profile_info['admin'] == true %}
         <a href="/admin" class="nav-item">
             {{ icon('shield') }}

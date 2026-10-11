@@ -1047,9 +1047,20 @@ def delete_idea(idea_id):
         current_user_username = session['username']  # Use 'username' from the session
 
 # Check if the idea was added by the current user, if it's in their list, OR if they're a member of the shared list
+        # A gifted gift can only be deleted by the person who gave the idea or the gifter
+        if idea.get('gifted'):
+            is_authorized = (
+                idea.get('added_by') == current_user_username or
+                idea.get('bought_by') == current_user_username
+            )
+        else:
+            is_authorized = (
+                idea['added_by'] == current_user_username or
+                idea['user_id'] == current_user_username or
+                (shared_list and current_user_username in shared_list.get('list_members', []))
+            )
 
-        # Check if the idea was added by the current user or if it's in their list
-        if idea['added_by'] == current_user_username or idea['user_id'] == current_user_username or (shared_list and current_user_username in shared_list.get('list_members', [])):
+        if is_authorized:
             # Check if the idea is bought
             if idea['bought_by']:
                 # Send an email to the buyer via SMTP
@@ -1421,6 +1432,120 @@ def mark_as_not_bought(idea_id):
         flash(_('Idea not found'), 'danger')
 
     return '', 204  # Return a response with HTTP status code 204 (no content)
+
+
+def get_visible_usernames(current_user):
+    """Return the set of usernames the current user can see (same logic as the dashboard)."""
+    users = load_users()
+    current_user_data = next((user for user in users if user['username'] == current_user), None)
+    if not current_user_data:
+        return {current_user}
+
+    visible = set()
+    is_guest = current_user_data.get('guest', False)
+
+    if is_guest:
+        access_type = current_user_data.get('access_type', 'family')
+        if access_type == 'family':
+            guest_groups = current_user_data.get('groups', [])
+            for user in users:
+                if (user.get('groups') and any(group in guest_groups for group in user['groups'])
+                        and not user.get('guest')):
+                    visible.add(user['username'])
+        else:  # people access
+            access_users = current_user_data.get('access_users', [])
+            for user in users:
+                if user['username'] in access_users and not user.get('guest'):
+                    visible.add(user['username'])
+    else:
+        current_user_groups = current_user_data.get('groups', [])
+        if not current_user_groups:
+            visible = {user['username'] for user in users if not user.get('guest')}
+        else:
+            for user in users:
+                if (not user.get('groups') or any(group in current_user_groups for group in user.get('groups', []))) \
+                        and not user.get('guest'):
+                    visible.add(user['username'])
+
+    visible.add(current_user)
+    return visible
+
+
+@app.route('/mark_as_gifted/<int:idea_id>', methods=['POST'])
+@login_required
+@guest_allowed
+def mark_as_gifted(idea_id):
+    """Let the buyer mark a bought gift as actually offered/delivered."""
+    gift_ideas_data = load_gift_ideas()
+    idea = find_idea_by_id(gift_ideas_data, idea_id)
+
+    if idea:
+        if idea.get('bought_by') != session['username']:
+            flash(_('You can only mark as gifted a gift you bought.'), 'danger')
+        elif idea.get('gifted'):
+            flash(_('"%(name)s" is already gifted.') % {'name': idea['gift_name']}, 'warning')
+        else:
+            idea['gifted'] = True
+            idea['date_gifted'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            save_gift_ideas(gift_ideas_data)
+            flash(_('Marked "%(name)s" as gifted!') % {'name': idea['gift_name']}, 'success')
+    else:
+        flash(_('Idea not found'), 'danger')
+
+    return redirect(url_for('history'))
+
+
+@app.route('/mark_as_not_gifted/<int:idea_id>', methods=['POST'])
+@login_required
+@guest_allowed
+def mark_as_not_gifted(idea_id):
+    """Switch a gifted gift back to its previous (bought) state."""
+    gift_ideas_data = load_gift_ideas()
+    idea = find_idea_by_id(gift_ideas_data, idea_id)
+
+    if idea:
+        if not idea.get('gifted'):
+            flash(_('This gift is not gifted.'), 'warning')
+        elif session['username'] not in (idea.get('added_by'), idea.get('bought_by')):
+            flash(_('Only the person who gave the idea or the gifter can change its state.'), 'danger')
+        else:
+            idea['gifted'] = False
+            idea.pop('date_gifted', None)
+            save_gift_ideas(gift_ideas_data)
+            flash(_('Marked "%(name)s" as not gifted.') % {'name': idea['gift_name']}, 'success')
+    else:
+        flash(_('Idea not found'), 'danger')
+
+    return redirect(url_for('history'))
+
+
+@app.route('/history')
+@login_required
+@guest_allowed
+def history():
+    """Read-only history of all gifted gifts visible to the current user."""
+    gift_ideas_data = load_gift_ideas()
+    current_user = session.get('username')
+    visible_usernames = get_visible_usernames(current_user)
+
+    gifted_ideas = [
+        idea for idea in gift_ideas_data
+        if idea.get('gifted')
+        and (
+            idea['user_id'] in visible_usernames
+            or idea.get('added_by') == current_user
+            or idea.get('bought_by') == current_user
+        )
+    ]
+
+    gifted_ideas.sort(key=lambda x: x.get('date_gifted', ''), reverse=True)
+
+    for idea in gifted_ideas:
+        idea['recipient_name'] = get_full_name(idea['user_id'])
+        idea['gifter_name'] = get_full_name(idea.get('bought_by', ''))
+        idea['can_manage'] = idea.get('added_by') == current_user or idea.get('bought_by') == current_user
+
+    return render_template('history.html', gifted_ideas=gifted_ideas)
 
 
 @app.route('/bought_items')

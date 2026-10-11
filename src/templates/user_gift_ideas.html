@@ -20,6 +20,9 @@
             <div class="flex flex-col items-start sm:flex-row sm:items-center">
                 <div class="min-w-0 flex-1">
                     <h2 class="break-words text-lg font-semibold text-[rgb(var(--text))]">{{ gift_idea.gift_name }}</h2>
+                    {% if gift_idea.get('gifted') %}
+                    <span class="badge mt-1 bg-[rgb(var(--success-soft))] text-[rgb(var(--success))]">{{ icon('gift', 'h-4 w-4') }} {{ _('Gifted') }}</span>
+                    {% endif %}
                     {% if gift_idea.get('last_updated') %}
                     <p class="mt-0.5 text-xs text-[rgb(var(--text-secondary))]">{{ _('Last updated:') }} {{ gift_idea.last_updated[:10] }}</p>
                     {% endif %}
@@ -48,7 +51,7 @@
                 {% endif %}
 
                 <div class="idea-actions mt-4 flex flex-wrap items-center gap-2 sm:ml-4 sm:mt-0">
-                    {% if gift_idea.added_by == session['username'] or is_shared_list_member %}
+                    {% if (gift_idea.added_by == session['username'] or is_shared_list_member) and not gift_idea.get('gifted') %}
                     <button class="delete-idea-button flex items-center justify-center rounded bg-[rgb(var(--danger))] px-3 py-1" data-idea-id="{{ gift_idea.gift_idea_id }}">
                         {{ icon('trash', 'h-5 w-5 text-white') }}
                     </button>
@@ -66,7 +69,10 @@
                     </a>
                     {% endif %}
                     {% if gift_idea.bought_by %}
-                    {% if gift_idea.bought_by == session['username'] %}
+                    {% if gift_idea.bought_by == session['username'] and not gift_idea.get('gifted') %}
+                    <button class="mark-as-gifted-button flex items-center justify-center gap-1 rounded bg-[rgb(var(--success))] px-3 py-1 text-white" data-idea-id="{{ gift_idea.gift_idea_id }}">
+                        {{ icon('gift', 'h-4 w-4') }} {{ _('Gift offered') }}
+                    </button>
                     <button class="mark-as-not-bought-button flex items-center justify-center rounded bg-[rgb(var(--danger))] px-3 py-1 text-white" data-idea-id="{{ gift_idea.gift_idea_id }}">{{ _('Cancel the purchase') }}</button>
                     {% endif %}
                     {% else %}
@@ -125,6 +131,9 @@
                     {{ get_full_name(gift_idea.bought_by) }}
                     {% endif %}
                 </p>
+                {% if gift_idea.get('gifted') %}
+                <p class="mt-1 text-[rgb(var(--success))]">{{ icon('gift', 'h-4 w-4') }} {{ _('Gifted on:') }} {{ gift_idea.date_gifted[:10] }}</p>
+                {% endif %}
                 {% else %}
                 <strong class="text-[rgb(var(--text))]">{{ _('Available idea') }}</strong>
                 {% endif %}
@@ -190,6 +199,23 @@
         button.addEventListener('click', () => {
             const ideaId = button.getAttribute('data-idea-id');
             markIdeaAsBought(ideaId, button, true);
+        });
+    });
+
+    document.querySelectorAll('.mark-as-gifted-button').forEach(button => {
+        button.addEventListener('click', () => {
+            const ideaId = button.getAttribute('data-idea-id');
+            fetch(`/mark_as_gifted/${ideaId}`, {
+                method: 'POST',
+            })
+            .then(response => {
+                if (response.ok) {
+                    location.reload();
+                }
+            })
+            .catch(error => {
+                console.error('Error marking idea as gifted:', error);
+            });
         });
     });
 
