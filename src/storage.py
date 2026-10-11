@@ -67,50 +67,64 @@ def _table_empty(conn, table):
 
 
 def _import_json_list(conn, json_path, table):
-    """Import a JSON list-of-dicts file into one row per item, preserving order."""
+    """Import a JSON list-of-dicts file into one row per item, preserving order.
+
+    Returns True if the file was successfully imported (and may be removed).
+    """
     try:
         items = json.loads(json_path.read_text())
     except (json.JSONDecodeError, OSError):
-        return
+        return False
     if not isinstance(items, list):
-        return
+        return False
     conn.executemany(
         f"INSERT INTO {table} (data) VALUES (?)",
         [(json.dumps(item, ensure_ascii=False),) for item in items],
     )
+    return True
 
 
 def _import_json_map(conn, json_path, table):
-    """Import a JSON dict file into one key/value row per entry."""
+    """Import a JSON dict file into one key/value row per entry.
+
+    Returns True if the file was successfully imported (and may be removed).
+    """
     try:
         items = json.loads(json_path.read_text())
     except (json.JSONDecodeError, OSError):
-        return
+        return False
     if not isinstance(items, dict):
-        return
+        return False
     conn.executemany(
         f"INSERT INTO {table} (key, value) VALUES (?, ?)",
         [(str(key), json.dumps(value, ensure_ascii=False)) for key, value in items.items()],
     )
+    return True
 
 
 def initialize(data_dir):
     """Idempotent bootstrap: create schema, migrate JSON → SQLite, seed demo.
 
-    Safe to call on every boot and from the container entrypoint.
+    Safe to call on every boot and from the container entrypoint. Migrated
+    legacy JSON files are deleted once their data has been committed to SQLite.
     """
     data_dir = Path(data_dir)
     had_ideas_json = (data_dir / "ideas.json").exists()
+
+    migrated = []
 
     with _connect(data_dir) as conn:
         _init_schema(conn)
 
         if _table_empty(conn, "gift_ideas"):
-            _import_json_list(conn, data_dir / "ideas.json", "gift_ideas")
+            if _import_json_list(conn, data_dir / "ideas.json", "gift_ideas"):
+                migrated.append(data_dir / "ideas.json")
         if _table_empty(conn, "users"):
-            _import_json_list(conn, data_dir / "users.json", "users")
+            if _import_json_list(conn, data_dir / "users.json", "users"):
+                migrated.append(data_dir / "users.json")
         if _table_empty(conn, "settings"):
-            _import_json_map(conn, data_dir / "settings.json", "settings")
+            if _import_json_map(conn, data_dir / "settings.json", "settings"):
+                migrated.append(data_dir / "settings.json")
 
         # Fresh install with no legacy data: seed the demo idea.
         if not had_ideas_json and _table_empty(conn, "gift_ideas"):
@@ -120,6 +134,10 @@ def initialize(data_dir):
             )
 
         conn.commit()
+
+    for path in migrated:
+        path.unlink(missing_ok=True)
+        print(f"[storage] Migrated and removed {path}")
 
 
 def load_gift_ideas(data_dir):
