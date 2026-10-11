@@ -162,7 +162,7 @@
                     </div>
                     {% endif %}
                     <p class="description text-sm text-[rgb(var(--text-secondary))]" style="max-width: 400px; white-space: pre-wrap; word-wrap: break-word;">{{ item.description }}</p>
-                    {% if item.value %}
+                    {% if item.value and item.bought_by == session['username'] %}
                     <p class="text-sm text-[rgb(var(--text-secondary))]">{{ _('Estimated Value:') }} {{ format_currency(item.value) }}</p>
                     {% endif %}
                     <p class="text-sm text-[rgb(var(--text-secondary))]">{{ _('Gifted by:') }} {{ item.gifter_name }}</p>
