@@ -44,24 +44,24 @@ def login(client, username):
 
 
 def test_admin_dashboard_requires_login(client):
-    resp = client.get("/admin")
+    resp = client.get("/admin/shared_lists")
     assert resp.status_code == 302
     assert "/login" in resp.headers["Location"]
 
 
 def test_non_admin_cannot_access_admin_dashboard(client):
     login(client, "alice")
-    resp = client.get("/admin")
+    resp = client.get("/admin/shared_lists")
     assert resp.status_code == 302
     assert "/dashboard" in resp.headers["Location"]
 
 
-def test_admin_dashboard_shows_shared_lists(client, tmp_path):
+def test_admin_shared_lists_page_shows_shared_lists(client, tmp_path):
     _add_shared_list(tmp_path)
     _promote_admin(tmp_path, "bob")
     login(client, "bob")
 
-    resp = client.get("/admin")
+    resp = client.get("/admin/shared_lists")
     assert resp.status_code == 200
     html = resp.get_data(as_text=True)
     assert "My Shared List" in html
@@ -87,7 +87,7 @@ def test_admin_delete_shared_list_removes_user_and_ideas(client, tmp_path):
 
     resp = client.post("/admin/delete_shared_list/shared_family_list")
     assert resp.status_code == 302
-    assert "/admin" in resp.headers["Location"]
+    assert "/admin/shared_lists" in resp.headers["Location"]
 
     users = storage.load_users(str(tmp_path))
     assert not any(u["username"] == "shared_family_list" for u in users)

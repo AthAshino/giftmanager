@@ -8,31 +8,4 @@
     <h2 class="section-title">{{ _('Dashboard Overview') }}</h2>
     <p class="text-sm text-[rgb(var(--text-secondary))]">{{ _('This is the admin dashboard where you can manage users, configure settings, and more.') }}</p>
 </section>
-
-<section class="card p-4 sm:p-6">
-    <h2 class="section-title">{{ _('Shared Lists') }}</h2>
-    {% if shared_lists %}
-    <div class="space-y-4">
-        {% for list in shared_lists %}
-        <div class="flex flex-col gap-3 rounded-lg border border-[rgb(var(--border))] p-4 sm:flex-row sm:items-center sm:justify-between">
-            <div class="min-w-0">
-                <div class="truncate font-semibold text-[rgb(var(--text))]">{{ list.full_name }} <span class="text-sm font-normal text-[rgb(var(--text-secondary))]">({{ list.username }})</span></div>
-                <div class="mt-1 truncate text-sm text-[rgb(var(--text-secondary))]">
-                    {{ _('Owner:') }} {{ get_full_name(list.list_owner) }}
-                    {% if list.list_members %} &middot; {{ _('Members:') }} {% for username in list.list_members %}{{ get_full_name(username) }}{% if not loop.last %}, {% endif %}{% endfor %}{% endif %}
-                </div>
-            </div>
-            <div class="flex flex-wrap items-center gap-2">
-                <a href="{{ url_for('user_gift_ideas', selected_user_id=list.username) }}" class="btn-secondary py-1 text-xs">{{ _('View') }}</a>
-                <form method="POST" action="{{ url_for('admin_delete_shared_list', list_username=list.username) }}" onsubmit="return confirm('{{ _('Are you sure you want to delete this shared list?') }}')">
-                    <button type="submit" class="btn-danger py-1 text-xs">{{ _('Delete') }}</button>
-                </form>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-    {% else %}
-    <p class="py-4 text-center text-[rgb(var(--text-secondary))]">{{ _('No shared lists yet.') }}</p>
-    {% endif %}
-</section>
 {% endblock %}
