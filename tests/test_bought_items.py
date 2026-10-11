@@ -1,14 +1,14 @@
-import json
+import storage
 
 
 def _ideas(tmp_path):
-    return json.loads((tmp_path / "ideas.json").read_text())
+    return storage.load_gift_ideas(str(tmp_path))
 
 
 def _add_idea(tmp_path, idea):
     ideas = _ideas(tmp_path)
     ideas.append(idea)
-    (tmp_path / "ideas.json").write_text(json.dumps(ideas))
+    storage.save_gift_ideas(str(tmp_path), ideas)
 
 
 def login(client, username):
@@ -91,7 +91,7 @@ def test_mark_all_button_disabled_when_all_gifted(client, tmp_path):
         if i["gift_idea_id"] == 1:
             i["gifted"] = True
             i["date_gifted"] = "2026-01-01 00:00:00"
-    (tmp_path / "ideas.json").write_text(json.dumps(ideas))
+    storage.save_gift_ideas(str(tmp_path), ideas)
 
     # all filtered gifts are gifted -> button is disabled
     resp = client.get("/bought_items")
@@ -104,7 +104,7 @@ def test_mark_all_button_disabled_when_all_gifted(client, tmp_path):
         if i["gift_idea_id"] == 1:
             i["gifted"] = False
             i.pop("date_gifted", None)
-    (tmp_path / "ideas.json").write_text(json.dumps(ideas))
+    storage.save_gift_ideas(str(tmp_path), ideas)
 
     resp = client.get("/bought_items")
     html = resp.get_data(as_text=True)

@@ -16,7 +16,7 @@ services:
       # Live source mount + keep the image-built venv alive under a named volume
       - ./src:/app
       - giftmanager_venv:/app/.venv
-      # Persistent app data (settings.json, users.json, ideas.json, avatars)
+      # Persistent app data (giftmanager.db, avatars)
       - ./data:/app/data
     # Hot reload on Python file changes
     command: gunicorn app:app --workers 1 --threads 2 --bind 0.0.0.0:5000 --reload

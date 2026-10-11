@@ -21,29 +21,32 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 import python_avatars
 
+import storage
+
 # Disable SSL warnings to clean up your logs
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 #
-# Config: settings.json (non-secrets) + environment variables (secrets)
+# Config: SQLite (non-secrets) + environment variables (secrets)
 #
 # Priority for every read_env_variable() call:
 #   1. os.environ  — Docker/system env vars ALWAYS win/overrides all else (secrets AND settings)
-#   2. settings.json — UI-saved values (non-secrets only)
+#   2. SQLite settings table — UI-saved values (non-secrets only)
 #   3. hardcoded default
 #
 # Secrets (never written to disk):
 #   SECRET_KEY, SMTP_PASSWORD, OIDC_CLIENT_ID, OIDC_CLIENT_SECRET
 #
-# Everything else lives in ./data/settings.json and is editable via the UI.
+# Everything else lives in the SQLite database (./data/giftmanager.db) and is
+# editable via the UI.
 #
-# Migration: on first boot, if settings.json is missing, the legacy ./data/.env
-# is read automatically — secrets are promoted to os.environ, everything else
-# is written to settings.json. Transparent, no user action required.
+# Migration: on first boot, any legacy JSON files (settings.json / users.json /
+# ideas.json) are imported into SQLite automatically — the container entrypoint
+# also runs the same migration before starting the app. Transparent, no user
+# action required.
 #
 
 _DATA_DIR = Path("./data")
-_SETTINGS_PATH = _DATA_DIR / "settings.json"
 _LEGACY_ENV_PATH = _DATA_DIR / ".env"
 
 _SECRET_KEYS = {
@@ -97,9 +100,13 @@ def _parse_dotenv_file(path: Path) -> dict:
 def _load_or_migrate_settings() -> dict:
 
     _DATA_DIR.mkdir(parents=True, exist_ok=True)
+    storage.initialize(_DATA_DIR)
 
-    if not _SETTINGS_PATH.exists():
-        print("[config] settings.json not found — running one-time migration from legacy .env")
+    settings = storage.load_settings(_DATA_DIR)
+    was_empty = not settings
+
+    if was_empty:
+        # One-time migration from the legacy ./data/.env (pre-SQLite versions)
         legacy = _parse_dotenv_file(_LEGACY_ENV_PATH)
 
         # Promote secrets from legacy .env into os.environ (in-process only)
@@ -108,27 +115,21 @@ def _load_or_migrate_settings() -> dict:
                 os.environ[key] = legacy[key]
                 print(f"[config] Migrated secret {key} → os.environ")
 
-        # Build settings.json from defaults + non-secret legacy values
+        # Build settings from defaults + non-secret legacy values
         settings = dict(_SETTINGS_DEFAULTS)
         for key, value in legacy.items():
             if key not in _SECRET_KEYS:
                 settings[key] = value
 
-        with open(_SETTINGS_PATH, 'w') as f:
-            json.dump(settings, f, indent=2)
-        print(f"[config] settings.json created at {_SETTINGS_PATH}")
-    else:
-        with open(_SETTINGS_PATH, 'r') as f:
-            settings = json.load(f)
-        # Backfill any keys added in newer app versions
-        changed = False
-        for key, default in _SETTINGS_DEFAULTS.items():
-            if key not in settings:
-                settings[key] = default
-                changed = True
-        if changed:
-            with open(_SETTINGS_PATH, 'w') as f:
-                json.dump(settings, f, indent=2)
+    # Backfill any keys added in newer app versions
+    changed = False
+    for key, default in _SETTINGS_DEFAULTS.items():
+        if key not in settings:
+            settings[key] = default
+            changed = True
+
+    if was_empty or changed:
+        storage.save_settings(_DATA_DIR, settings)
 
     return settings
 
@@ -149,13 +150,12 @@ def read_env_variable(key, default=None):
 def save_setting(key: str, value: str):
 
     if key in _SECRET_KEYS:
-        print(f"[config] Ignored attempt to save secret '{key}' to settings.json — set it as an env var.")
+        print(f"[config] Ignored attempt to save secret '{key}' — set it as an env var.")
         return
     if os.environ.get(key) is not None:
         print(f"[config] Note: '{key}' is overridden by an environment variable; UI-saved value will be ignored.")
     _settings[key] = value
-    with open(_SETTINGS_PATH, 'w') as f:
-        json.dump(_settings, f, indent=2)
+    storage.save_settings(_DATA_DIR, _settings)
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY", "changethis-set-SECRET_KEY-env-var")
@@ -266,8 +266,6 @@ def inject_nav_context():
 
 _ = gettext
 
-app.config['IDEAS_FILE'] = Path(app.config['DATA'], 'ideas.json')
-app.config['USERS_FILE'] = Path(app.config['DATA'], 'users.json')
 app.config['AVATAR_DIR'] = Path(app.config['DATA'], 'avatars')
 
 app.config['AVATAR_CLAIM_TIMEOUT'] = 3600 # in seconds
@@ -275,31 +273,10 @@ app.config['AVATAR_CLAIM_TIMEOUT'] = 3600 # in seconds
 ph = PasswordHasher()
 
 
-def prepopulate_file(filename: str, data: str):
-    if Path(filename).exists():
-        return
-
-    # Prepopulate user data
-    Path(filename).parent.mkdir(exist_ok=True, parents=True)
-    with open(filename, 'w') as file:
-        file.write(data)
-
-prepopulate_file(app.config['IDEAS_FILE'], """
-        [
-            {
-                "user_id": "demo",
-                "gift_idea_id": 1,
-                "gift_name": "Default",
-                "description": "dont delete",
-                "link": "icbest.ca",
-                "added_by": "demo",
-                "bought_by": ""
-            }
-        ]""")
-
-prepopulate_file(app.config['USERS_FILE'], """
-        [
-        ]""")
+# SQLite storage replaces the legacy JSON files (users.json / ideas.json /
+# settings.json). initialize() is idempotent and transparently migrates any
+# existing JSON data on first boot — no user action required.
+storage.initialize(app.config['DATA'])
 
 # Setup directory for avatars
 try:
@@ -311,20 +288,16 @@ for i in range(1, 9):
     shutil.copy(Path(__file__).parent / "static" / "icons" / f"avatar{i}.png", Path(app.config['AVATAR_DIR'], f"avatar{i}.png"))
 
 def load_gift_ideas():
-    with open(app.config['IDEAS_FILE'], 'r') as file:
-        return json.load(file)
+    return storage.load_gift_ideas(app.config['DATA'])
 
 def save_gift_ideas(gift_ideas):
-    with open(app.config['IDEAS_FILE'], 'w') as file:
-        json.dump(gift_ideas, file, indent=4)
+    storage.save_gift_ideas(app.config['DATA'], gift_ideas)
 
 def load_users():
-    with open(app.config['USERS_FILE'], 'r') as file:
-        return json.load(file)
+    return storage.load_users(app.config['DATA'])
 
 def save_users(users):
-    with open(app.config['USERS_FILE'], 'w') as file:
-        json.dump(users, file, indent=4)
+    storage.save_users(app.config['DATA'], users)
 
 
 # Define a decorator for requiring authentication
@@ -2589,7 +2562,7 @@ def edit_email_settings():
             # Set them permanently in your Docker/systemd environment.
             if smtp_password:
                 os.environ["SMTP_PASSWORD"] = smtp_password
-            # Non-secrets are saved to settings.json
+            # Non-secrets are saved to the SQLite settings table
             for key, value in [
                 ("SYSTEM_EMAIL", system_email),
                 ("SMTP_HOST", smtp_host),
@@ -2793,7 +2766,7 @@ def setupenv():
             "ENABLE_AUTO_REGISTRATION": request.form.get('ENABLE_AUTO_REGISTRATION', 'false'),
         }
 
-        # Secrets → os.environ (in-process); non-secrets → settings.json
+        # Secrets → os.environ (in-process); non-secrets → SQLite settings
         for key, value in env_variables.items():
             if key in _SECRET_KEYS:
                 if value:

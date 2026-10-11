@@ -1,8 +1,8 @@
-import json
+import storage
 
 
 def _load_ideas(tmp_path):
-    return json.loads((tmp_path / "ideas.json").read_text())
+    return storage.load_gift_ideas(str(tmp_path))
 
 
 def _ideas_panel(html):

@@ -45,5 +45,9 @@ ENV GUNICORN_THREADS=4
 ENV GUNICORN_BIND=0.0.0.0:5000
 ENV PATH="/app/.venv/bin:$PATH"
 
+# Run the JSON → SQLite data migration (idempotent, no user action required)
+# before starting the application.
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
+
 # Command to run the application with Gunicorn and selected parameters
 CMD gunicorn app:app --workers 1 --threads ${GUNICORN_THREADS} --bind ${GUNICORN_BIND}
