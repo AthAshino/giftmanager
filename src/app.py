@@ -1502,7 +1502,21 @@ def bought_items():
     users = load_users()
 
     # Filter the gift ideas to include only the ones that are bought by the current user
-    bought_items = [idea for idea in gift_ideas_data if idea['bought_by'] == session['username']]
+    all_bought_items = [idea for idea in gift_ideas_data if idea['bought_by'] == session['username']]
+
+    # Distinct recipients of the bought gifts, for the filter dropdown
+    recipients = {}
+    for item in all_bought_items:
+        recipients[item['user_id']] = get_full_name(item['user_id'])
+    recipients = sorted(recipients.items(), key=lambda kv: kv[1].lower())
+
+    # Optional filter on the recipient user (default: everyone)
+    selected_user = request.args.get('user', '')
+    if selected_user and any(u for u, _ in recipients if u == selected_user):
+        bought_items = [idea for idea in all_bought_items if idea['user_id'] == selected_user]
+    else:
+        bought_items = all_bought_items
+        selected_user = ''
 
     # Add the full name for each bought item and ensure custom_fields exists
     for item in bought_items:
@@ -1514,7 +1528,42 @@ def bought_items():
     bought_items.sort(key=lambda x: (x['recipient_name'].lower(), x.get('gift_name', '').lower()))
 
     imgenabled = read_env_variable('IMGENABLED', 'true').lower() == 'true'
-    return render_template('bought_items.html', bought_items=bought_items, imgenabled=imgenabled)
+    return render_template('bought_items.html', bought_items=bought_items, recipients=recipients, selected_user=selected_user, imgenabled=imgenabled)
+
+
+@app.route('/mark_all_as_gifted', methods=['POST'])
+@login_required
+@guest_allowed
+def mark_all_as_gifted():
+    """Mark all gifts bought by the current user (optionally for a specific recipient) as gifted."""
+    gift_ideas_data = load_gift_ideas()
+    connected_user = session['username']
+
+    selected_user = request.form.get('user') or request.args.get('user') or ''
+    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    count = 0
+    for idea in gift_ideas_data:
+        if idea.get('bought_by') != connected_user:
+            continue
+        if selected_user and idea['user_id'] != selected_user:
+            continue
+        if idea.get('gifted'):
+            continue
+        idea['gifted'] = True
+        idea['date_gifted'] = now
+        count += 1
+
+    if count:
+        save_gift_ideas(gift_ideas_data)
+        flash(_('Marked %(count)d gifts as gifted!') % {'count': count}, 'success')
+    else:
+        flash(_('No bought gifts to mark as gifted.'), 'info')
+
+    if selected_user:
+        fallback = url_for('bought_items', user=selected_user)
+    else:
+        fallback = url_for('bought_items')
+    return redirect(_safe_redirect_target(request.form.get('next') or request.args.get('next')) or fallback)
 
 
 def get_full_name(username):

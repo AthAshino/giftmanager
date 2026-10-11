@@ -4,7 +4,20 @@
 {% block page_title %}{{ _('Bought Items') }}{% endblock %}
 
 {% block content %}
-<h1 class="mb-6 text-xl font-bold text-[rgb(var(--text))] sm:text-2xl">{{ _('Object bought by me:') }}</h1>
+<div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <h1 class="text-xl font-bold text-[rgb(var(--text))] sm:text-2xl">{{ _('Object bought by me:') }}</h1>
+    <div class="flex flex-wrap items-center gap-2">
+        <select id="userFilter" class="input" aria-label="{{ _('Filter by user') }}">
+            <option value="">{{ _('Everyone') }}</option>
+            {% for username, full_name in recipients %}
+            <option value="{{ username }}" {% if username == selected_user %}selected{% endif %}>{{ full_name }}</option>
+            {% endfor %}
+        </select>
+        <button type="button" id="markAllGifted" class="btn-primary" data-confirm="{{ _('Are you sure you want to mark all these gifts as gifted?') }}">
+            {{ icon('gift', 'h-4 w-4') }} {{ _('Mark all as gifted') }}
+        </button>
+    </div>
+</div>
 <ul class="space-y-4">
     {% for item in bought_items %}
     <li class="card p-4" data-idea-id="{{ item.gift_idea_id }}">
@@ -52,6 +65,10 @@
                 <button class="mark-as-gifted-button flex items-center justify-center gap-1 rounded bg-[rgb(var(--success))] px-3 py-1 text-white" data-idea-id="{{ item.gift_idea_id }}" data-next="{{ url_for('bought_items') }}">
                     {{ icon('gift', 'h-4 w-4') }} {{ _('Gift offered') }}
                 </button>
+                {% else %}
+                <button class="mark-as-not-gifted-button flex items-center justify-center gap-1 rounded bg-[rgb(var(--primary))] px-3 py-1 text-white" data-idea-id="{{ item.gift_idea_id }}" data-next="{{ url_for('bought_items') }}">
+                    {{ icon('check', 'h-4 w-4') }} {{ _('Switch back to bought') }}
+                </button>
                 {% endif %}
             </div>
         </div>
@@ -70,6 +87,52 @@
 
 {% block scripts %}
 <script>
+    const userFilter = document.getElementById('userFilter');
+    if (userFilter) {
+        userFilter.addEventListener('change', () => {
+            const value = userFilter.value;
+            const url = new URL(window.location);
+            if (value) {
+                url.searchParams.set('user', value);
+            } else {
+                url.searchParams.delete('user');
+            }
+            window.location.href = url;
+        });
+    }
+
+    const markAllButton = document.getElementById('markAllGifted');
+    if (markAllButton) {
+        markAllButton.addEventListener('click', () => {
+            if (!window.confirm(markAllButton.dataset.confirm || '{{ _('Mark all as gifted') }}')) {
+                return;
+            }
+            const selectedUser = userFilter ? userFilter.value : '';
+            const params = new URLSearchParams();
+            if (selectedUser) {
+                params.set('user', selectedUser);
+            }
+            const next = new URL('/bought_items', window.location.origin);
+            if (selectedUser) {
+                next.searchParams.set('user', selectedUser);
+            }
+            params.set('next', next.pathname + next.search);
+            fetch('/mark_all_as_gifted', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: params
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = response.url;
+                }
+            })
+            .catch(error => {
+                console.error('Error marking all as gifted:', error);
+            });
+        });
+    }
+
     document.querySelectorAll('.mark-as-gifted-button').forEach(button => {
         button.addEventListener('click', () => {
             const ideaId = button.getAttribute('data-idea-id');
@@ -86,6 +149,25 @@
             })
             .catch(error => {
                 console.error('Error marking idea as gifted:', error);
+            });
+        });
+    });
+    document.querySelectorAll('.mark-as-not-gifted-button').forEach(button => {
+        button.addEventListener('click', () => {
+            const ideaId = button.getAttribute('data-idea-id');
+            const next = button.getAttribute('data-next') || '';
+            fetch(`/mark_as_not_gifted/${ideaId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ next: next })
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = response.url;
+                }
+            })
+            .catch(error => {
+                console.error('Error switching back:', error);
             });
         });
     });
