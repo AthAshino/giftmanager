@@ -56,3 +56,19 @@ def test_unrestricted_idea_visible_to_all(client):
         login(client, username)
         html = client.get("/user_gift_ideas/alice").get_data(as_text=True)
         assert "Public idea" in html
+
+
+def test_family_not_in_recipients_groups_is_dropped(client):
+    # alice only belongs to Fam1. Attempting to restrict an idea for her to
+    # Fam3 (a family she is not a member of) must be dropped server-side,
+    # leaving the idea visible to everyone.
+    login(client, "carol")
+    resp = add_idea(client, "alice", "alice", "Mismatched family", visible_groups=["Fam3"])
+    assert resp.status_code == 302
+
+    # dave (Fam2) shares no family with alice and did not add the idea,
+    # yet must still see it because the invalid restriction was discarded.
+    login(client, "dave")
+    html = client.get("/user_gift_ideas/alice").get_data(as_text=True)
+    assert "Mismatched family" in html
+

@@ -4,14 +4,24 @@
 
 {% block content %}
 <section class="card p-4 sm:p-6">
-    <form action="{{ url_for('add_idea', selected_user_id=default_user) }}" method="post" class="space-y-4">
+    <form action="{{ form_action }}" method="post" enctype="multipart/form-data" class="space-y-4">
         <div>
             <label for="user" class="label font-semibold">{{ _('Add to:') }}</label>
-            <select name="user" id="user" class="input" required>
+            {% if default_user %}
+            <input type="hidden" name="user" value="{{ default_user }}">
+            <select name="user" id="user" class="input opacity-60 cursor-not-allowed" disabled>
                 {% for user in user_list %}
                 <option value="{{ user['username'] }}" {% if user['username'] == default_user %}selected{% endif %}>{{ user['full_name'] }}</option>
                 {% endfor %}
             </select>
+            {% else %}
+            <select name="user" id="user" class="input" required>
+                <option disabled selected value> {{ _('-- Choose here --') }} </option>
+                {% for user in user_list %}
+                <option value="{{ user['username'] }}">{{ user['full_name'] }}</option>
+                {% endfor %}
+            </select>
+            {% endif %}
         </div>
         <div>
             <label for="name" class="label font-semibold">{{ _('Title:') }}</label>
@@ -40,19 +50,17 @@
         <div>
             <label class="label font-semibold">{{ _('Visible to families (Optional):') }}</label>
             <p class="text-xs text-[rgb(var(--text-secondary))]">{{ _('Select the families that can see this idea. Leave unselected to make it visible to everyone.') }}</p>
-            {% if all_groups %}
-            <div class="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-3">
+            <div id="familySelector" class="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-3">
                 {% for group in all_groups %}
-                <label class="flex items-center gap-2 text-sm text-[rgb(var(--text))]">
+                <label class="family-option flex items-center gap-2 text-sm text-[rgb(var(--text))]">
                     <input type="checkbox" name="visible_groups" value="{{ group }}" class="minimal-checkbox">
                     <span>{{ group }}</span>
                 </label>
                 {% endfor %}
             </div>
-            {% else %}
-            <p class="mt-2 text-sm text-[rgb(var(--text-secondary))]">{{ _('No families available.') }}</p>
-            {% endif %}
+            <p id="noFamiliesMsg" class="mt-2 text-sm text-[rgb(var(--text-secondary))] hidden">{{ _('No families available.') }}</p>
         </div>
+        <script type="application/json" id="familyUserGroups">{{ user_list | tojson }}</script>
         <div>
             <label class="label font-semibold">{{ _('Custom Fields (Optional):') }}</label>
             <div id="customFieldsContainer" class="mt-2 space-y-3"></div>
@@ -145,6 +153,36 @@
     });
 
     let customFieldCounter = 0;
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const userSelect = document.getElementById('user');
+        const familyContainer = document.getElementById('familySelector');
+        const noFamiliesMsg = document.getElementById('noFamiliesMsg');
+        if (!userSelect || !familyContainer) return;
+
+        let userGroups = [];
+        const dataEl = document.getElementById('familyUserGroups');
+        if (dataEl) {
+            try { userGroups = JSON.parse(dataEl.textContent); } catch (e) { userGroups = []; }
+        }
+
+        function updateFamilies() {
+            const selected = userGroups.find(u => u.username === userSelect.value);
+            const groups = selected ? (selected.groups || []) : [];
+            let visibleCount = 0;
+            familyContainer.querySelectorAll('.family-option').forEach(option => {
+                const input = option.querySelector('input');
+                const visible = groups.indexOf(input.value) !== -1;
+                option.classList.toggle('hidden', !visible);
+                if (!visible) input.checked = false;
+                if (visible) visibleCount++;
+            });
+            noFamiliesMsg.classList.toggle('hidden', visibleCount > 0);
+        }
+
+        userSelect.addEventListener('change', updateFamilies);
+        updateFamilies();
+    });
 
     function addCustomField() {
         const container = document.getElementById('customFieldsContainer');

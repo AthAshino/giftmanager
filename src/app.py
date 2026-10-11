@@ -927,14 +927,14 @@ def add2():
     if not current_user_groups:
         # If the current user has no groups, allow them to see all users
         user_list = [
-            {"full_name": user["full_name"], "username": user["username"]}
+            {"full_name": user["full_name"], "username": user["username"], "groups": user.get("groups", [])}
             for user in users
             if not user.get('guest')
         ]
     else:
         # Filter the user list to include only those in the current user's groups
         user_list = [
-            {"full_name": user["full_name"], "username": user["username"]}
+            {"full_name": user["full_name"], "username": user["username"], "groups": user.get("groups", [])}
             for user in users
             if not user.get("groups") or any(group in user.get("groups", []) for group in current_user_groups)
             and not user.get('guest')
@@ -957,6 +957,12 @@ def add2():
 
         # Families allowed to see the idea (empty = visible to everyone)
         visible_groups = request.form.getlist('visible_groups')
+
+        # Restrict visible families to those the recipient actually belongs to
+        recipient = next((u for u in users if u['username'] == user), None)
+        if recipient:
+            recipient_groups = recipient.get('groups', [])
+            visible_groups = [g for g in visible_groups if g in recipient_groups]
 
         # Retrieve the logged-in user's username
         added_by = session.get('username')
@@ -1004,7 +1010,7 @@ def add2():
         return redirect(url_for('user_gift_ideas', selected_user_id=user))
     imgenabled = read_env_variable('IMGENABLED', 'true').lower() == 'true'
     # Render the "Add Idea" page with the filtered user list
-    return render_template('add2.html', user_list=user_list, imgenabled=imgenabled, all_groups=all_groups)
+    return render_template('add_idea.html', user_list=user_list, imgenabled=imgenabled, all_groups=all_groups, default_user=None, form_action=url_for('add2'))
 
 
 @app.route('/add_idea/<path:selected_user_id>', methods=['GET', 'POST'])
@@ -1029,14 +1035,14 @@ def add_idea(selected_user_id):
     if not current_user_groups:
         # If the current user has no groups, allow them to see all users
         user_list = [
-            {"full_name": user["full_name"], "username": user["username"]}
+            {"full_name": user["full_name"], "username": user["username"], "groups": user.get("groups", [])}
             for user in users
             if not user.get('guest')
         ]
     else:
         # Filter the user list to include only those in the current user's groups
         user_list = [
-            {"full_name": user["full_name"], "username": user["username"]}
+            {"full_name": user["full_name"], "username": user["username"], "groups": user.get("groups", [])}
             for user in users
             if not user.get("groups") or any(group in user.get("groups", []) for group in current_user_groups)
             and not user.get('guest')
@@ -1053,6 +1059,12 @@ def add_idea(selected_user_id):
         
         # Families allowed to see the idea (empty = visible to everyone)
         visible_groups = request.form.getlist('visible_groups')
+
+        # Restrict visible families to those the recipient actually belongs to
+        recipient = next((u for u in users if u['username'] == user), None)
+        if recipient:
+            recipient_groups = recipient.get('groups', [])
+            visible_groups = [g for g in visible_groups if g in recipient_groups]
 
         # Retrieve the currently logged-in user
         added_by = session.get('username')
@@ -1105,7 +1117,7 @@ def add_idea(selected_user_id):
         for group in user.get('groups', [])
     ))
     # Render the "Add Idea" page with the user list, gift ideas, and the selected user as default
-    return render_template('add_idea.html', user_list=user_list, gift_ideas=gift_ideas_data, default_user=selected_user_id, imgenabled=imgenabled, all_groups=all_groups)
+    return render_template('add_idea.html', user_list=user_list, gift_ideas=gift_ideas_data, default_user=selected_user_id, imgenabled=imgenabled, all_groups=all_groups, form_action=url_for('add_idea', selected_user_id=selected_user_id))
 
 
 @app.route('/delete_idea/<int:idea_id>', methods=['DELETE'])
@@ -2124,6 +2136,11 @@ def edit_idea(idea_id):
 
                 # Update which families can see the idea (empty = visible to everyone)
                 visible_groups = request.form.getlist('visible_groups')
+                # Restrict visible families to those the recipient actually belongs to
+                recipient = next((u for u in users if u['username'] == idea['user_id']), None)
+                if recipient:
+                    recipient_groups = recipient.get('groups', [])
+                    visible_groups = [g for g in visible_groups if g in recipient_groups]
                 if visible_groups:
                     idea['visible_to_groups'] = visible_groups
                 else:
@@ -2141,11 +2158,9 @@ def edit_idea(idea_id):
             imgenabled = read_env_variable('IMGENABLED', 'true').lower() == 'true'
             if 'custom_fields' not in idea:
                 idea['custom_fields'] = {}
-            # All available families (groups) across users, for the visibility selector
-            all_groups = sorted(set(
-                group for user in users
-                for group in user.get('groups', [])
-            ))
+            # Families of the idea's recipient, for the visibility selector
+            idea_owner = next((user for user in users if user['username'] == idea['user_id']), None)
+            all_groups = sorted(idea_owner.get('groups', [])) if idea_owner else []
             # Render the edit idea form with pre-filled data
             return render_template('edit_idea.html', idea=idea, imgenabled=imgenabled, all_groups=all_groups)
         else:

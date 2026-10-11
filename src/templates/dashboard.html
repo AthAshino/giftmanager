@@ -4,9 +4,6 @@
 {% block page_title %}{{ _('Gift Dashboard') }}{% endblock %}
 
 {% block header_actions %}
-    <a href="{{ url_for('bought_items') }}" class="rounded-lg p-2 text-[rgb(var(--text-secondary))] hover:bg-[rgb(var(--surface-2))]" title="{{ _('Bought items') }}">
-        {{ icon('cart', 'h-5 w-5') }}
-    </a>
     {% if assigned_users %}
     <a href="{{ url_for('secret_santa_assignments') }}" class="rounded-lg p-2 text-[rgb(var(--text-secondary))] hover:bg-[rgb(var(--surface-2))]" title="{{ _('View your Secret Santa assignment') }}">
         {{ icon('gift', 'h-5 w-5') }}
