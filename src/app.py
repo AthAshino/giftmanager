@@ -536,6 +536,14 @@ def auth():
         # Retrieve the access token from OIDC provider
         token = oauth.keycloak.authorize_access_token()
     except Exception as e:
+        error = getattr(e, "error", None)
+        description = getattr(e, "description", None)
+        app.logger.error(
+            "OIDC authorize_access_token failed"
+            f"{'' if error is None else f' (error={error})'}"
+            f"{'' if description is None else f': {description}'}",
+            exc_info=True,
+        )
         flash(_("OIDC authorization failed."), "danger")
         return redirect(url_for("login"))
     
@@ -546,6 +554,7 @@ def auth():
         # Parse ID token and retrieve user info
         user_info = oauth.keycloak.parse_id_token(token, nonce=nonce)
     except Exception as e:
+        app.logger.error("OIDC parse_id_token failed", exc_info=True)
         flash(_("Failed to parse user information."), "danger")
         return redirect(url_for("login"))
     
