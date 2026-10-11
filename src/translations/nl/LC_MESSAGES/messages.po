@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 11:23+0200\n"
+"POT-Creation-Date: 2026-10-11 11:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: nl\n"
@@ -84,7 +84,7 @@ msgstr ""
 msgid "Language updated."
 msgstr "Laatst bijgewerkt:"
 
-#: src/app.py:727 src/app.py:2479
+#: src/app.py:727 src/app.py:2448
 msgid "No account? Contact a family member to create an account."
 msgstr ""
 "Geen account? Neem contact op met een familielid om een account aan te "
@@ -151,8 +151,8 @@ msgstr "SUGGESTIES VERWIJDERD"
 msgid "You are not authorized to delete this idea."
 msgstr "Je bent niet bevoegd om deze suggestie te verwijderen."
 
-#: src/app.py:1079 src/app.py:1403 src/app.py:1432 src/app.py:1493
-#: src/app.py:1517 src/app.py:2014
+#: src/app.py:1079 src/app.py:1403 src/app.py:1432 src/app.py:1464
+#: src/app.py:1490 src/app.py:1983
 msgid "Idea not found"
 msgstr "Suggestie niet gevonden"
 
@@ -165,7 +165,7 @@ msgstr "Deze suggestie, %(name)s, is verwijderd maar je hebt hem al gekocht."
 msgid "User data not found"
 msgstr "Gebruikersgegevens niet gevonden"
 
-#: src/app.py:1340 src/app.py:1798 src/app.py:3188
+#: src/app.py:1340 src/app.py:1767 src/app.py:3157
 msgid "User not found"
 msgstr "Gebruiker niet gevonden"
 
@@ -208,61 +208,62 @@ msgstr ""
 "U heeft \"%(name)s\" niet gekocht, dus u kunt het niet markeren als niet "
 "gekocht."
 
-#: src/app.py:1484
+#: src/app.py:1454
 msgid "You can only mark as gifted a gift you bought."
 msgstr ""
 
 # | msgid "Pool \"%(name)s\" created"
-#: src/app.py:1486
+#: src/app.py:1456
 #, fuzzy, python-format
 msgid "\"%(name)s\" is already gifted."
 msgstr "Pool \"%(name)s\" aangemaakt"
 
 # | msgid "Marked \"%(name)s\" as bought!"
-#: src/app.py:1491
+#: src/app.py:1461
 #, fuzzy, python-format
 msgid "Marked \"%(name)s\" as gifted!"
 msgstr "\"%(name)s\" gemarkeerd als gekocht!"
 
 # | msgid "Gift idea not found"
-#: src/app.py:1508
+#: src/app.py:1480
 #, fuzzy
 msgid "This gift is not gifted."
 msgstr "Cadeau suggestie niet gevonden"
 
-#: src/app.py:1510
+#: src/app.py:1482
 msgid "Only the person who gave the idea or the gifter can change its state."
 msgstr ""
 
 # | msgid "Marked \"%(name)s\" as not bought."
-#: src/app.py:1515
+#: src/app.py:1487
 #, fuzzy, python-format
 msgid "Marked \"%(name)s\" as not gifted."
 msgstr "\"%(name)s\" gemarkeerd als niet gekocht."
 
-#: src/app.py:1596
+#: src/app.py:1543
 msgid "No gift ideas for this user."
 msgstr "Geen geschenk suggesties voor deze gebruiker."
 
-#: src/app.py:1621 src/templates/user_gift_ideas.html:129
+#: src/app.py:1568 src/app.py:1574 src/app.py:1582 src/app.py:1628
+#: src/templates/user_gift_ideas.html:132
 msgid "Anonymous"
 msgstr "Annuleer de aankoop"
 
 # | msgid "You haven\\'t added any gift ideas."
-#: src/app.py:1655
+#: src/app.py:1620
 #, fuzzy
 msgid "You haven't added any gift ideas."
 msgstr "U heeft nog geen cadeau suggesties toegevoegd."
 
-#: src/app.py:1689
+#: src/app.py:1658
 msgid "Order updated successfully!"
 msgstr "Volgorde succesvol bijgewerkt!"
 
-#: src/app.py:1851
+#: src/app.py:1820
 msgid "Avatar file not found!"
 msgstr "Avatar bestand niet gevonden!"
 
-#: src/app.py:1891
+#: src/app.py:1860
 msgid ""
 "Generated user avatar timed out and was deleted! Try again to add the new"
 " user."
@@ -270,147 +271,147 @@ msgstr ""
 "De gegenereerde gebruikersavatar is verlopen en verwijderd! Probeer "
 "opnieuw om de nieuwe gebruiker toe te voegen."
 
-#: src/app.py:1899
+#: src/app.py:1868
 msgid "Username already exists!"
 msgstr "Gebruikersnaam bestaat al!"
 
-#: src/app.py:1920
+#: src/app.py:1889
 msgid "User added successfully!"
 msgstr "Gebruiker succesvol toegevoegd!"
 
-#: src/app.py:2003
+#: src/app.py:1972
 msgid "Idea updated successfully!"
 msgstr "Suggestie succesvol bijgewerkt!"
 
-#: src/app.py:2012
+#: src/app.py:1981
 msgid "You are not authorized to edit this idea."
 msgstr "Je bent niet bevoegd om deze Suggestie te bewerken."
 
-#: src/app.py:2056
+#: src/app.py:2025
 #, python-format
 msgid "%(person)s has no possible recipients"
 msgstr "%(person)s heeft geen mogelijke ontvangers"
 
-#: src/app.py:2080
+#: src/app.py:2049
 #, python-format
 msgid "Unexpected exclusion violation: %(giver)s → %(receiver)s"
 msgstr "Onverwachte uitsluitingsschending: %(giver)s → %(receiver)s"
 
-#: src/app.py:2083
+#: src/app.py:2052
 msgid "Could not find valid assignments after many attempts"
 msgstr "Kon na vele pogingen geen geldige toewijzingen vinden"
 
-#: src/app.py:2103
+#: src/app.py:2072
 msgid "Invalid pool name"
 msgstr "Ongeldige poolnaam"
 
-#: src/app.py:2115
+#: src/app.py:2084
 #, python-format
 msgid "Pool \"%(name)s\" deleted"
 msgstr "Pool \"%(name)s\" verwijderd"
 
-#: src/app.py:2117
+#: src/app.py:2086
 #, python-format
 msgid "Pool \"%(name)s\" not found"
 msgstr "Pool \"%(name)s\" niet gevonden"
 
-#: src/app.py:2147
+#: src/app.py:2116
 msgid "Pool name required"
 msgstr "instructions"
 
-#: src/app.py:2150
+#: src/app.py:2119
 msgid "Invalid pool name (letters, numbers, dashes, underscores only)"
 msgstr "Ongeldige poolnaam (alleen letters, cijfers, streepjes en underscores)"
 
-#: src/app.py:2153
+#: src/app.py:2122
 msgid "Need at least 2 participants"
 msgstr "pool_name"
 
-#: src/app.py:2156
+#: src/app.py:2125
 msgid "Duplicate participants selected"
 msgstr "Secret Santa opdrachten zijn gemaakt!"
 
-#: src/app.py:2185
+#: src/app.py:2154
 #, python-format
 msgid " %(error)s"
 msgstr " %(error)s"
 
-#: src/app.py:2195
+#: src/app.py:2164
 #, python-format
 msgid "Assignment violates %(a)s ↔ %(b)s"
 msgstr "Toewijzing schendt %(a)s ↔ %(b)s"
 
-#: src/app.py:2207
+#: src/app.py:2176
 #, python-format
 msgid " Critical error: %(error)s"
 msgstr " Kritieke fout: %(error)s"
 
-#: src/app.py:2223
+#: src/app.py:2192
 #, python-format
 msgid "Pool \"%(name)s\" created"
 msgstr "Pool \"%(name)s\" aangemaakt"
 
-#: src/app.py:2237
+#: src/app.py:2206
 #, python-format
 msgid " Error saving: %(error)s"
 msgstr " Fout bij opslaan: %(error)s"
 
-#: src/app.py:2262
+#: src/app.py:2231
 msgid "You don't have any Secret Santa assignments yet."
 msgstr "Je hebt nog geen Secret Santa opdrachten."
 
-#: src/app.py:2272
+#: src/app.py:2241
 msgid "No specific instructions provided."
 msgstr "Geen specifieke instructies gegeven."
 
-#: src/app.py:2308
+#: src/app.py:2277
 msgid "User deleted successfully!"
 msgstr "Gebruiker succesvol verwijderd!"
 
-#: src/app.py:2319
+#: src/app.py:2288
 msgid "Admin status updated successfully!"
 msgstr "Beheerder status bijgewerkt!"
 
-#: src/app.py:2347
+#: src/app.py:2316
 msgid "Avatar uploaded successfully!"
 msgstr "Avatar succesvol geüpload!"
 
-#: src/app.py:2349
+#: src/app.py:2318
 #, python-format
 msgid "Error uploading avatar: %(error)s"
 msgstr "Fout bij het uploaden van avatar: %(error)s"
 
-#: src/app.py:2365
+#: src/app.py:2334
 msgid "Generated avatar timed out and was deleted! Please generate a new one."
 msgstr "De gegenereerde avatar is verlopen en verwijderd! Genereer een nieuwe."
 
-#: src/app.py:2384
+#: src/app.py:2353
 msgid "User updated successfully!"
 msgstr "Gebruiker is succesvol bijgewerkt!"
 
-#: src/app.py:2448
+#: src/app.py:2417
 msgid "Email settings updated successfully!"
 msgstr "E-mail instellingen succesvol bijgewerkt!"
 
-#: src/app.py:2450
+#: src/app.py:2419
 #, python-format
 msgid "An error occurred: %(error)s"
 msgstr "Er is een fout opgetreden: %(error)s"
 
-#: src/app.py:2472
+#: src/app.py:2441
 msgid "Login message updated successfully!"
 msgstr "Aanmeldingsbericht succesvol bijgewerkt!"
 
-#: src/app.py:2474
+#: src/app.py:2443
 #, python-format
 msgid "Error updating login message: %(error)s"
 msgstr "Fout bij het bijwerken van het aanmeldingsbericht: %(error)s"
 
-#: src/app.py:2476
+#: src/app.py:2445
 msgid "Message cannot be empty."
 msgstr "r"
 
-#: src/app.py:2536
+#: src/app.py:2505
 #, python-format
 msgid ""
 "%(count)s gift ideas older than the threshold have been successfully "
@@ -419,31 +420,31 @@ msgstr ""
 "%(count)s cadeau suggesties ouder dan de drempel zijn succesvol "
 "verwijderd."
 
-#: src/app.py:2542
+#: src/app.py:2511
 #, python-format
 msgid "Error deleting old gift ideas: %(error)s"
 msgstr "Fout bij het verwijderen van oude cadeau suggesties: %(error)s"
 
-#: src/app.py:2563
+#: src/app.py:2532
 #, python-format
 msgid "The number of days to delete old gift ideas has been updated to %(days)s."
 msgstr ""
 "Het aantal dagen om oude cadeau suggesties te verwijderen is bijgewerkt "
 "naar %(days)s."
 
-#: src/app.py:2567
+#: src/app.py:2536
 msgid "Invalid number of days entered. Please enter a valid number."
 msgstr "Ongeldig aantal dagen ingevoerd. Voer een geldig nummer in."
 
-#: src/app.py:2569
+#: src/app.py:2538
 msgid "Please provide a value for the number of days."
 msgstr "Geef een waarde op voor het aantal dagen."
 
-#: src/app.py:2582
+#: src/app.py:2551
 msgid "Users are already configured. Setup page is unavailable."
 msgstr "Gebruikers zijn al geconfigureerd. Setup pagina is niet beschikbaar."
 
-#: src/app.py:2613
+#: src/app.py:2582
 msgid ""
 "Admin account created successfully. Please configure the environment "
 "variables."
@@ -451,63 +452,63 @@ msgstr ""
 "Beheerdersaccount succesvol aangemaakt. Configureer de "
 "omgevingsvariabelen."
 
-#: src/app.py:2623
+#: src/app.py:2592
 msgid "You must access this page from the setupadmin route."
 msgstr "U moet toegang krijgen tot deze pagina vanuit de setupadmin route."
 
-#: src/app.py:2649
+#: src/app.py:2618
 msgid "Settings saved successfully!"
 msgstr "Omgevingsvariabelen succesvol opgeslagen!"
 
-#: src/app.py:2677
+#: src/app.py:2646
 #, python-format
 msgid "Missing required fields: %(fields)s"
 msgstr "Ontbrekende verplichte velden: %(fields)s"
 
-#: src/app.py:2688
+#: src/app.py:2657
 msgid "OIDC settings saved successfully!"
 msgstr "OIDC instellingen succesvol opgeslagen!"
 
-#: src/app.py:2691
+#: src/app.py:2660
 #, python-format
 msgid "Error saving OIDC settings: %(error)s"
 msgstr "Fout bij het opslaan van OIDC-instellingen: %(error)s"
 
-#: src/app.py:2735
+#: src/app.py:2704
 msgid "New group added successfully!"
 msgstr "Omgeving bestand niet gevonden. Maak een nieuw aan."
 
-#: src/app.py:2762
+#: src/app.py:2731
 msgid "Group assignments updated successfully!"
 msgstr "Groep opdrachten succesvol bijgewerkt!"
 
-#: src/app.py:2827
+#: src/app.py:2796
 #, python-format
 msgid "Successfully removed %(count)s gift ideas."
 msgstr "Succesvol %(count)s cadeau suggesties verwijderd."
 
 # | msgid "Error occurred while running delete_old_gift_ideas:
 # %(error)s\\n\\n"
-#: src/app.py:2833
+#: src/app.py:2802
 #, fuzzy, python-format
 msgid ""
 "Error occurred while running delete_old_gift_ideas: %(error)s\n"
 "\n"
 msgstr "Er is een fout opgetreden tijdens delete_old_gift_ideas: %(error)s\\n\\n"
 
-#: src/app.py:2878
+#: src/app.py:2847
 msgid "URL parameter is required"
 msgstr "URL-parameter is verplicht"
 
-#: src/app.py:2884
+#: src/app.py:2853
 msgid "No OG image found"
 msgstr "Geen OG-afbeelding gevonden"
 
-#: src/app.py:2926
+#: src/app.py:2895
 msgid "Guest user created successfully!"
 msgstr "Gast gebruiker succesvol aangemaakt!"
 
-#: src/app.py:2975
+#: src/app.py:2944
 #, python-format
 msgid ""
 "Guest user %(username)s deleted successfully! %(count)s purchased gift "
@@ -516,128 +517,128 @@ msgstr ""
 "Gast gebruiker %(username)s succesvol verwijderd! %(count)s gekochte "
 "cadeau suggesties verwijderd."
 
-#: src/app.py:2977
+#: src/app.py:2946
 msgid "Guest user not found."
 msgstr "Gast gebruiker niet gevonden."
 
-#: src/app.py:2993
+#: src/app.py:2962
 msgid "Guest login successful!"
 msgstr "Gast login succesvol!"
 
-#: src/app.py:2996
+#: src/app.py:2965
 msgid "Invalid guest password"
 msgstr "Ongeldig gast wachtwoord"
 
-#: src/app.py:3018
+#: src/app.py:2987
 msgid "Currency settings updated! Please restart to see changes"
 msgstr "Valuta instellingen bijgewerkt! Start opnieuw op om wijzigingen te zien"
 
-#: src/app.py:3031
+#: src/app.py:3000
 msgid "Self-registration settings updated successfully!"
 msgstr "Zelfregistratie instellingen succesvol bijgewerkt!"
 
-#: src/app.py:3074
+#: src/app.py:3043
 #, python-format
 msgid "Shared list \"%(name)s\" created successfully!"
 msgstr "Gedeelde lijst \"%(name)s\" succesvol aangemaakt!"
 
-#: src/app.py:3111 src/app.py:3139
+#: src/app.py:3080 src/app.py:3108
 msgid "Shared list not found."
 msgstr "Gedeelde lijst niet gevonden."
 
-#: src/app.py:3116
+#: src/app.py:3085
 msgid "Only the list owner can delete this shared list."
 msgstr "Alleen de lijsteigenaar kan deze gedeelde lijst verwijderen."
 
-#: src/app.py:3127
+#: src/app.py:3096
 #, python-format
 msgid "Shared list \"%(name)s\" deleted successfully!"
 msgstr "Gedeelde lijst \"%(name)s\" succesvol verwijderd!"
 
-#: src/app.py:3144
+#: src/app.py:3113
 msgid "Only the list owner can edit members."
 msgstr "Alleen de lijsteigenaar kan leden bewerken."
 
-#: src/app.py:3156
+#: src/app.py:3125
 #, python-format
 msgid "Members updated for \"%(name)s\"!"
 msgstr "Leden bijgewerkt voor \"%(name)s\"!"
 
-#: src/app.py:3168
+#: src/app.py:3137
 msgid "Link sharing settings updated!"
 msgstr "Deellink instellingen bijgewerkt!"
 
-#: src/app.py:3180
+#: src/app.py:3149
 msgid "Link sharing feature is currently disabled by administrator."
 msgstr "De deellink functie is momenteel uitgeschakeld door de beheerder."
 
-#: src/app.py:3196
+#: src/app.py:3165
 msgid "Target not found"
 msgstr "Doel niet gevonden"
 
-#: src/app.py:3203
+#: src/app.py:3172
 msgid "You are not a member of this shared list"
 msgstr "U bent geen lid van deze gedeelde lijst"
 
-#: src/app.py:3208
+#: src/app.py:3177
 msgid "You can only manage your own sharing settings"
 msgstr "U kunt alleen uw eigen deelinstellingen beheren"
 
-#: src/app.py:3235
+#: src/app.py:3204
 msgid "New share link created!"
 msgstr "Nieuwe deellink aangemaakt!"
 
-#: src/app.py:3245
+#: src/app.py:3214
 #, python-format
 msgid "Share link %(status)s!"
 msgstr "Deellink %(status)s!"
 
-#: src/app.py:3259
+#: src/app.py:3228
 #, python-format
 msgid "Share link extended by %(days)s days! New expiry: %(expiry)s"
 msgstr "Deellink verlengd met %(days)s dagen! Nieuwe vervaldatum: %(expiry)s"
 
-#: src/app.py:3270
+#: src/app.py:3239
 msgid "Share link deleted!"
 msgstr "Deellink verwijderd!"
 
-#: src/app.py:3364 src/app.py:3430
+#: src/app.py:3333 src/app.py:3399
 msgid "Share link not found or expired"
 msgstr "Deellink niet gevonden of verlopen"
 
-#: src/app.py:3367
+#: src/app.py:3336
 msgid "Purchases not allowed for this share link"
 msgstr "Aankopen niet toegestaan voor deze deellink"
 
-#: src/app.py:3372 src/app.py:3435
+#: src/app.py:3341 src/app.py:3404
 msgid "Gift idea not found"
 msgstr "Cadeau suggestie niet gevonden"
 
-#: src/app.py:3377
+#: src/app.py:3346
 msgid "Visitor name is required"
 msgstr "Bezoekersnaam is vereist"
 
-#: src/app.py:3403
+#: src/app.py:3372
 msgid "Item marked as purchased"
 msgstr "Item gemarkeerd als gekocht"
 
-#: src/app.py:3407
+#: src/app.py:3376
 msgid "Item already purchased"
 msgstr "Item is al gekocht"
 
-#: src/app.py:3440
+#: src/app.py:3409
 msgid "Visitor ID required"
 msgstr "Bezoeker-ID vereist"
 
-#: src/app.py:3458
+#: src/app.py:3427
 msgid "Purchase cancelled"
 msgstr "Aankoop geannuleerd"
 
-#: src/app.py:3460
+#: src/app.py:3429
 msgid "You can only cancel your own purchases"
 msgstr "U kunt alleen uw eigen aankopen annuleren"
 
-#: src/templates/_admin_sidebar.html:3 src/templates/dashboard.html:178
+#: src/templates/_admin_sidebar.html:3 src/templates/dashboard.html:174
 msgid "Users"
 msgstr "Gebruikers"
 
@@ -708,7 +709,7 @@ msgid "New Ideas"
 msgstr "Nieuwe suggesties"
 
 #: src/templates/add2.html:3 src/templates/add_idea.html:3
-#: src/templates/user_gift_ideas.html:8
+#: src/templates/user_gift_ideas.html:7
 msgid "Add Ideas"
 msgstr "Suggesties toevoegen"
 
@@ -814,7 +815,7 @@ msgid "Add"
 msgstr "Avatar 4"
 
 #: src/templates/admin_dashboard.html:2 src/templates/admin_dashboard.html:3
-#: src/templates/dashboard.html:168
+#: src/templates/dashboard.html:164
 msgid "Admin Dashboard"
 msgstr "Beheerder Dashboard"
 
@@ -1002,7 +1003,7 @@ msgstr "Menu schakelen"
 # | msgid "Toggle menu"
 #: src/templates/base.html:31 src/templates/base_simple.html:24
 #: src/templates/dashboard.html:18 src/templates/my_ideas.html:7
-#: src/templates/user_gift_ideas.html:10
+#: src/templates/user_gift_ideas.html:8
 #, fuzzy
 msgid "Toggle theme"
 msgstr "Menu schakelen"
@@ -1012,7 +1013,7 @@ msgid "Back"
 msgstr "Terug"
 
 #: src/templates/base_standalone.html:11 src/templates/base_standalone.html:23
-#: src/templates/dashboard.html:171
+#: src/templates/dashboard.html:167
 msgid "Giftmanager"
 msgstr "Giftmanager"
 
@@ -1024,24 +1025,28 @@ msgstr "Gekochte artikelen"
 msgid "Object bought by me:"
 msgstr "Artikel gekocht door mij:"
 
-#: src/templates/bought_items.html:13 src/templates/history.html:13
-#: src/templates/my_ideas.html:29 src/templates/user_gift_ideas.html:24
+#: src/templates/bought_items.html:13 src/templates/my_ideas.html:34
+#: src/templates/my_ideas.html:95 src/templates/user_gift_ideas.html:27
+#: src/templates/user_gift_ideas.html:152
 msgid "Gifted"
 msgstr ""
 
-#: src/templates/bought_items.html:15 src/templates/history.html:14
+#: src/templates/bought_items.html:15 src/templates/my_ideas.html:96
+#: src/templates/user_gift_ideas.html:153
 msgid "For:"
 msgstr "Voor:"
 
-#: src/templates/bought_items.html:16 src/templates/history.html:19
+#: src/templates/bought_items.html:16 src/templates/my_ideas.html:98
+#: src/templates/user_gift_ideas.html:155
 msgid "Description:"
 msgstr "Beschrijving:"
 
-#: src/templates/bought_items.html:18 src/templates/history.html:21
+#: src/templates/bought_items.html:18 src/templates/my_ideas.html:100
+#: src/templates/user_gift_ideas.html:157
 msgid "Link:"
 msgstr "Link:"
 
-#: src/templates/bought_items.html:22 src/templates/user_gift_ideas.html:74
+#: src/templates/bought_items.html:22 src/templates/user_gift_ideas.html:77
 msgid "Gift offered"
 msgstr ""
 
@@ -1124,10 +1129,6 @@ msgstr "Gedeelde lijsten"
 #: src/templates/dashboard.html:158
 msgid "Public links"
 msgstr "Openbare links"
-
-#: src/templates/dashboard.html:163 src/templates/history.html:3
-msgid "History"
-msgstr ""
 
 #: src/templates/delete_old_gift_ideas.html:2
 msgid "Manage Gift Ideas"
@@ -1230,9 +1231,9 @@ msgstr "Wijzigingen opslaan"
 msgid "- Edit an idea"
 msgstr "- Bewerk een suggestie"
 
-#: src/templates/edit_idea.html:20 src/templates/my_ideas.html:55
+#: src/templates/edit_idea.html:20 src/templates/my_ideas.html:60
 #: src/templates/shared_list_public.html:26
-#: src/templates/user_gift_ideas.html:48
+#: src/templates/user_gift_ideas.html:51
 msgid "OG Image"
 msgstr "OG-afbeelding"
 
@@ -1263,40 +1264,6 @@ msgstr "Aanmelding bericht wijzigen"
 #: src/templates/edit_login_message.html:11
 msgid "Update Message"
 msgstr "Bericht bijwerken"
-
-# | msgid "Gift Ideas for"
-#: src/templates/history.html:4
-#, fuzzy
-msgid "Gifted History"
-msgstr "Cadeau suggesties voor"
-
-#: src/templates/history.html:8
-msgid "Gifts that have been offered:"
-msgstr ""
-
-# | msgid "Added By:"
-#: src/templates/history.html:15
-#, fuzzy
-msgid "Gifted by:"
-msgstr "Toegevoegd door:"
-
-#: src/templates/history.html:17 src/templates/user_gift_ideas.html:135
-msgid "Gifted on:"
-msgstr ""
-
-#: src/templates/history.html:26
-msgid "Switch back to bought"
-msgstr ""
-
-# | msgid "No shared lists yet."
-#: src/templates/history.html:38
-#, fuzzy
-msgid "No gifted gifts yet."
-msgstr "Nog geen gedeelde lijsten."
-
-#: src/templates/history.html:69
-msgid "Delete this gifted gift?"
-msgstr ""
 
 #: src/templates/login.html:2 src/templates/login.html:6
 msgid "Login"
@@ -1717,27 +1684,53 @@ msgstr "Mijn suggesties"
 msgid "My List of Ideas"
 msgstr "Mijn lijst met suggesties"
 
-#: src/templates/my_ideas.html:16
+#: src/templates/my_ideas.html:14 src/templates/user_gift_ideas.html:15
+#, fuzzy
+#| msgid "My Ideas"
+msgid "Ideas"
+msgstr "Mijn suggesties"
+
+#: src/templates/my_ideas.html:15 src/templates/user_gift_ideas.html:16
+msgid "History"
+msgstr ""
+
+#: src/templates/my_ideas.html:21
 msgid "Reorder"
 msgstr "Sorteer"
 
-#: src/templates/my_ideas.html:17
+#: src/templates/my_ideas.html:22
 msgid "Save Order"
 msgstr "Bewaar sortering"
 
-#: src/templates/my_ideas.html:42 src/templates/shared_list_public.html:18
-#: src/templates/user_gift_ideas.html:40
+#: src/templates/my_ideas.html:47 src/templates/shared_list_public.html:18
+#: src/templates/user_gift_ideas.html:43
 msgid "Estimated Value:"
 msgstr "Geschatte waarde:"
 
-#: src/templates/my_ideas.html:44 src/templates/shared_list_public.html:20
-#: src/templates/user_gift_ideas.html:42
+#: src/templates/my_ideas.html:49 src/templates/shared_list_public.html:20
+#: src/templates/user_gift_ideas.html:45
 msgid "Added By:"
 msgstr "Toegevoegd door:"
 
-#: src/templates/my_ideas.html:47 src/templates/user_gift_ideas.html:27
+#: src/templates/my_ideas.html:52 src/templates/user_gift_ideas.html:30
 msgid "Last updated:"
 msgstr "Laatst bijgewerkt:"
+
+# | msgid "Added By:"
+#: src/templates/my_ideas.html:97 src/templates/user_gift_ideas.html:154
+#, fuzzy
+msgid "Gifted by:"
+msgstr "Toegevoegd door:"
+
+#: src/templates/my_ideas.html:105 src/templates/user_gift_ideas.html:162
+msgid "Switch back to bought"
+msgstr ""
+
+# | msgid "No shared lists yet."
+#: src/templates/my_ideas.html:117 src/templates/user_gift_ideas.html:174
+#, fuzzy
+msgid "No gifted gifts yet."
+msgstr "Nog geen gedeelde lijsten."
 
 #: src/templates/noideas.html:2 src/templates/noideas.html:3
 msgid "No gift ideas?"
@@ -2123,7 +2116,7 @@ msgstr "Ik heb dit gekocht"
 
 #: src/templates/shared_list_public.html:58
 #: src/templates/shared_list_public.html:60
-#: src/templates/user_gift_ideas.html:120
+#: src/templates/user_gift_ideas.html:123
 msgid "Purchased by:"
 msgstr "Gekocht door:"
 
@@ -2168,28 +2161,28 @@ msgstr "Suggestie lijst"
 msgid "Ideas list for"
 msgstr "Suggesties lijst voor"
 
-#: src/templates/user_gift_ideas.html:76
+#: src/templates/user_gift_ideas.html:79
 msgid "Cancel the purchase"
 msgstr "De aankoop annuleren"
 
-#: src/templates/user_gift_ideas.html:83
+#: src/templates/user_gift_ideas.html:86
 msgid "Purchase (anonymously)"
 msgstr "Kopen (anoniem)"
 
-#: src/templates/user_gift_ideas.html:89 src/templates/user_gift_ideas.html:96
+#: src/templates/user_gift_ideas.html:92 src/templates/user_gift_ideas.html:99
 msgid "Purchase"
 msgstr "Kopen"
 
-#: src/templates/user_gift_ideas.html:109
+#: src/templates/user_gift_ideas.html:112
 msgid "Purchase anonymously"
 msgstr "Anoniem kopen"
 
-#: src/templates/user_gift_ideas.html:122
+#: src/templates/user_gift_ideas.html:125
 msgid "Me ("
 msgstr "Beschikbare suggestie"
 
-#: src/templates/user_gift_ideas.html:124
-#: src/templates/user_gift_ideas.html:126
+#: src/templates/user_gift_ideas.html:127
+#: src/templates/user_gift_ideas.html:129
 msgid "(anonymously)"
 msgstr "Aankoop voltooid"
 
@@ -2249,4 +2242,17 @@ msgstr "Aankoop voltooid"
 
 #~ msgid "🎅 Secret Santa 🎁"
 #~ msgstr "🎅 Secret Santa 🎁"
+
+#~ msgid "Gifted on:"
+#~ msgstr ""
+
+# | msgid "Gift Ideas for"
+#~ msgid "Gifted History"
+#~ msgstr "Cadeau suggesties voor"
+
+#~ msgid "Gifts that have been offered:"
+#~ msgstr ""
+
+#~ msgid "Delete this gifted gift?"
+#~ msgstr ""
 

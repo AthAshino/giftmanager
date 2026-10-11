@@ -5,12 +5,16 @@ def _load_ideas(tmp_path):
     return json.loads((tmp_path / "ideas.json").read_text())
 
 
+def _ideas_panel(html):
+    return html.split('<section id="tab-ideas"', 1)[1].split('</section>', 1)[0]
+
+
 def test_mark_as_gifted_only_buyer(client, tmp_path):
     # bob bought idea 1 -> allowed
     login(client, "bob")
     resp = client.post("/mark_as_gifted/1")
     assert resp.status_code == 302
-    assert "/history" in resp.headers["Location"]
+    assert "/user_gift_ideas/alice?tab=history" in resp.headers["Location"]
 
     ideas = _load_ideas(tmp_path)
     idea = next(i for i in ideas if i["gift_idea_id"] == 1)
@@ -29,26 +33,31 @@ def test_mark_as_gifted_non_buyer_forbidden(client, tmp_path):
     assert not idea.get("gifted")
 
 
-def test_history_shows_gifted_and_manage_buttons(client, tmp_path):
+def test_ideas_tab_excludes_gifted_and_history_tab_shows_them(client, tmp_path):
     login(client, "bob")
     client.post("/mark_as_gifted/1")
-    resp = client.get("/history")
+    resp = client.get("/user_gift_ideas/alice?tab=history")
     assert resp.status_code == 200
     html = resp.get_data(as_text=True)
+    # the gifted idea appears on the page (history panel)...
     assert "From self" in html
+    # ...but not in the actual-ideas panel
+    assert "From self" not in _ideas_panel(html)
     # bob is the gifter -> can switch back
     assert "Switch back to bought" in html
 
 
-def test_history_hides_gifted_for_unrelated_user(client, tmp_path):
-    # carol shares no family with alice and is neither gifter nor idea-giver
+def test_history_anonymizes_gifter_for_unrelated_user(client, tmp_path):
+    # carol shares no family with bob (the gifter) and is neither gifter nor idea-giver
     login(client, "bob")
     client.post("/mark_as_gifted/1", follow_redirects=True)  # consume bob's flash
     login(client, "carol")
-    resp = client.get("/history")
+    resp = client.get("/user_gift_ideas/alice?tab=history")
     assert resp.status_code == 200
     html = resp.get_data(as_text=True)
-    assert "From self" not in html
+    # the gifter's identity stays hidden for unrelated users
+    assert "Bob" not in html
+    assert "Anonymous" in html
 
 
 def test_mark_as_not_gifted_switch_back(client, tmp_path):

@@ -4,16 +4,19 @@
 {% block page_title %}{{ _('Ideas list for') }} {{ user_namels }}{% endblock %}
 
 {% block header_actions %}
-{% if user_gift_ideas %}
-<a href="{{ url_for('add_idea', selected_user_id=user_gift_ideas[0].user_id) }}" class="btn-primary">{{ _('Add Ideas') }}</a>
-{% endif %}
+<a href="{{ url_for('add_idea', selected_user_id=selected_user_id) }}" class="btn-primary">{{ _('Add Ideas') }}</a>
 <button type="button" onclick="toggleDarkMode()" class="rounded-lg p-2 text-[rgb(var(--text-secondary))] hover:bg-[rgb(var(--surface-2))]" aria-label="{{ _('Toggle theme') }}">
     {{ icon('moon', 'h-5 w-5') }}
 </button>
 {% endblock %}
 
 {% block content %}
-<section class="card p-4 sm:p-6">
+<div class="mb-4 flex gap-2 overflow-x-auto border-b border-[rgb(var(--border))]">
+    <button type="button" class="nav-tab active" data-tab-target="ideas">{{ _('Ideas') }}</button>
+    <button type="button" class="nav-tab" data-tab-target="history">{{ _('History') }}</button>
+</div>
+
+<section id="tab-ideas" class="tab-panel card p-4 sm:p-6">
     <ul class="space-y-4">
         {% for gift_idea in user_gift_ideas %}
         <li class="card p-4" data-idea-id="{{ gift_idea.gift_idea_id }}">
@@ -70,7 +73,7 @@
                     {% endif %}
                     {% if gift_idea.bought_by %}
                     {% if gift_idea.bought_by == session['username'] and not gift_idea.get('gifted') %}
-                    <button class="mark-as-gifted-button flex items-center justify-center gap-1 rounded bg-[rgb(var(--success))] px-3 py-1 text-white" data-idea-id="{{ gift_idea.gift_idea_id }}">
+                    <button class="mark-as-gifted-button flex items-center justify-center gap-1 rounded bg-[rgb(var(--success))] px-3 py-1 text-white" data-idea-id="{{ gift_idea.gift_idea_id }}" data-next="{{ url_for('user_gift_ideas', selected_user_id=selected_user_id, tab='history') }}">
                         {{ icon('gift', 'h-4 w-4') }} {{ _('Gift offered') }}
                     </button>
                     <button class="mark-as-not-bought-button flex items-center justify-center rounded bg-[rgb(var(--danger))] px-3 py-1 text-white" data-idea-id="{{ gift_idea.gift_idea_id }}">{{ _('Cancel the purchase') }}</button>
@@ -131,9 +134,6 @@
                     {{ get_full_name(gift_idea.bought_by) }}
                     {% endif %}
                 </p>
-                {% if gift_idea.get('gifted') %}
-                <p class="mt-1 text-[rgb(var(--success))]">{{ icon('gift', 'h-4 w-4') }} {{ _('Gifted on:') }} {{ gift_idea.date_gifted[:10] }}</p>
-                {% endif %}
                 {% else %}
                 <strong class="text-[rgb(var(--text))]">{{ _('Available idea') }}</strong>
                 {% endif %}
@@ -142,10 +142,67 @@
         {% endfor %}
     </ul>
 </section>
+
+<div id="tab-history" class="tab-panel hidden">
+    {% if gifted_ideas %}
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {% for item in gifted_ideas %}
+        <div class="card p-6" data-idea-id="{{ item.gift_idea_id }}">
+            <h3 class="mb-4 text-xl font-semibold text-[rgb(var(--text))]">{{ item.gift_name }}</h3>
+            <span class="badge mb-4 bg-[rgb(var(--success-soft))] text-[rgb(var(--success))]">{{ icon('gift', 'h-4 w-4') }} {{ _('Gifted') }}</span>
+            <p class="text-sm text-[rgb(var(--text))]"><strong>{{ _('For:') }}</strong> {{ user_namels }}</p>
+            <p class="text-sm text-[rgb(var(--text))]"><strong>{{ _('Gifted by:') }}</strong> {{ item.gifter_name }}</p>
+            <p class="text-sm text-[rgb(var(--text))]"><strong>{{ _('Description:') }}</strong> {{ item.description }}</p>
+            {% if item.link %}
+            <p class="break-all text-sm text-[rgb(var(--text))]"><strong>{{ _('Link:') }}</strong> <a href="{{ item.link }}" target="_blank">{{ item.link }}</a></p>
+            {% endif %}
+            {% if item.get('can_manage') %}
+            <div class="mt-4 flex flex-wrap gap-2 border-t border-[rgb(var(--border))] pt-3">
+                <button class="mark-as-not-gifted-button flex items-center justify-center gap-1 rounded bg-[rgb(var(--primary))] px-3 py-1 text-white" data-idea-id="{{ item.gift_idea_id }}" data-next="{{ url_for('user_gift_ideas', selected_user_id=selected_user_id, tab='history') }}">
+                    {{ icon('check', 'h-4 w-4') }} {{ _('Switch back to bought') }}
+                </button>
+                <button class="delete-idea-button flex items-center justify-center rounded bg-[rgb(var(--danger))] px-3 py-1 text-white" data-idea-id="{{ item.gift_idea_id }}">
+                    {{ icon('trash', 'h-4 w-4') }}
+                </button>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="card p-6">
+        <p class="text-[rgb(var(--text-secondary))]">{{ _('No gifted gifts yet.') }}</p>
+    </div>
+    {% endif %}
+</div>
 {% endblock %}
 
 {% block scripts %}
 <script>
+    function switchTab(tab) {
+        document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.add('hidden'));
+        const panel = document.getElementById('tab-' + tab);
+        if (panel) panel.classList.remove('hidden');
+        document.querySelectorAll('.nav-tab[data-tab-target]').forEach(button => {
+            button.classList.toggle('active', button.dataset.tabTarget === tab);
+        });
+        const url = new URL(window.location);
+        if (tab === 'history') {
+            url.searchParams.set('tab', 'history');
+        } else {
+            url.searchParams.delete('tab');
+        }
+        history.replaceState({}, '', url);
+    }
+
+    document.querySelectorAll('.nav-tab[data-tab-target]').forEach(button => {
+        button.addEventListener('click', () => switchTab(button.dataset.tabTarget));
+    });
+
+    if (new URLSearchParams(window.location.search).get('tab') === 'history') {
+        switchTab('history');
+    }
+
     function markIdeaAsBought(ideaId, button, anonymous = false) {
         fetch(`/mark_as_bought/${ideaId}`, {
             method: 'POST',
@@ -205,16 +262,39 @@
     document.querySelectorAll('.mark-as-gifted-button').forEach(button => {
         button.addEventListener('click', () => {
             const ideaId = button.getAttribute('data-idea-id');
+            const next = button.getAttribute('data-next') || '';
             fetch(`/mark_as_gifted/${ideaId}`, {
                 method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ next: next })
             })
             .then(response => {
                 if (response.ok) {
-                    location.reload();
+                    window.location.href = response.url;
                 }
             })
             .catch(error => {
                 console.error('Error marking idea as gifted:', error);
+            });
+        });
+    });
+
+    document.querySelectorAll('.mark-as-not-gifted-button').forEach(button => {
+        button.addEventListener('click', () => {
+            const ideaId = button.getAttribute('data-idea-id');
+            const next = button.getAttribute('data-next') || '';
+            fetch(`/mark_as_not_gifted/${ideaId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ next: next })
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = response.url;
+                }
+            })
+            .catch(error => {
+                console.error('Error switching back:', error);
             });
         });
     });

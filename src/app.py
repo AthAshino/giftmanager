@@ -1434,41 +1434,11 @@ def mark_as_not_bought(idea_id):
     return '', 204  # Return a response with HTTP status code 204 (no content)
 
 
-def get_visible_usernames(current_user):
-    """Return the set of usernames the current user can see (same logic as the dashboard)."""
-    users = load_users()
-    current_user_data = next((user for user in users if user['username'] == current_user), None)
-    if not current_user_data:
-        return {current_user}
-
-    visible = set()
-    is_guest = current_user_data.get('guest', False)
-
-    if is_guest:
-        access_type = current_user_data.get('access_type', 'family')
-        if access_type == 'family':
-            guest_groups = current_user_data.get('groups', [])
-            for user in users:
-                if (user.get('groups') and any(group in guest_groups for group in user['groups'])
-                        and not user.get('guest')):
-                    visible.add(user['username'])
-        else:  # people access
-            access_users = current_user_data.get('access_users', [])
-            for user in users:
-                if user['username'] in access_users and not user.get('guest'):
-                    visible.add(user['username'])
-    else:
-        current_user_groups = current_user_data.get('groups', [])
-        if not current_user_groups:
-            visible = {user['username'] for user in users if not user.get('guest')}
-        else:
-            for user in users:
-                if (not user.get('groups') or any(group in current_user_groups for group in user.get('groups', []))) \
-                        and not user.get('guest'):
-                    visible.add(user['username'])
-
-    visible.add(current_user)
-    return visible
+def _safe_redirect_target(target):
+    """Return target if it is a safe internal path, otherwise None."""
+    if target and target.startswith('/') and not target.startswith('//'):
+        return target
+    return None
 
 
 @app.route('/mark_as_gifted/<int:idea_id>', methods=['POST'])
@@ -1489,10 +1459,12 @@ def mark_as_gifted(idea_id):
             idea['date_gifted'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             save_gift_ideas(gift_ideas_data)
             flash(_('Marked "%(name)s" as gifted!') % {'name': idea['gift_name']}, 'success')
+        fallback = url_for('user_gift_ideas', selected_user_id=idea['user_id'], tab='history')
     else:
         flash(_('Idea not found'), 'danger')
+        fallback = url_for('my_ideas')
 
-    return redirect(url_for('history'))
+    return redirect(_safe_redirect_target(request.form.get('next') or request.args.get('next')) or fallback)
 
 
 @app.route('/mark_as_not_gifted/<int:idea_id>', methods=['POST'])
@@ -1513,39 +1485,12 @@ def mark_as_not_gifted(idea_id):
             idea.pop('date_gifted', None)
             save_gift_ideas(gift_ideas_data)
             flash(_('Marked "%(name)s" as not gifted.') % {'name': idea['gift_name']}, 'success')
+        fallback = url_for('user_gift_ideas', selected_user_id=idea['user_id'], tab='history')
     else:
         flash(_('Idea not found'), 'danger')
+        fallback = url_for('my_ideas')
 
-    return redirect(url_for('history'))
-
-
-@app.route('/history')
-@login_required
-@guest_allowed
-def history():
-    """Read-only history of all gifted gifts visible to the current user."""
-    gift_ideas_data = load_gift_ideas()
-    current_user = session.get('username')
-    visible_usernames = get_visible_usernames(current_user)
-
-    gifted_ideas = [
-        idea for idea in gift_ideas_data
-        if idea.get('gifted')
-        and (
-            idea['user_id'] in visible_usernames
-            or idea.get('added_by') == current_user
-            or idea.get('bought_by') == current_user
-        )
-    ]
-
-    gifted_ideas.sort(key=lambda x: x.get('date_gifted', ''), reverse=True)
-
-    for idea in gifted_ideas:
-        idea['recipient_name'] = get_full_name(idea['user_id'])
-        idea['gifter_name'] = get_full_name(idea.get('bought_by', ''))
-        idea['can_manage'] = idea.get('added_by') == current_user or idea.get('bought_by') == current_user
-
-    return render_template('history.html', gifted_ideas=gifted_ideas)
+    return redirect(_safe_redirect_target(request.form.get('next') or request.args.get('next')) or fallback)
 
 
 @app.route('/bought_items')
@@ -1586,13 +1531,15 @@ def user_gift_ideas(selected_user_id):
 
     # Filter the gift ideas for the selected user
     gift_ideas_data = load_gift_ideas()  # Load the gift ideas from the JSON file
-    user_gift_ideas = [idea for idea in gift_ideas_data if idea['user_id'] == selected_user_id]
+    user_gift_ideas = [idea for idea in gift_ideas_data if idea['user_id'] == selected_user_id and not idea.get('gifted')]
+    gifted_ideas = [idea for idea in gift_ideas_data if idea['user_id'] == selected_user_id and idea.get('gifted')]
 
     # Sort the gift ideas by priority, with ideas that have no priority appearing at the bottom
     user_gift_ideas.sort(key=lambda x: (x.get('priority', float('inf')), x['gift_idea_id']))
+    gifted_ideas.sort(key=lambda x: x.get('date_gifted', ''), reverse=True)
 
     # Check if there are no ideas and redirect to the NOIDEA page
-    if not user_gift_ideas:
+    if not user_gift_ideas and not gifted_ideas:
         flash(_('No gift ideas for this user.'), 'info')
         return redirect(url_for('noidea'))
     
@@ -1621,12 +1568,28 @@ def user_gift_ideas(selected_user_id):
                 idea['bought_by'] = _('Anonymous')
                 idea['bought_by_hidden'] = True
 
+    for idea in gifted_ideas:
+        idea['can_manage'] = idea.get('added_by') == connected_user or idea.get('bought_by') == connected_user
+        gifter = idea.get('bought_by')
+        gifter_name = get_full_name(gifter) if gifter else _('Anonymous')
+        if gifter and gifter != connected_user:
+            buyer = next((user for user in users if user['username'] == gifter), None)
+            buyer_groups = set(buyer.get('groups', [])) if buyer else set()
+            shares_family = bool(connected_groups & buyer_groups)
+            if not shares_family and (
+                (idea.get('bought_anonymously') == True) or
+                hide_purchaser):
+                gifter_name = _('Anonymous')
+        idea['gifter_name'] = gifter_name
+
     shared_list = next((user for user in users if user['username'] == selected_user_id and user.get('shared_list')), None)
     is_shared_list_member = shared_list and connected_user in shared_list.get('list_members', [])
     # Call get_full_name function to fetch the user's full name directly in the route
     user_namels = get_full_name(selected_user_id)  # Get the full name based on the selected user ID
     return render_template('user_gift_ideas.html',
         user_gift_ideas=user_gift_ideas,
+        gifted_ideas=gifted_ideas,
+        selected_user_id=selected_user_id,
         user_namels=user_namels,
         imgenabled=imgenabled,
         hide_purchaser=hide_purchaser,
@@ -1643,15 +1606,17 @@ def my_ideas():
     gift_ideas_data = load_gift_ideas()
 
     # Filter the gift ideas to include only the ones added by the connected user
-    my_gift_ideas = [idea for idea in gift_ideas_data if idea['user_id'] == connected_user and idea.get('added_by') == connected_user]
+    my_gift_ideas = [idea for idea in gift_ideas_data if idea['user_id'] == connected_user and idea.get('added_by') == connected_user and not idea.get('gifted')]
+    gifted_ideas = [idea for idea in gift_ideas_data if idea['user_id'] == connected_user and idea.get('added_by') == connected_user and idea.get('gifted')]
 
     # Sort the gift ideas by priority, with ideas that have no priority appearing at the bottom
     my_gift_ideas.sort(key=lambda x: (x.get('priority', float('inf')), x['gift_idea_id']))
+    gifted_ideas.sort(key=lambda x: x.get('date_gifted', ''), reverse=True)
 
     reordering = read_env_variable('REORDERING', 'true').lower() == 'true'
     imgenabled = read_env_variable('IMGENABLED', 'true').lower() == 'true'
     # Check if there are no ideas and redirect to a different page
-    if not my_gift_ideas:
+    if not my_gift_ideas and not gifted_ideas:
         flash(_('You haven\'t added any gift ideas.'), 'info')
         return redirect(url_for('noidea'))
     # Ensure each idea has custom_fields and last_updated fields for template
@@ -1659,7 +1624,11 @@ def my_ideas():
         if 'custom_fields' not in idea:
             idea['custom_fields'] = {}
 
-    return render_template('my_ideas.html', my_gift_ideas=my_gift_ideas, reordering=reordering, imgenabled=imgenabled)
+    for idea in gifted_ideas:
+        idea['gifter_name'] = get_full_name(idea.get('bought_by', '')) if idea.get('bought_by') else _('Anonymous')
+        idea['can_manage'] = True  # the connected user added these ideas
+
+    return render_template('my_ideas.html', my_gift_ideas=my_gift_ideas, gifted_ideas=gifted_ideas, reordering=reordering, imgenabled=imgenabled)
 
 @app.route('/update_order', methods=['POST'])
 @login_required

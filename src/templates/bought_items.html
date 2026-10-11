@@ -18,7 +18,7 @@
         <p class="break-all text-sm text-[rgb(var(--text))]"><strong>{{ _('Link:') }}</strong> <a href="{{ item.link }}" target="_blank">{{ item.link }}</a></p>
         {% endif %}
         {% if not item.get('gifted') %}
-        <button class="mark-as-gifted-button mt-4 flex w-full items-center justify-center gap-1 rounded bg-[rgb(var(--success))] px-3 py-2 text-white" data-idea-id="{{ item.gift_idea_id }}">
+        <button class="mark-as-gifted-button mt-4 flex w-full items-center justify-center gap-1 rounded bg-[rgb(var(--success))] px-3 py-2 text-white" data-idea-id="{{ item.gift_idea_id }}" data-next="{{ url_for('bought_items') }}">
             {{ icon('gift', 'h-4 w-4') }} {{ _('Gift offered') }}
         </button>
         {% endif %}
@@ -32,12 +32,15 @@
     document.querySelectorAll('.mark-as-gifted-button').forEach(button => {
         button.addEventListener('click', () => {
             const ideaId = button.getAttribute('data-idea-id');
+            const next = button.getAttribute('data-next') || '';
             fetch(`/mark_as_gifted/${ideaId}`, {
                 method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ next: next })
             })
             .then(response => {
                 if (response.ok) {
-                    location.reload();
+                    window.location.href = response.url;
                 }
             })
             .catch(error => {
