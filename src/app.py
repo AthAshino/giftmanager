@@ -1504,11 +1504,17 @@ def bought_items():
     # Filter the gift ideas to include only the ones that are bought by the current user
     bought_items = [idea for idea in gift_ideas_data if idea['bought_by'] == session['username']]
 
-    # Add the full name for each bought item
+    # Add the full name for each bought item and ensure custom_fields exists
     for item in bought_items:
         item['recipient_name'] = get_full_name(item['user_id'])
+        if 'custom_fields' not in item:
+            item['custom_fields'] = {}
 
-    return render_template('bought_items.html', bought_items=bought_items)
+    # Sort the bought items by recipient user, then by gift name
+    bought_items.sort(key=lambda x: (x['recipient_name'].lower(), x.get('gift_name', '').lower()))
+
+    imgenabled = read_env_variable('IMGENABLED', 'true').lower() == 'true'
+    return render_template('bought_items.html', bought_items=bought_items, imgenabled=imgenabled)
 
 
 def get_full_name(username):

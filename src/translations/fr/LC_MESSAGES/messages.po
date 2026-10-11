@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 11:36+0200\n"
+"POT-Creation-Date: 2026-10-11 11:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -86,7 +86,7 @@ msgstr ""
 msgid "Language updated."
 msgstr "Dernière mise à jour:"
 
-#: src/app.py:727 src/app.py:2448
+#: src/app.py:727 src/app.py:2454
 msgid "No account? Contact a family member to create an account."
 msgstr "Pas de compte ? Contactez un membre de la famille pour créer un compte."
 
@@ -152,7 +152,7 @@ msgid "You are not authorized to delete this idea."
 msgstr "Vous n'êtes pas autorisé à supprimer cette idée."
 
 #: src/app.py:1079 src/app.py:1403 src/app.py:1432 src/app.py:1464
-#: src/app.py:1490 src/app.py:1983
+#: src/app.py:1490 src/app.py:1989
 msgid "Idea not found"
 msgstr "Idée introuvable"
 
@@ -165,7 +165,7 @@ msgstr "Cette idée, %(name)s, a été supprimée mais vous l'avez déjà achet�
 msgid "User data not found"
 msgstr "Données utilisateur non trouvées"
 
-#: src/app.py:1340 src/app.py:1767 src/app.py:3157
+#: src/app.py:1340 src/app.py:1773 src/app.py:3163
 msgid "User not found"
 msgstr "Utilisateur introuvable"
 
@@ -235,30 +235,30 @@ msgstr "Seule la personne qui a donné l'idée ou l'acheteur peut modifier son �
 msgid "Marked \"%(name)s\" as not gifted."
 msgstr "\"%(name)s\" n'est plus marqué comme offert."
 
-#: src/app.py:1543
+#: src/app.py:1549
 msgid "No gift ideas for this user."
 msgstr "Aucune idée cadeau pour cet utilisateur."
 
-#: src/app.py:1568 src/app.py:1574 src/app.py:1582 src/app.py:1628
+#: src/app.py:1574 src/app.py:1580 src/app.py:1588 src/app.py:1634
 #: src/templates/user_gift_ideas.html:132
 msgid "Anonymous"
 msgstr "Anonyme"
 
 # | msgid "You haven\\'t added any gift ideas."
-#: src/app.py:1620
+#: src/app.py:1626
 #, fuzzy
 msgid "You haven't added any gift ideas."
 msgstr "Vous n'avez pas encore ajouté d'idées cadeaux."
 
-#: src/app.py:1658
+#: src/app.py:1664
 msgid "Order updated successfully!"
 msgstr "Ordre mis à jour avec succès !"
 
-#: src/app.py:1820
+#: src/app.py:1826
 msgid "Avatar file not found!"
 msgstr "Fichier avatar introuvable !"
 
-#: src/app.py:1860
+#: src/app.py:1866
 msgid ""
 "Generated user avatar timed out and was deleted! Try again to add the new"
 " user."
@@ -266,151 +266,151 @@ msgstr ""
 "L'avatar de l'utilisateur généré a expiré et a été supprimé ! Essayez à "
 "nouveau pour ajouter le nouvel utilisateur."
 
-#: src/app.py:1868
+#: src/app.py:1874
 msgid "Username already exists!"
 msgstr "Ce nom d'utilisateur existe déjà !"
 
-#: src/app.py:1889
+#: src/app.py:1895
 msgid "User added successfully!"
 msgstr "Utilisateur ajouté avec succès !"
 
-#: src/app.py:1972
+#: src/app.py:1978
 msgid "Idea updated successfully!"
 msgstr "Idée mise à jour avec succès !"
 
-#: src/app.py:1981
+#: src/app.py:1987
 msgid "You are not authorized to edit this idea."
 msgstr "Vous n'êtes pas autorisé à modifier cette idée."
 
-#: src/app.py:2025
+#: src/app.py:2031
 #, python-format
 msgid "%(person)s has no possible recipients"
 msgstr "%(person)s n'a aucun bénéficiaire possible"
 
-#: src/app.py:2049
+#: src/app.py:2055
 #, python-format
 msgid "Unexpected exclusion violation: %(giver)s → %(receiver)s"
 msgstr "Violation d'exclusion inattendue : %(giver)s → %(receiver)s"
 
-#: src/app.py:2052
+#: src/app.py:2058
 msgid "Could not find valid assignments after many attempts"
 msgstr ""
 "Impossible de trouver des assignations valides après de nombreuses "
 "tentatives"
 
-#: src/app.py:2072
+#: src/app.py:2078
 msgid "Invalid pool name"
 msgstr "Nom de pool invalide"
 
-#: src/app.py:2084
+#: src/app.py:2090
 #, python-format
 msgid "Pool \"%(name)s\" deleted"
 msgstr "Pool \"%(name)s\" supprimé"
 
-#: src/app.py:2086
+#: src/app.py:2092
 #, python-format
 msgid "Pool \"%(name)s\" not found"
 msgstr "Pool \"%(name)s\" introuvable"
 
-#: src/app.py:2116
+#: src/app.py:2122
 msgid "Pool name required"
 msgstr "Nom du pool requis"
 
-#: src/app.py:2119
+#: src/app.py:2125
 msgid "Invalid pool name (letters, numbers, dashes, underscores only)"
 msgstr "Nom de pool invalide (lettres, chiffres, tirets et underscores uniquement)"
 
-#: src/app.py:2122
+#: src/app.py:2128
 msgid "Need at least 2 participants"
 msgstr "Au moins 2 participants sont nécessaires"
 
-#: src/app.py:2125
+#: src/app.py:2131
 msgid "Duplicate participants selected"
 msgstr "Participants en double sélectionnés"
 
-#: src/app.py:2154
+#: src/app.py:2160
 #, python-format
 msgid " %(error)s"
 msgstr " %(error)s"
 
-#: src/app.py:2164
+#: src/app.py:2170
 #, python-format
 msgid "Assignment violates %(a)s ↔ %(b)s"
 msgstr "L'assignation viole %(a)s ↔ %(b)s"
 
-#: src/app.py:2176
+#: src/app.py:2182
 #, python-format
 msgid " Critical error: %(error)s"
 msgstr " Erreur critique : %(error)s"
 
-#: src/app.py:2192
+#: src/app.py:2198
 #, python-format
 msgid "Pool \"%(name)s\" created"
 msgstr "Pool \"%(name)s\" créé"
 
-#: src/app.py:2206
+#: src/app.py:2212
 #, python-format
 msgid " Error saving: %(error)s"
 msgstr " Erreur lors de l'enregistrement : %(error)s"
 
-#: src/app.py:2231
+#: src/app.py:2237
 msgid "You don't have any Secret Santa assignments yet."
 msgstr "Vous n'avez pas encore d'assignation Secret Santa."
 
-#: src/app.py:2241
+#: src/app.py:2247
 msgid "No specific instructions provided."
 msgstr "Aucune instruction spécifique fournie."
 
-#: src/app.py:2277
+#: src/app.py:2283
 msgid "User deleted successfully!"
 msgstr "Utilisateur supprimé avec succès !"
 
-#: src/app.py:2288
+#: src/app.py:2294
 msgid "Admin status updated successfully!"
 msgstr "Le statut de l'administrateur a été mis à jour avec succès !"
 
-#: src/app.py:2316
+#: src/app.py:2322
 msgid "Avatar uploaded successfully!"
 msgstr "Avatar téléchargé avec succès !"
 
-#: src/app.py:2318
+#: src/app.py:2324
 #, python-format
 msgid "Error uploading avatar: %(error)s"
 msgstr "Erreur lors du téléchargement de l'avatar : %(error)s"
 
-#: src/app.py:2334
+#: src/app.py:2340
 msgid "Generated avatar timed out and was deleted! Please generate a new one."
 msgstr ""
 "L'avatar de l'utilisateur généré a expiré et a été supprimé ! Veuillez en"
 " générer un nouveau."
 
-#: src/app.py:2353
+#: src/app.py:2359
 msgid "User updated successfully!"
 msgstr "Utilisateur mis à jour avec succès !"
 
-#: src/app.py:2417
+#: src/app.py:2423
 msgid "Email settings updated successfully!"
 msgstr "Paramètres d'Email ont été mis à jour avec succès !"
 
-#: src/app.py:2419
+#: src/app.py:2425
 #, python-format
 msgid "An error occurred: %(error)s"
 msgstr "Une erreur est survenue : %(error)s"
 
-#: src/app.py:2441
+#: src/app.py:2447
 msgid "Login message updated successfully!"
 msgstr "Message de connexion mis à jour avec succès !"
 
-#: src/app.py:2443
+#: src/app.py:2449
 #, python-format
 msgid "Error updating login message: %(error)s"
 msgstr "Erreur lors de la mise à jour du message de connexion : %(error)s"
 
-#: src/app.py:2445
+#: src/app.py:2451
 msgid "Message cannot be empty."
 msgstr "Le message ne peut pas être vide."
 
-#: src/app.py:2505
+#: src/app.py:2511
 #, python-format
 msgid ""
 "%(count)s gift ideas older than the threshold have been successfully "
@@ -419,33 +419,33 @@ msgstr ""
 "%(count)s idées cadeaux plus anciennes que le seuil ont été supprimées "
 "avec succès."
 
-#: src/app.py:2511
+#: src/app.py:2517
 #, python-format
 msgid "Error deleting old gift ideas: %(error)s"
 msgstr "Erreur lors de la suppression des vieilles idées cadeaux : %(error)s"
 
-#: src/app.py:2532
+#: src/app.py:2538
 #, python-format
 msgid "The number of days to delete old gift ideas has been updated to %(days)s."
 msgstr ""
 "Le nombre de jours pour supprimer les vieilles idées cadeaux a été mis à "
 "jour à %(days)s."
 
-#: src/app.py:2536
+#: src/app.py:2542
 msgid "Invalid number of days entered. Please enter a valid number."
 msgstr "Nombre de jours invalide. Veuillez saisir un nombre valide."
 
-#: src/app.py:2538
+#: src/app.py:2544
 msgid "Please provide a value for the number of days."
 msgstr "Veuillez fournir une valeur pour le nombre de jours."
 
-#: src/app.py:2551
+#: src/app.py:2557
 msgid "Users are already configured. Setup page is unavailable."
 msgstr ""
 "Les utilisateurs sont déjà configurés. La page de configuration est "
 "indisponible."
 
-#: src/app.py:2582
+#: src/app.py:2588
 msgid ""
 "Admin account created successfully. Please configure the environment "
 "variables."
@@ -453,44 +453,44 @@ msgstr ""
 "Compte administrateur créé avec succès. Veuillez configurer les variables"
 " d'environnement."
 
-#: src/app.py:2592
+#: src/app.py:2598
 msgid "You must access this page from the setupadmin route."
 msgstr "Vous devez accéder à cette page à partir de la page setupadmin."
 
-#: src/app.py:2618
+#: src/app.py:2624
 msgid "Settings saved successfully!"
 msgstr "Paramètres enregistrés avec succès !"
 
-#: src/app.py:2646
+#: src/app.py:2652
 #, python-format
 msgid "Missing required fields: %(fields)s"
 msgstr "Champs obligatoires manquants : %(fields)s"
 
-#: src/app.py:2657
+#: src/app.py:2663
 msgid "OIDC settings saved successfully!"
 msgstr "Paramètres OIDC enregistrés avec succès !"
 
-#: src/app.py:2660
+#: src/app.py:2666
 #, python-format
 msgid "Error saving OIDC settings: %(error)s"
 msgstr "Erreur lors de l'enregistrement des paramètres OIDC : %(error)s"
 
-#: src/app.py:2704
+#: src/app.py:2710
 msgid "New group added successfully!"
 msgstr "Nouveau groupe ajouté avec succès !"
 
-#: src/app.py:2731
+#: src/app.py:2737
 msgid "Group assignments updated successfully!"
 msgstr "Assignations des groupes mis à jour avec succès !"
 
-#: src/app.py:2796
+#: src/app.py:2802
 #, python-format
 msgid "Successfully removed %(count)s gift ideas."
 msgstr "%(count)s idées cadeaux supprimées avec succès."
 
 # | msgid "Error occurred while running delete_old_gift_ideas:
 # %(error)s\\n\\n"
-#: src/app.py:2802
+#: src/app.py:2808
 #, fuzzy, python-format
 msgid ""
 "Error occurred while running delete_old_gift_ideas: %(error)s\n"
@@ -499,19 +499,19 @@ msgstr ""
 "Une erreur est survenue lors de l'exécution de delete_old_gift_ideas : "
 "%(error)s\\n\\n"
 
-#: src/app.py:2847
+#: src/app.py:2853
 msgid "URL parameter is required"
 msgstr "Le paramètre URL est requis"
 
-#: src/app.py:2853
+#: src/app.py:2859
 msgid "No OG image found"
 msgstr "Aucune image OG trouvée"
 
-#: src/app.py:2895
+#: src/app.py:2901
 msgid "Guest user created successfully!"
 msgstr "Utilisateur invité créé avec succès !"
 
-#: src/app.py:2944
+#: src/app.py:2950
 #, python-format
 msgid ""
 "Guest user %(username)s deleted successfully! %(count)s purchased gift "
@@ -520,130 +520,130 @@ msgstr ""
 "Utilisateur invité %(username)s supprimé avec succès ! %(count)s idées "
 "cadeaux achetées supprimées."
 
-#: src/app.py:2946
+#: src/app.py:2952
 msgid "Guest user not found."
 msgstr "Utilisateur invité introuvable."
 
-#: src/app.py:2962
+#: src/app.py:2968
 msgid "Guest login successful!"
 msgstr "Connexion d'invité réussie!"
 
-#: src/app.py:2965
+#: src/app.py:2971
 msgid "Invalid guest password"
 msgstr "Mot de passe d'invité invalide"
 
-#: src/app.py:2987
+#: src/app.py:2993
 msgid "Currency settings updated! Please restart to see changes"
 msgstr ""
 "Paramètres des devises mis à jour ! Veuillez redémarrer pour voir les "
 "changements"
 
-#: src/app.py:3000
+#: src/app.py:3006
 msgid "Self-registration settings updated successfully!"
 msgstr "Paramètres d'auto-inscription mis à jour avec succès !"
 
-#: src/app.py:3043
+#: src/app.py:3049
 #, python-format
 msgid "Shared list \"%(name)s\" created successfully!"
 msgstr "Liste partagée \"%(name)s\" créée avec succès !"
 
-#: src/app.py:3080 src/app.py:3108
+#: src/app.py:3086 src/app.py:3114
 msgid "Shared list not found."
 msgstr "Liste partagée non trouvée."
 
-#: src/app.py:3085
+#: src/app.py:3091
 msgid "Only the list owner can delete this shared list."
 msgstr "Seul le propriétaire de la liste peut supprimer cette liste partagée."
 
-#: src/app.py:3096
+#: src/app.py:3102
 #, python-format
 msgid "Shared list \"%(name)s\" deleted successfully!"
 msgstr "Liste partagée \"%(name)s\" supprimée avec succès !"
 
-#: src/app.py:3113
+#: src/app.py:3119
 msgid "Only the list owner can edit members."
 msgstr "Seul le propriétaire de la liste peut modifier les membres."
 
-#: src/app.py:3125
+#: src/app.py:3131
 #, python-format
 msgid "Members updated for \"%(name)s\"!"
 msgstr "Membres mis à jour pour \"%(name)s\" !"
 
-#: src/app.py:3137
+#: src/app.py:3143
 msgid "Link sharing settings updated!"
 msgstr "Paramètres de partage de liens mis à jour !"
 
-#: src/app.py:3149
+#: src/app.py:3155
 msgid "Link sharing feature is currently disabled by administrator."
 msgstr ""
 "La fonction de partage de liens est actuellement désactivée par "
 "l'administrateur."
 
-#: src/app.py:3165
+#: src/app.py:3171
 msgid "Target not found"
 msgstr "Cible introuvable"
 
-#: src/app.py:3172
+#: src/app.py:3178
 msgid "You are not a member of this shared list"
 msgstr "Vous n'êtes pas membre de cette liste partagée"
 
-#: src/app.py:3177
+#: src/app.py:3183
 msgid "You can only manage your own sharing settings"
 msgstr "Vous ne pouvez gérer que vos propres paramètres de partage"
 
-#: src/app.py:3204
+#: src/app.py:3210
 msgid "New share link created!"
 msgstr "Nouveau lien de partage créé !"
 
-#: src/app.py:3214
+#: src/app.py:3220
 #, python-format
 msgid "Share link %(status)s!"
 msgstr "Lien de partage %(status)s !"
 
-#: src/app.py:3228
+#: src/app.py:3234
 #, python-format
 msgid "Share link extended by %(days)s days! New expiry: %(expiry)s"
 msgstr ""
 "Lien de partage prolongé de %(days)s jours ! Nouvelle expiration : "
 "%(expiry)s"
 
-#: src/app.py:3239
+#: src/app.py:3245
 msgid "Share link deleted!"
 msgstr "Lien de partage supprimé !"
 
-#: src/app.py:3333 src/app.py:3399
+#: src/app.py:3339 src/app.py:3405
 msgid "Share link not found or expired"
 msgstr "Lien de partage introuvable ou expiré"
 
-#: src/app.py:3336
+#: src/app.py:3342
 msgid "Purchases not allowed for this share link"
 msgstr "Les achats ne sont pas autorisés pour ce lien de partage"
 
-#: src/app.py:3341 src/app.py:3404
+#: src/app.py:3347 src/app.py:3410
 msgid "Gift idea not found"
 msgstr "Idée cadeau introuvable"
 
-#: src/app.py:3346
+#: src/app.py:3352
 msgid "Visitor name is required"
 msgstr "Le nom du visiteur est requis"
 
-#: src/app.py:3372
+#: src/app.py:3378
 msgid "Item marked as purchased"
 msgstr "Article marqué comme acheté"
 
-#: src/app.py:3376
+#: src/app.py:3382
 msgid "Item already purchased"
 msgstr "Article déjà acheté"
 
-#: src/app.py:3409
+#: src/app.py:3415
 msgid "Visitor ID required"
 msgstr "Identifiant du visiteur requis"
 
-#: src/app.py:3427
+#: src/app.py:3433
 msgid "Purchase cancelled"
 msgstr "Achat annulé"
 
-#: src/app.py:3429
+#: src/app.py:3435
 msgid "You can only cancel your own purchases"
 msgstr "Vous ne pouvez annuler que vos propres achats"
 
@@ -1038,28 +1038,30 @@ msgstr "Articles achetés"
 msgid "Object bought by me:"
 msgstr "Objet acheté par moi :"
 
-#: src/templates/bought_items.html:13 src/templates/my_ideas.html:34
-#: src/templates/my_ideas.html:95 src/templates/user_gift_ideas.html:27
-#: src/templates/user_gift_ideas.html:152
+#: src/templates/bought_items.html:15 src/templates/bought_items.html:61
+#: src/templates/my_ideas.html:34 src/templates/my_ideas.html:97
+#: src/templates/user_gift_ideas.html:27 src/templates/user_gift_ideas.html:154
 msgid "Gifted"
 msgstr "Offert"
 
-#: src/templates/bought_items.html:15 src/templates/my_ideas.html:96
-#: src/templates/user_gift_ideas.html:153
+#: src/templates/bought_items.html:17 src/templates/bought_items.html:63
 msgid "For:"
 msgstr "Pour:"
 
-#: src/templates/bought_items.html:16 src/templates/my_ideas.html:98
-#: src/templates/user_gift_ideas.html:155
-msgid "Description:"
-msgstr "Description :"
+#: src/templates/bought_items.html:29 src/templates/my_ideas.html:47
+#: src/templates/my_ideas.html:109 src/templates/shared_list_public.html:18
+#: src/templates/user_gift_ideas.html:43 src/templates/user_gift_ideas.html:166
+msgid "Estimated Value:"
+msgstr "Valeur estimée :"
 
-#: src/templates/bought_items.html:18 src/templates/my_ideas.html:100
-#: src/templates/user_gift_ideas.html:157
-msgid "Link:"
-msgstr "Lien:"
+#: src/templates/bought_items.html:36 src/templates/edit_idea.html:20
+#: src/templates/my_ideas.html:60 src/templates/my_ideas.html:117
+#: src/templates/shared_list_public.html:26
+#: src/templates/user_gift_ideas.html:51 src/templates/user_gift_ideas.html:174
+msgid "OG Image"
+msgstr "Image OG"
 
-#: src/templates/bought_items.html:22 src/templates/user_gift_ideas.html:77
+#: src/templates/bought_items.html:53 src/templates/user_gift_ideas.html:77
 msgid "Gift offered"
 msgstr "Cadeau offert"
 
@@ -1243,12 +1245,6 @@ msgstr "Enregistrer les modifications"
 #: src/templates/edit_idea.html:2
 msgid "- Edit an idea"
 msgstr "- Modifier une idée"
-
-#: src/templates/edit_idea.html:20 src/templates/my_ideas.html:60
-#: src/templates/shared_list_public.html:26
-#: src/templates/user_gift_ideas.html:51
-msgid "OG Image"
-msgstr "Image OG"
 
 #: src/templates/edit_idea.html:33
 msgid "Enter estimated value in dollars"
@@ -1717,11 +1713,6 @@ msgstr "Réorganiser"
 msgid "Save Order"
 msgstr "Enregistrer l'ordre"
 
-#: src/templates/my_ideas.html:47 src/templates/shared_list_public.html:18
-#: src/templates/user_gift_ideas.html:43
-msgid "Estimated Value:"
-msgstr "Valeur estimée :"
-
 #: src/templates/my_ideas.html:49 src/templates/shared_list_public.html:20
 #: src/templates/user_gift_ideas.html:45
 msgid "Added By:"
@@ -1731,15 +1722,17 @@ msgstr "Par:"
 msgid "Last updated:"
 msgstr "Dernière mise à jour:"
 
-#: src/templates/my_ideas.html:97 src/templates/user_gift_ideas.html:154
+#: src/templates/my_ideas.html:111 src/templates/my_ideas.html:144
+#: src/templates/user_gift_ideas.html:168
+#: src/templates/user_gift_ideas.html:201
 msgid "Gifted by:"
 msgstr "Offert par :"
 
-#: src/templates/my_ideas.html:105 src/templates/user_gift_ideas.html:162
+#: src/templates/my_ideas.html:134 src/templates/user_gift_ideas.html:191
 msgid "Switch back to bought"
 msgstr "Repasser à acheté"
 
-#: src/templates/my_ideas.html:117 src/templates/user_gift_ideas.html:174
+#: src/templates/my_ideas.html:151 src/templates/user_gift_ideas.html:208
 msgid "No gifted gifts yet."
 msgstr "Aucun cadeau offert pour le moment."
 
@@ -2256,4 +2249,10 @@ msgstr "(anonyme)"
 
 #~ msgid "Delete this gifted gift?"
 #~ msgstr "Supprimer ce cadeau offert ?"
+
+#~ msgid "Description:"
+#~ msgstr "Description :"
+
+#~ msgid "Link:"
+#~ msgstr "Lien:"
 

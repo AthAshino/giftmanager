@@ -88,30 +88,64 @@
 
 <div id="tab-history" class="tab-panel hidden">
     {% if gifted_ideas %}
-    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <ul class="space-y-4">
         {% for item in gifted_ideas %}
-        <div class="card p-6" data-idea-id="{{ item.gift_idea_id }}">
-            <h3 class="mb-4 text-xl font-semibold text-[rgb(var(--text))]">{{ item.gift_name }}</h3>
-            <span class="badge mb-4 bg-[rgb(var(--success-soft))] text-[rgb(var(--success))]">{{ icon('gift', 'h-4 w-4') }} {{ _('Gifted') }}</span>
-            <p class="text-sm text-[rgb(var(--text))]"><strong>{{ _('For:') }}</strong> {{ get_full_name(session['username']) }}</p>
-            <p class="text-sm text-[rgb(var(--text))]"><strong>{{ _('Gifted by:') }}</strong> {{ item.gifter_name }}</p>
-            <p class="text-sm text-[rgb(var(--text))]"><strong>{{ _('Description:') }}</strong> {{ item.description }}</p>
-            {% if item.link %}
-            <p class="break-all text-sm text-[rgb(var(--text))]"><strong>{{ _('Link:') }}</strong> <a href="{{ item.link }}" target="_blank">{{ item.link }}</a></p>
-            {% endif %}
-            {% if item.get('can_manage') %}
-            <div class="mt-4 flex flex-wrap gap-2 border-t border-[rgb(var(--border))] pt-3">
-                <button class="mark-as-not-gifted-button flex items-center justify-center gap-1 rounded bg-[rgb(var(--primary))] px-3 py-1 text-white" data-idea-id="{{ item.gift_idea_id }}" data-next="{{ url_for('my_ideas', tab='history') }}">
-                    {{ icon('check', 'h-4 w-4') }} {{ _('Switch back to bought') }}
-                </button>
-                <button class="delete-idea-button flex items-center justify-center rounded bg-[rgb(var(--danger))] px-3 py-1 text-white" data-idea-id="{{ item.gift_idea_id }}">
-                    {{ icon('trash', 'h-4 w-4') }}
-                </button>
+        <li class="card p-4" data-idea-id="{{ item.gift_idea_id }}">
+            <div class="flex flex-col items-start sm:flex-row sm:items-center">
+                <div class="min-w-0 flex-1">
+                    <h2 class="break-words text-lg font-semibold text-[rgb(var(--text))]">{{ item.gift_name }}</h2>
+                    <span class="badge mt-1 bg-[rgb(var(--success-soft))] text-[rgb(var(--success))]">{{ icon('gift', 'h-4 w-4') }} {{ _('Gifted') }}</span>
+                    {% if item.get('custom_fields') %}
+                    <div class="custom-fields mt-1 mb-1 flex flex-wrap gap-1">
+                        {% for key, value in item.custom_fields.items() %}
+                        {% if key and value %}
+                        <span class="badge bg-[rgb(var(--primary-soft))] text-[rgb(var(--primary))]">{{ key }}: {{ value }}</span>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <p class="description text-sm text-[rgb(var(--text-secondary))]" style="max-width: 400px; white-space: pre-wrap; word-wrap: break-word;">{{ item.description }}</p>
+                    {% if item.value %}
+                    <p class="text-sm text-[rgb(var(--text-secondary))]">{{ _('Estimated Value:') }} {{ format_currency(item.value) }}</p>
+                    {% endif %}
+                    <p class="text-sm text-[rgb(var(--text-secondary))]">{{ _('Gifted by:') }} {{ item.gifter_name }}</p>
+                </div>
+
+                {% if imgenabled %}
+                <div class="flex w-full justify-center py-2 sm:w-16 sm:py-0">
+                    {% if item.image_path %}
+                    <img src="{{ item.image_path }}" alt="{{ _('OG Image') }}" class="h-16 w-16 rounded-lg object-cover shadow-sm">
+                    {% endif %}
+                </div>
+                {% endif %}
+
+                <div class="idea-actions mt-4 flex flex-wrap items-center gap-2 sm:ml-4 sm:mt-0">
+                    {% if item.link %}
+                    {% set link = item.link %}
+                    {% if not link.startswith('http://') and not link.startswith('https://') %}
+                    {% set link = 'https://' + link %}
+                    {% endif %}
+                    <a href="{{ link }}" target="_blank" class="open-link-button flex items-center justify-center rounded bg-[rgb(var(--accent))] px-3 py-1">
+                        {{ icon('link', 'h-5 w-5 text-white') }}
+                    </a>
+                    {% endif %}
+                    {% if item.get('can_manage') %}
+                    <button class="mark-as-not-gifted-button flex items-center justify-center gap-1 rounded bg-[rgb(var(--primary))] px-3 py-1 text-white" data-idea-id="{{ item.gift_idea_id }}" data-next="{{ url_for('my_ideas', tab='history') }}">
+                        {{ icon('check', 'h-4 w-4') }} {{ _('Switch back to bought') }}
+                    </button>
+                    <button class="delete-idea-button flex items-center justify-center rounded bg-[rgb(var(--danger))] px-3 py-1 text-white" data-idea-id="{{ item.gift_idea_id }}">
+                        {{ icon('trash', 'h-4 w-4') }}
+                    </button>
+                    {% endif %}
+                </div>
             </div>
-            {% endif %}
-        </div>
+
+            <div class="mt-4 border-t border-[rgb(var(--border))] pt-3">
+                <p class="text-[rgb(var(--success))]">{{ _('Gifted by:') }} {{ item.gifter_name }}</p>
+            </div>
+        </li>
         {% endfor %}
-    </div>
+    </ul>
     {% else %}
     <div class="card p-6">
         <p class="text-[rgb(var(--text-secondary))]">{{ _('No gifted gifts yet.') }}</p>

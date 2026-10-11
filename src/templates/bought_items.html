@@ -5,26 +5,67 @@
 
 {% block content %}
 <h1 class="mb-6 text-xl font-bold text-[rgb(var(--text))] sm:text-2xl">{{ _('Object bought by me:') }}</h1>
-<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+<ul class="space-y-4">
     {% for item in bought_items %}
-    <div class="card p-6">
-        <h3 class="mb-4 text-xl font-semibold text-[rgb(var(--text))]">{{ item.gift_name }}</h3>
-        {% if item.get('gifted') %}
-        <span class="badge mb-4 bg-[rgb(var(--success-soft))] text-[rgb(var(--success))]">{{ icon('gift', 'h-4 w-4') }} {{ _('Gifted') }}</span>
-        {% endif %}
-        <p class="text-sm text-[rgb(var(--text))]"><strong>{{ _('For:') }}</strong> {{ item.recipient_name }}</p>
-        <p class="text-sm text-[rgb(var(--text))]"><strong>{{ _('Description:') }}</strong> {{ item.description }}</p>
-        {% if item.link %}
-        <p class="break-all text-sm text-[rgb(var(--text))]"><strong>{{ _('Link:') }}</strong> <a href="{{ item.link }}" target="_blank">{{ item.link }}</a></p>
-        {% endif %}
-        {% if not item.get('gifted') %}
-        <button class="mark-as-gifted-button mt-4 flex w-full items-center justify-center gap-1 rounded bg-[rgb(var(--success))] px-3 py-2 text-white" data-idea-id="{{ item.gift_idea_id }}" data-next="{{ url_for('bought_items') }}">
-            {{ icon('gift', 'h-4 w-4') }} {{ _('Gift offered') }}
-        </button>
-        {% endif %}
-    </div>
+    <li class="card p-4" data-idea-id="{{ item.gift_idea_id }}">
+        <div class="flex flex-col items-start sm:flex-row sm:items-center">
+            <div class="min-w-0 flex-1">
+                <h2 class="break-words text-lg font-semibold text-[rgb(var(--text))]">{{ item.gift_name }}</h2>
+                {% if item.get('gifted') %}
+                <span class="badge mt-1 bg-[rgb(var(--success-soft))] text-[rgb(var(--success))]">{{ icon('gift', 'h-4 w-4') }} {{ _('Gifted') }}</span>
+                {% endif %}
+                <p class="text-sm text-[rgb(var(--text-secondary))]">{{ _('For:') }} {{ item.recipient_name }}</p>
+                {% if item.get('custom_fields') %}
+                <div class="custom-fields mt-1 mb-1 flex flex-wrap gap-1">
+                    {% for key, value in item.custom_fields.items() %}
+                    {% if key and value %}
+                    <span class="badge bg-[rgb(var(--primary-soft))] text-[rgb(var(--primary))]">{{ key }}: {{ value }}</span>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <p class="description text-sm text-[rgb(var(--text-secondary))]" style="max-width: 400px; white-space: pre-wrap; word-wrap: break-word;">{{ item.description }}</p>
+                {% if item.value %}
+                <p class="text-sm text-[rgb(var(--text-secondary))]">{{ _('Estimated Value:') }} {{ format_currency(item.value) }}</p>
+                {% endif %}
+            </div>
+
+            {% if imgenabled %}
+            <div class="flex w-full justify-center py-2 sm:w-16 sm:py-0">
+                {% if item.image_path %}
+                <img src="{{ item.image_path }}" alt="{{ _('OG Image') }}" class="h-16 w-16 rounded-lg object-cover shadow-sm">
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <div class="idea-actions mt-4 flex flex-wrap items-center gap-2 sm:ml-4 sm:mt-0">
+                {% if item.link %}
+                {% set link = item.link %}
+                {% if not link.startswith('http://') and not link.startswith('https://') %}
+                {% set link = 'https://' + link %}
+                {% endif %}
+                <a href="{{ link }}" target="_blank" class="open-link-button flex items-center justify-center rounded bg-[rgb(var(--accent))] px-3 py-1">
+                    {{ icon('link', 'h-5 w-5 text-white') }}
+                </a>
+                {% endif %}
+                {% if not item.get('gifted') %}
+                <button class="mark-as-gifted-button flex items-center justify-center gap-1 rounded bg-[rgb(var(--success))] px-3 py-1 text-white" data-idea-id="{{ item.gift_idea_id }}" data-next="{{ url_for('bought_items') }}">
+                    {{ icon('gift', 'h-4 w-4') }} {{ _('Gift offered') }}
+                </button>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="mt-4 border-t border-[rgb(var(--border))] pt-3">
+            {% if item.get('gifted') %}
+            <p class="text-[rgb(var(--success))]">{{ _('Gifted') }}</p>
+            {% else %}
+            <p class="text-[rgb(var(--text-secondary))]">{{ _('For:') }} {{ item.recipient_name }}</p>
+            {% endif %}
+        </div>
+    </li>
     {% endfor %}
-</div>
+</ul>
 {% endblock %}
 
 {% block scripts %}
