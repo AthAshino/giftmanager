@@ -1,0 +1,80 @@
+{% extends 'base_simple.html' %}
+{% from '_icons.html' import icon %}
+{% block title %}{{ _('History') }}{% endblock %}
+{% block page_title %}{{ _('Gifted History') }}{% endblock %}
+
+{% block content %}
+{% if gifted_ideas %}
+<h1 class="mb-6 text-xl font-bold text-[rgb(var(--text))] sm:text-2xl">{{ _('Gifts that have been offered:') }}</h1>
+<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    {% for item in gifted_ideas %}
+    <div class="card p-6" data-idea-id="{{ item.gift_idea_id }}">
+        <h3 class="mb-4 text-xl font-semibold text-[rgb(var(--text))]">{{ item.gift_name }}</h3>
+        <span class="badge mb-4 bg-[rgb(var(--success-soft))] text-[rgb(var(--success))]">{{ icon('gift', 'h-4 w-4') }} {{ _('Gifted') }}</span>
+        <p class="text-sm text-[rgb(var(--text))]"><strong>{{ _('For:') }}</strong> {{ item.recipient_name }}</p>
+        <p class="text-sm text-[rgb(var(--text))]"><strong>{{ _('Gifted by:') }}</strong> {{ item.gifter_name }}</p>
+        {% if item.get('date_gifted') %}
+        <p class="text-sm text-[rgb(var(--text))]"><strong>{{ _('Gifted on:') }}</strong> {{ item.date_gifted[:10] }}</p>
+        {% endif %}
+        <p class="text-sm text-[rgb(var(--text))]"><strong>{{ _('Description:') }}</strong> {{ item.description }}</p>
+        {% if item.link %}
+        <p class="break-all text-sm text-[rgb(var(--text))]"><strong>{{ _('Link:') }}</strong> <a href="{{ item.link }}" target="_blank">{{ item.link }}</a></p>
+        {% endif %}
+        {% if item.get('can_manage') %}
+        <div class="mt-4 flex flex-wrap gap-2 border-t border-[rgb(var(--border))] pt-3">
+            <button class="mark-as-not-gifted-button flex items-center justify-center gap-1 rounded bg-[rgb(var(--primary))] px-3 py-1 text-white" data-idea-id="{{ item.gift_idea_id }}">
+                {{ icon('check', 'h-4 w-4') }} {{ _('Switch back to bought') }}
+            </button>
+            <button class="delete-idea-button flex items-center justify-center rounded bg-[rgb(var(--danger))] px-3 py-1 text-white" data-idea-id="{{ item.gift_idea_id }}">
+                {{ icon('trash', 'h-4 w-4') }}
+            </button>
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="card p-6">
+    <p class="text-[rgb(var(--text-secondary))]">{{ _('No gifted gifts yet.') }}</p>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function handleResponse(response, successMessage) {
+        if (response.status === 204 || response.ok) {
+            location.reload();
+        } else {
+            console.error('Request failed. Status:', response.status);
+        }
+    }
+
+    document.querySelectorAll('.mark-as-not-gifted-button').forEach(button => {
+        button.addEventListener('click', () => {
+            const ideaId = button.getAttribute('data-idea-id');
+            fetch(`/mark_as_not_gifted/${ideaId}`, {
+                method: 'POST',
+            })
+            .then(response => handleResponse(response))
+            .catch(error => {
+                console.error('Error switching back:', error);
+            });
+        });
+    });
+
+    document.querySelectorAll('.delete-idea-button').forEach(button => {
+        button.addEventListener('click', () => {
+            const ideaId = button.getAttribute('data-idea-id');
+            if (!confirm('{{ _('Delete this gifted gift?') }}')) return;
+            fetch(`/delete_idea/${ideaId}`, {
+                method: 'DELETE',
+            })
+            .then(response => handleResponse(response))
+            .catch(error => {
+                console.error('Error deleting idea:', error);
+            });
+        });
+    });
+</script>
+{% endblock %}
