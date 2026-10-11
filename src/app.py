@@ -2406,7 +2406,9 @@ def secret_santa_assignments():
 @app.route('/admin')
 @admin_required
 def admin_dashboard():
-    return render_template('admin_dashboard.html')
+    users = load_users()
+    shared_lists = [user for user in users if user.get('shared_list', False)]
+    return render_template('admin_dashboard.html', shared_lists=shared_lists)
 
 @app.route('/users', methods=['GET', 'POST'])
 @admin_required
@@ -3254,6 +3256,30 @@ def delete_shared_list(list_username):
     
     flash(_('Shared list "%(name)s" deleted successfully!') % {'name': shared_list['full_name']}, 'success')
     return redirect(url_for('manage_shared_lists'))
+
+@app.route('/admin/delete_shared_list/<path:list_username>', methods=['POST'])
+@admin_required
+def admin_delete_shared_list(list_username):
+    users = load_users()
+    gift_ideas = load_gift_ideas()
+
+    # Find the shared list
+    shared_list = next((user for user in users if user['username'] == list_username), None)
+
+    if not shared_list or not shared_list.get('shared_list', False):
+        flash(_('Shared list not found.'), 'danger')
+        return redirect(url_for('admin_dashboard'))
+
+    # Remove shared list user
+    users = [user for user in users if user['username'] != list_username]
+    save_users(users)
+
+    # Remove all ideas associated with this shared list
+    updated_gift_ideas = [idea for idea in gift_ideas if idea['user_id'] != list_username]
+    save_gift_ideas(updated_gift_ideas)
+
+    flash(_('Shared list "%(name)s" deleted successfully!') % {'name': shared_list['full_name']}, 'success')
+    return redirect(url_for('admin_dashboard'))
 
 @app.route('/edit_shared_list_members/<path:list_username>', methods=['POST'])
 @login_required
