@@ -20,158 +20,19 @@
     </button>
 {% endblock %}
 
-{% block sidebar %}
-<div class="flex h-full flex-col overflow-y-auto">
-    <div class="flex items-center justify-between px-4 py-4">
-        <h2 class="text-lg font-semibold text-[rgb(var(--text))]">{{ _('Menu') }}</h2>
-        {% if profile_info['avatar'] %}
-        <img class="h-12 w-12 rounded-full object-cover ring-2 ring-[rgb(var(--primary))]" src="{{ url_for('show_avatar', filename=profile_info.avatar) }}" alt="{{ _('Avatar') }}">
-        {% endif %}
-    </div>
-
-    {% if password_messages %}
-    <div class="px-4">
-        <div class="alert-danger">{{ password_messages | join(' ') }}</div>
-    </div>
-    {% endif %}
-
-    <div class="flex-1 space-y-1 px-3 py-2">
-        <div class="card mb-3 p-4">
-            <h3 class="mb-2 text-base font-semibold text-[rgb(var(--text))]">{{ _('Info') }}</h3>
-            <p class="text-sm text-[rgb(var(--text-secondary))]">{{ _('Name:') }} {{ profile_info['full_name'] }}</p>
-            <p class="text-sm text-[rgb(var(--text-secondary))]">{{ _('Birthday:') }} {{ profile_info['birthday'] }}</p>
-            <form method="POST" action="/change_user_grouping" class="mt-3">
-                <label class="inline-flex items-center gap-2 text-sm font-medium text-[rgb(var(--text))]">
-                    <input type="checkbox" name="user_grouping" value="true"
-                           onclick="this.form.submit()" {% if show_groups %}checked{% endif %}
-                           class="minimal-checkbox">
-                    {{ _('Group users on dashboard') }}
-                </label>
-            </form>
-        </div>
-
-        <div class="dropdown-container">
-            <div class="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-medium text-[rgb(var(--text))] hover:bg-[rgb(var(--surface-2))]"
-                 onclick="toggleDropdown('languageDropdown', 'languageChevron')">
-                <span>{{ _('Language') }}</span>
-                {{ icon('chevron', 'h-4 w-4 text-[rgb(var(--text-secondary))] dropdown-chevron') }}
-            </div>
-            <div class="dropdown-content" id="languageDropdown">
-                <form method="POST" action="{{ url_for('set_language') }}" class="px-3 py-2">
-                    <label for="lang" class="label">{{ _('Language') }}</label>
-                    <select name="lang" id="lang" class="input" onchange="this.form.submit()">
-                        {% for code, name in [('en', 'English'), ('fr', 'Français'), ('es', 'Español'), ('nl', 'Nederlands'), ('sv', 'Svenska')] %}
-                        <option value="{{ code }}" {{ 'selected' if current_locale == code }}>{{ name }}</option>
-                        {% endfor %}
-                    </select>
-                </form>
-            </div>
-        </div>
-
-        {% if not profile_info.guest %}
-        <div class="dropdown-container">
-            <div class="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-medium text-[rgb(var(--text))] hover:bg-[rgb(var(--surface-2))]"
-                 onclick="toggleDropdown('avatarDropdown', 'avatarChevron')">
-                <span>{{ _('Change Avatar') }}</span>
-                {{ icon('chevron', 'h-4 w-4 text-[rgb(var(--text-secondary))] dropdown-chevron') }}
-            </div>
-            <div class="dropdown-content" id="avatarDropdown">
-                <form method="POST" action="/change_avatar" enctype="multipart/form-data" class="px-3 py-2 space-y-3">
-                    <fieldset class="flex items-center gap-4">
-                        <label class="relative block h-20 w-20 shrink-0 overflow-hidden rounded-full">
-                            <input type="text" name="avatar" value="{{ avatar }}" class="sr-only" id="avatar_input"/>
-                            <img src="{{ url_for('show_avatar', filename=profile_info['avatar']) }}"
-                                 alt="{{ _('Avatar') }}" class="h-full w-full object-cover" id="avatar_image"/>
-                        </label>
-                        <div class="flex flex-col gap-2">
-                            <div class="rounded-md border border-[rgb(var(--border))] bg-[rgb(var(--surface-2))] px-3 py-2 text-center text-sm text-[rgb(var(--text))] transition hover:bg-[rgb(var(--border))]"
-                                 id="generate_button">
-                                {{ _('Random avatar') }}
-                            </div>
-                            <label class="rounded-md border border-[rgb(var(--border))] bg-[rgb(var(--surface-2))] px-3 py-2 text-center text-sm text-[rgb(var(--text))] transition hover:bg-[rgb(var(--border))]">
-                                {{ _('Upload image') }}
-                                <input type="file" name="new_avatar" accept="image/*" class="sr-only" id="new_avatar_input"/>
-                            </label>
-                        </div>
-                    </fieldset>
-                    <button type="submit" class="btn-primary w-full">{{ _('Change Avatar') }}</button>
-                </form>
-            </div>
-        </div>
-
-        <div class="dropdown-container">
-            <div class="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-medium text-[rgb(var(--text))] hover:bg-[rgb(var(--surface-2))]"
-                 onclick="toggleDropdown('passwordDropdown', 'passwordChevron')">
-                <span>{{ _('Change Password') }}</span>
-                {{ icon('chevron', 'h-4 w-4 text-[rgb(var(--text-secondary))] dropdown-chevron') }}
-            </div>
-            <div class="dropdown-content" id="passwordDropdown">
-                <form method="POST" action="/change_password" class="space-y-3 px-3 py-2">
-                    <div>
-                        <label for="current_password" class="label">{{ _('Current Password') }}</label>
-                        <input type="password" name="current_password" id="current_password" class="input" required>
-                    </div>
-                    <div>
-                        <label for="new_password" class="label">{{ _('New Password') }}</label>
-                        <input type="password" name="new_password" id="new_password" class="input" required>
-                    </div>
-                    <div>
-                        <label for="confirm_password" class="label">{{ _('Repeat New Password') }}</label>
-                        <input type="password" name="confirm_password" id="confirm_password" class="input" required>
-                    </div>
-                    <button type="submit" class="btn-primary w-full">{{ _('Change Password') }}</button>
-                </form>
-            </div>
-        </div>
-
-        <div class="dropdown-container">
-            <div class="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-medium text-[rgb(var(--text))] hover:bg-[rgb(var(--surface-2))]"
-                 onclick="toggleDropdown('emailDropdown', 'emailChevron')">
-                <span>{{ _('Change Email') }}</span>
-                {{ icon('chevron', 'h-4 w-4 text-[rgb(var(--text-secondary))] dropdown-chevron') }}
-            </div>
-            <div class="dropdown-content" id="emailDropdown">
-                <form method="POST" action="/change_email" class="space-y-3 px-3 py-2">
-                    <div>
-                        <label for="new_email" class="label">{{ _('New Email') }}</label>
-                        <input type="email" name="new_email" id="new_email" class="input" required>
-                    </div>
-                    <button type="submit" class="btn-primary w-full">{{ _('Change Email') }}</button>
-                </form>
-            </div>
-        </div>
-        {% endif %}
-    </div>
-
-    <div class="mt-auto space-y-1 border-t border-[rgb(var(--border))] px-3 py-3">
-        <a href="/logout" class="nav-item">
-            {{ icon('logout') }}
-            <span>{{ _('Logout') }}</span>
-        </a>
-        <a href="/manage_shared_lists" class="nav-item">
-            {{ icon('share') }}
-            <span>{{ _('Shared Lists') }}</span>
-        </a>
-        {% if enable_link_sharing %}
-        <a href="/manage_sharing" class="nav-item">
-            {{ icon('link') }}
-            <span>{{ _('Public links') }}</span>
-        </a>
-        {% endif %}
-        {% if profile_info['admin'] == true %}
-        <a href="/admin" class="nav-item">
-            {{ icon('shield') }}
-            <span>{{ _('Admin Dashboard') }}</span>
-        </a>
-        {% endif %}
-        <p class="pt-2 text-xs text-[rgb(var(--text-secondary))]">{{ _('Giftmanager') }} {{ app_version }}</p>
-    </div>
-</div>
-{% endblock %}
-
 {% block content %}
 <section class="card p-4 sm:p-6">
-    <h2 class="section-title">{{ _('Users') }}</h2>
+    <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <h2 class="section-title mb-0">{{ _('Users') }}</h2>
+        <form method="POST" action="/change_user_grouping">
+            <label class="inline-flex items-center gap-2 text-sm font-medium text-[rgb(var(--text))]">
+                <input type="checkbox" name="user_grouping" value="true"
+                       onclick="this.form.submit()" {% if show_groups %}checked{% endif %}
+                       class="minimal-checkbox">
+                {{ _('Group users on dashboard') }}
+            </label>
+        </form>
+    </div>
     {% if show_groups %}
     <div class="space-y-4">
         {% for group in groups %}
@@ -203,32 +64,4 @@
     </div>
     {% endif %}
 </section>
-{% endblock %}
-
-{% block scripts %}
-<script>
-    (function () {
-        const addAvatarInput = document.getElementById('new_avatar_input');
-        if (addAvatarInput) {
-            addAvatarInput.addEventListener('change', () => {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    document.getElementById('avatar_image').src = event.target.result;
-                    document.getElementById('avatar_input').value = addAvatarInput.files[0].name;
-                };
-                reader.readAsDataURL(addAvatarInput.files[0]);
-            });
-        }
-
-        const generateButton = document.getElementById('generate_button');
-        if (generateButton) {
-            generateButton.addEventListener('click', async () => {
-                const response = await fetch("{{ url_for('generate_avatar') }}");
-                const data = await response.json();
-                document.getElementById('avatar_image').src = `/avatars/${data['filename']}`;
-                document.getElementById('avatar_input').value = data['filename'];
-            });
-        }
-    })();
-</script>
 {% endblock %}

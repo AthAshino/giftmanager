@@ -12,14 +12,21 @@
     ('setup_advanced', 'sliders', _('Advanced')),
 ] %}
 <div class="flex h-full flex-col overflow-y-auto px-3 py-4">
-    <a href="{{ url_for('admin_dashboard') }}" class="mb-6 flex items-center gap-2 px-3 text-lg font-bold text-[rgb(var(--text))]">
-        {{ icon('shield', 'h-6 w-6 text-[rgb(var(--primary))]') }}
-        {{ _('Admin') }}
-    </a>
+    <div class="sidebar-header mb-6 flex items-center justify-between">
+        <a href="{{ url_for('admin_dashboard') }}" class="flex items-center gap-2 px-3 text-lg font-bold text-[rgb(var(--text))]">
+            {{ icon('shield', 'h-6 w-6 text-[rgb(var(--primary))]') }}
+            <span class="sidebar-brand-text">{{ _('Admin') }}</span>
+        </a>
+        <button id="sidebarCollapseToggle"
+                class="hidden rounded-lg p-2 text-[rgb(var(--text-secondary))] hover:bg-[rgb(var(--surface-2))] lg:inline-flex"
+                aria-label="{{ _('Toggle sidebar labels') }}" aria-expanded="true">
+            {{ icon('chevron-left', 'h-5 w-5') }}
+        </button>
+    </div>
 
     <nav class="flex-1 space-y-6">
         <div>
-            <h2 class="mb-2 px-3 text-xs font-semibold uppercase tracking-wide text-[rgb(var(--text-secondary))]">{{ _('Management') }}</h2>
+            <h2 class="sidebar-section-title mb-2 px-3 text-xs font-semibold uppercase tracking-wide text-[rgb(var(--text-secondary))]">{{ _('Management') }}</h2>
             {% for endpoint, name, label in admin_nav[:5] %}
             <a href="{{ url_for(endpoint) }}"
                class="{{ 'nav-item nav-item-active' if request.endpoint == endpoint else 'nav-item' }}">
@@ -29,7 +36,7 @@
             {% endfor %}
         </div>
         <div>
-            <h2 class="mb-2 px-3 text-xs font-semibold uppercase tracking-wide text-[rgb(var(--text-secondary))]">{{ _('Configuration & Maintenance') }}</h2>
+            <h2 class="sidebar-section-title mb-2 px-3 text-xs font-semibold uppercase tracking-wide text-[rgb(var(--text-secondary))]">{{ _('Configuration & Maintenance') }}</h2>
             {% for endpoint, name, label in admin_nav[5:] %}
             <a href="{{ url_for(endpoint) }}"
                class="{{ 'nav-item nav-item-active' if request.endpoint == endpoint else 'nav-item' }}">

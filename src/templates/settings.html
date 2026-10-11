@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% from '_icons.html' import icon %}
+{% block title %}{{ _('Settings') }}{% endblock %}
+{% block page_title %}{{ _('Settings') }}{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    {% if not profile_info.guest %}
+    <section class="card p-4 sm:p-6">
+        <h2 class="section-title">{{ _('Profile') }}</h2>
+        <form method="POST" action="/change_avatar" enctype="multipart/form-data" class="space-y-4">
+            <fieldset class="flex flex-wrap items-center gap-4">
+                <label class="relative block h-20 w-20 shrink-0 overflow-hidden rounded-full">
+                    <input type="text" name="avatar" value="{{ avatar }}" class="sr-only" id="avatar_input"/>
+                    <img src="{{ url_for('show_avatar', filename=profile_info['avatar']) }}"
+                         alt="{{ _('Avatar') }}" class="h-full w-full object-cover" id="avatar_image"/>
+                </label>
+                <div class="flex flex-col gap-2">
+                    <div class="rounded-md border border-[rgb(var(--border))] bg-[rgb(var(--surface-2))] px-3 py-2 text-center text-sm text-[rgb(var(--text))] transition hover:bg-[rgb(var(--border))]"
+                         id="generate_button">
+                        {{ _('Random avatar') }}
+                    </div>
+                    <label class="rounded-md border border-[rgb(var(--border))] bg-[rgb(var(--surface-2))] px-3 py-2 text-center text-sm text-[rgb(var(--text))] transition hover:bg-[rgb(var(--border))]">
+                        {{ _('Upload image') }}
+                        <input type="file" name="new_avatar" accept="image/*" class="sr-only" id="new_avatar_input"/>
+                    </label>
+                </div>
+            </fieldset>
+            <button type="submit" class="btn-primary">{{ _('Change Avatar') }}</button>
+        </form>
+    </section>
+    {% endif %}
+
+    <section class="card p-4 sm:p-6">
+        <h2 class="section-title">{{ _('Language') }}</h2>
+        <form method="POST" action="{{ url_for('set_language') }}" class="space-y-4">
+            <div>
+                <label for="lang" class="label">{{ _('Language') }}</label>
+                <select name="lang" id="lang" class="input" onchange="this.form.submit()">
+                    {% for code, name in [('en', 'English'), ('fr', 'Français'), ('es', 'Español'), ('nl', 'Nederlands'), ('sv', 'Svenska')] %}
+                    <option value="{{ code }}" {{ 'selected' if current_locale == code }}>{{ name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <p class="text-sm text-[rgb(var(--text-secondary))]">{{ _('The interface language is saved on your profile.') }}</p>
+        </form>
+    </section>
+
+    {% if not profile_info.guest %}
+    <section class="card p-4 sm:p-6">
+        <h2 class="section-title">{{ _('Change Password') }}</h2>
+        <form method="POST" action="/change_password" class="space-y-4">
+            <div>
+                <label for="current_password" class="label">{{ _('Current Password') }}</label>
+                <input type="password" name="current_password" id="current_password" class="input" required>
+            </div>
+            <div>
+                <label for="new_password" class="label">{{ _('New Password') }}</label>
+                <input type="password" name="new_password" id="new_password" class="input" required>
+            </div>
+            <div>
+                <label for="confirm_password" class="label">{{ _('Repeat New Password') }}</label>
+                <input type="password" name="confirm_password" id="confirm_password" class="input" required>
+            </div>
+            <button type="submit" class="btn-primary">{{ _('Change Password') }}</button>
+        </form>
+    </section>
+
+    <section class="card p-4 sm:p-6">
+        <h2 class="section-title">{{ _('Change Email') }}</h2>
+        <form method="POST" action="/change_email" class="space-y-4">
+            <div>
+                <label for="new_email" class="label">{{ _('New Email') }}</label>
+                <input type="email" name="new_email" id="new_email" class="input" required>
+            </div>
+            <button type="submit" class="btn-primary">{{ _('Change Email') }}</button>
+        </form>
+    </section>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    (function () {
+        const addAvatarInput = document.getElementById('new_avatar_input');
+        if (addAvatarInput) {
+            addAvatarInput.addEventListener('change', () => {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    document.getElementById('avatar_image').src = event.target.result;
+                    document.getElementById('avatar_input').value = addAvatarInput.files[0].name;
+                };
+                reader.readAsDataURL(addAvatarInput.files[0]);
+            });
+        }
+
+        const generateButton = document.getElementById('generate_button');
+        if (generateButton) {
+            generateButton.addEventListener('click', async () => {
+                const response = await fetch("{{ url_for('generate_avatar') }}");
+                const data = await response.json();
+                document.getElementById('avatar_image').src = `/avatars/${data['filename']}`;
+                document.getElementById('avatar_input').value = data['filename'];
+            });
+        }
+    })();
+</script>
+{% endblock %}

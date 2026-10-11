@@ -234,6 +234,36 @@ def inject_current_locale():
         'css_version': _css_version(),
     }
 
+APP_VERSION = "v2.8.0"
+
+@app.context_processor
+def inject_nav_context():
+    """Make navigation data available to all templates (shared user navbar)."""
+    ctx = {
+        'app_version': APP_VERSION,
+        'nav_user': None,
+        'assigned_users': None,
+        'enable_link_sharing': False,
+    }
+    if 'username' not in session:
+        return ctx
+    try:
+        users = load_users()
+    except Exception:
+        return ctx
+    current_user = next((u for u in users if u['username'] == session['username']), None)
+    if current_user is None:
+        return ctx
+    ctx['nav_user'] = {
+        'admin': current_user.get('admin', False),
+        'guest': current_user.get('guest', False),
+        'avatar': current_user.get('avatar'),
+    }
+    ctx['assigned_users'] = current_user.get('assigned_users', None)
+    enable_link_sharing_value = read_env_variable("ENABLE_LINK_SHARING", "true")
+    ctx['enable_link_sharing'] = str(enable_link_sharing_value).lower() == 'true' if enable_link_sharing_value is not None else True
+    return ctx
+
 _ = gettext
 
 app.config['IDEAS_FILE'] = Path(app.config['DATA'], 'ideas.json')
@@ -427,7 +457,7 @@ def change_email():
     save_users(users)
 
     flash(_('Email updated successfully.'), 'success')
-    return redirect(url_for('dashboard'))
+    return redirect(url_for('settings'))
 
 @app.route('/change_user_grouping', methods=['POST'])
 @login_required
@@ -453,6 +483,34 @@ def change_user_grouping():
     save_users(users)
 
     return redirect(url_for('dashboard'))
+
+@app.route('/settings')
+@login_required
+def settings():
+    # Read user data from the JSON file
+    users = load_users()
+
+    # Get the current user's data from the session
+    current_user = next((user for user in users if user['username'] == session['username']), None)
+
+    if not current_user:
+        flash(_('User data not found'), 'danger')
+        return redirect(url_for('login'))
+
+    profile_info = {
+        'full_name': current_user.get('full_name'),
+        'birthday': current_user.get('birthday'),
+        'admin': current_user.get('admin'),
+        'guest': current_user.get('guest', False),
+        'avatar': current_user.get('avatar', None),
+    }
+
+    return render_template(
+        'settings.html',
+        profile_info=profile_info,
+        avatar=current_user.get('avatar', None),
+        app_version=APP_VERSION,
+    )
 
 def get_currency_symbol():
     return read_env_variable("CURRENCY_SYMBOL", "$")
@@ -1294,7 +1352,7 @@ def dashboard():
         'avatar': current_user.get('avatar', None)
     }
 
-    app_version = "v2.8.0"
+    app_version = APP_VERSION
     
     # Get assigned users if available in the current user's data
     assigned_users = current_user.get('assigned_users', None)
@@ -1338,17 +1396,17 @@ def change_password():
 
     if not current_user:
         flash(_('User not found'), 'danger')
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('settings'))
 
     # Verify the current password
     if not verify_password(current_user['password'], current_password):
         flash(_('Current password is incorrect'), 'danger')
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('settings'))
 
     # Check if the new password and confirmation match
     if new_password != confirm_password:
         flash(_('New password and confirmation do not match'), 'danger')
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('settings'))
 
     # Update the password in the user data
     current_user['password'] = newhash
@@ -1357,7 +1415,7 @@ def change_password():
     save_users(users)
 
     flash(_('Password successfully changed'), 'success')
-    return redirect(url_for('dashboard'))
+    return redirect(url_for('settings'))
 
 def find_idea_by_id(ideas, idea_id):
     # Iterate through the list of ideas
@@ -1876,7 +1934,7 @@ def change_avatar():
     avatar_path = Path(app.config['AVATAR_DIR'], avatar)
     if not avatar or not avatar_path.is_file():
         flash(_('Avatar file not found!'), 'danger')
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('settings'))
 
     user['avatar'] = avatar
     save_users(users)
@@ -1884,7 +1942,7 @@ def change_avatar():
     # Cleanup unused avatars
     cleanup_unused_avatars(users)
 
-    return redirect(url_for('dashboard'))
+    return redirect(url_for('settings'))
 
 
 

@@ -126,6 +126,31 @@
     @apply bg-[rgb(var(--primary-soft))] text-[rgb(var(--primary))];
   }
 
+  /* Collapsible sidebar rail (desktop only) */
+  @media (min-width: 1024px) {
+    body.sidebar-collapsed #sidebar {
+      @apply w-20;
+    }
+
+    body.sidebar-collapsed #sidebar .sidebar-header {
+      @apply flex-col items-center gap-2;
+    }
+
+    body.sidebar-collapsed #sidebar .nav-item {
+      @apply justify-center px-0;
+    }
+
+    body.sidebar-collapsed #sidebar .nav-item span,
+    body.sidebar-collapsed #sidebar .sidebar-brand-text,
+    body.sidebar-collapsed #sidebar .sidebar-section-title {
+      display: none;
+    }
+
+    body.sidebar-collapsed #sidebar #sidebarCollapseToggle svg {
+      transform: rotate(180deg);
+    }
+  }
+
   .minimal-checkbox {
     @apply h-4 w-4 shrink-0 cursor-pointer rounded border-2 border-[rgb(var(--border))] bg-[rgb(var(--surface))] transition-colors checked:bg-[rgb(var(--primary))] checked:border-[rgb(var(--primary))] focus:ring-2 focus:ring-[rgb(var(--primary))] focus:ring-offset-2;
   }

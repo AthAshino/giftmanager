@@ -1,0 +1,79 @@
+{% from '_icons.html' import icon %}
+<div class="flex h-full flex-col overflow-y-auto px-3 py-4">
+    <div class="sidebar-header mb-6 flex items-center justify-between">
+        <a href="{{ url_for('dashboard') }}" class="flex items-center gap-2 px-3 text-lg font-bold text-[rgb(var(--text))]">
+            <span class="text-[rgb(var(--primary))]">&#127873;</span>
+            <span class="sidebar-brand-text">{{ _('Giftmanager') }}</span>
+        </a>
+        <button id="sidebarCollapseToggle"
+                class="hidden rounded-lg p-2 text-[rgb(var(--text-secondary))] hover:bg-[rgb(var(--surface-2))] lg:inline-flex"
+                aria-label="{{ _('Toggle sidebar labels') }}" aria-expanded="true">
+            {{ icon('chevron-left', 'h-5 w-5') }}
+        </button>
+    </div>
+
+    <nav class="flex-1 space-y-1">
+        <a href="{{ url_for('dashboard') }}"
+           class="{{ 'nav-item nav-item-active' if request.endpoint == 'dashboard' else 'nav-item' }}">
+            {{ icon('home') }}
+            <span>{{ _('Dashboard') }}</span>
+        </a>
+        <a href="{{ url_for('my_ideas') }}"
+           class="{{ 'nav-item nav-item-active' if request.endpoint == 'my_ideas' else 'nav-item' }}">
+            {{ icon('list') }}
+            <span>{{ _('My Ideas') }}</span>
+        </a>
+        <a href="{{ url_for('bought_items') }}"
+           class="{{ 'nav-item nav-item-active' if request.endpoint == 'bought_items' else 'nav-item' }}">
+            {{ icon('cart') }}
+            <span>{{ _('Bought Items') }}</span>
+        </a>
+        <a href="{{ url_for('add2') }}"
+           class="{{ 'nav-item nav-item-active' if request.endpoint == 'add2' else 'nav-item' }}">
+            {{ icon('plus') }}
+            <span>{{ _('Add Ideas') }}</span>
+        </a>
+        {% if assigned_users %}
+        <a href="{{ url_for('secret_santa_assignments') }}"
+           class="{{ 'nav-item nav-item-active' if request.endpoint == 'secret_santa_assignments' else 'nav-item' }}">
+            {{ icon('gift') }}
+            <span>{{ _('Secret Santa') }}</span>
+        </a>
+        {% endif %}
+    </nav>
+
+    <div class="mt-6 space-y-1 border-t border-[rgb(var(--border))] pt-4">
+        <a href="{{ url_for('manage_shared_lists') }}"
+           class="{{ 'nav-item nav-item-active' if request.endpoint == 'manage_shared_lists' else 'nav-item' }}">
+            {{ icon('share') }}
+            <span>{{ _('Shared Lists') }}</span>
+        </a>
+        {% if enable_link_sharing %}
+        <a href="{{ url_for('manage_sharing') }}"
+           class="{{ 'nav-item nav-item-active' if request.endpoint == 'manage_sharing' else 'nav-item' }}">
+            {{ icon('link') }}
+            <span>{{ _('Public links') }}</span>
+        </a>
+        {% endif %}
+        <a href="{{ url_for('settings') }}"
+           class="{{ 'nav-item nav-item-active' if request.endpoint == 'settings' else 'nav-item' }}">
+            {{ icon('settings') }}
+            <span>{{ _('Settings') }}</span>
+        </a>
+        {% if nav_user and nav_user.admin %}
+        <a href="{{ url_for('admin_dashboard') }}"
+           class="{{ 'nav-item nav-item-active' if is_admin_page else 'nav-item' }}">
+            {{ icon('shield') }}
+            <span>{{ _('Admin Dashboard') }}</span>
+        </a>
+        {% endif %}
+    </div>
+
+    <div class="mt-6 border-t border-[rgb(var(--border))] pt-4">
+        <a href="{{ url_for('logout') }}" class="nav-item">
+            {{ icon('logout') }}
+            <span>{{ _('Logout') }}</span>
+        </a>
+        <p class="sidebar-brand-text pt-2 text-center text-xs text-[rgb(var(--text-secondary))]">{{ _('Giftmanager') }} {{ app_version }}</p>
+    </div>
+</div>

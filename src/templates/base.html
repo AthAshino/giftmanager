@@ -9,7 +9,7 @@
 <div class="flex h-screen overflow-hidden">
     <aside id="sidebar"
            class="fixed inset-y-0 left-0 z-40 w-72 -translate-x-full border-r border-[rgb(var(--border))] bg-[rgb(var(--sidebar))] transition-transform duration-300 lg:static lg:translate-x-0 lg:shadow-none">
-        {% block sidebar %}{% endblock %}
+        {% block sidebar %}{% include '_user_sidebar.html' %}{% endblock %}
     </aside>
 
     <div id="sidebarOverlay" class="fixed inset-0 z-30 hidden bg-black/50 lg:hidden"></div>

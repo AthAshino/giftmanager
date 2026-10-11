@@ -47,6 +47,31 @@ function toggleSidebar() {
     }
 }
 
+// Collapsible sidebar: icons-only rail vs. expanded (labels visible)
+function initSidebarCollapse() {
+    const btn = document.getElementById('sidebarCollapseToggle');
+    const sidebar = document.getElementById('sidebar');
+    if (!btn || !sidebar) return;
+
+    const applyCollapsed = (collapsed) => {
+        document.body.classList.toggle('sidebar-collapsed', collapsed);
+        btn.setAttribute('aria-expanded', String(!collapsed));
+        try {
+            localStorage.setItem('sidebar-collapsed', collapsed ? '1' : '0');
+        } catch (e) {}
+    };
+
+    let saved = '0';
+    try {
+        saved = localStorage.getItem('sidebar-collapsed') || '0';
+    } catch (e) {}
+    applyCollapsed(saved === '1');
+
+    btn.addEventListener('click', () => {
+        applyCollapsed(!document.body.classList.contains('sidebar-collapsed'));
+    });
+}
+
 // Collapsible dropdown panels
 function toggleDropdown(dropdownId, chevronId) {
     const dropdown = document.getElementById(dropdownId);
@@ -92,6 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setupBackButton();
     setupLanguageSelector();
+    initSidebarCollapse();
 });
 
 // Service worker (PWA)
