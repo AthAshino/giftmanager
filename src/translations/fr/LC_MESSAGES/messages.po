@@ -2006,11 +2006,11 @@ msgstr "Configuration OIDC"
 
 #: src/templates/setup_oidc.html:9 src/templates/setupenv.html:21
 msgid "OIDC Server Metadata URL:"
-msgstr "Email du système:"
+msgstr "URL des métadonnées du serveur OIDC:"
 
 #: src/templates/setup_oidc.html:14 src/templates/setupenv.html:26
 msgid "OIDC Logout URL:"
-msgstr "Jours avant supression:"
+msgstr "URL de déconnexion OIDC:"
 
 #: src/templates/setup_oidc.html:19 src/templates/setupenv.html:31
 msgid "Primary OIDC Field:"

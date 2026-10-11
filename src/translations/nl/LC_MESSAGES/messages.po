@@ -963,7 +963,7 @@ msgstr "Ja"
 #: src/templates/setup_oidc.html:49 src/templates/setup_oidc.html:57
 #: src/templates/setupenv.html:53
 msgid "True"
-msgstr "Je kan deze instellingen later instellen in de parameters sectie."
+msgstr "Waar"
 
 #: src/templates/advanced.html:32 src/templates/advanced.html:44
 #: src/templates/setup_oidc.html:50 src/templates/setup_oidc.html:58
@@ -2018,7 +2018,7 @@ msgstr "Voer het primaire OIDC veld in"
 
 #: src/templates/setup_oidc.html:24 src/templates/setupenv.html:36
 msgid "Secondary OIDC Field:"
-msgstr "Secundaire DB Veld:"
+msgstr "Secundair OIDC-veld:"
 
 #: src/templates/setup_oidc.html:25
 msgid "Enter the secondary OIDC field"
@@ -2026,15 +2026,15 @@ msgstr "Voer het secundaire OIDC veld in"
 
 #: src/templates/setup_oidc.html:29 src/templates/setupenv.html:41
 msgid "Primary DB Field:"
-msgstr "Automatische registratie inschakelen:"
+msgstr "Primair DB-veld:"
 
 #: src/templates/setup_oidc.html:38 src/templates/setupenv.html:46
 msgid "Secondary DB Field:"
-msgstr "Nee"
+msgstr "Secundair DB-veld:"
 
 #: src/templates/setup_oidc.html:47 src/templates/setupenv.html:51
 msgid "Enable Auto Registration:"
-msgstr "Sla nu over"
+msgstr "Automatische registratie inschakelen:"
 
 #: src/templates/setup_oidc.html:55
 msgid "Enable Default Login Form:"

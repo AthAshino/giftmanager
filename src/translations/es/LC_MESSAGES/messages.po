@@ -962,13 +962,13 @@ msgstr "Ajustes de Moneda"
 #: src/templates/setup_oidc.html:49 src/templates/setup_oidc.html:57
 #: src/templates/setupenv.html:53
 msgid "True"
-msgstr "Por defecto: email"
+msgstr "Verdadero"
 
 #: src/templates/advanced.html:32 src/templates/advanced.html:44
 #: src/templates/setup_oidc.html:50 src/templates/setup_oidc.html:58
 #: src/templates/setupenv.html:54
 msgid "False"
-msgstr "Campo OIDC secundario:"
+msgstr "Falso"
 
 #: src/templates/advanced.html:40
 msgid "Enable images"
@@ -1264,7 +1264,7 @@ msgstr ""
 #: src/templates/manage_groups.html:55 src/templates/manage_users.html:85
 #: src/templates/setup_oidc.html:63
 msgid "Save Changes"
-msgstr "Activar"
+msgstr "Guardar cambios"
 
 #: src/templates/edit_idea.html:2
 msgid "- Edit an idea"
@@ -1305,7 +1305,7 @@ msgstr "Iniciar sesión"
 #: src/templates/login.html:15 src/templates/manage_guest_users.html:75
 #: src/templates/setup_oidc.html:32 src/templates/setup_oidc.html:40
 msgid "Username"
-msgstr "Nombre Completo"
+msgstr "Nombre de usuario"
 
 #: src/templates/login.html:19
 msgid "Password"
@@ -1696,12 +1696,12 @@ msgstr "Nombre Completo"
 #: src/templates/manage_users.html:50 src/templates/setup_oidc.html:33
 #: src/templates/setup_oidc.html:42
 msgid "Full Name"
-msgstr "Nombre de usuario"
+msgstr "Nombre completo"
 
 #: src/templates/manage_users.html:54 src/templates/setup_oidc.html:31
 #: src/templates/setup_oidc.html:41
 msgid "Email"
-msgstr "Campo secondario de la base de datos:"
+msgstr "Correo electrónico"
 
 #: src/templates/manage_users.html:58
 msgid "New Password (leave empty to keep current)"
@@ -2010,43 +2010,43 @@ msgstr "Configurar OIDC"
 
 #: src/templates/setup_oidc.html:9 src/templates/setupenv.html:21
 msgid "OIDC Server Metadata URL:"
-msgstr "Correo Electrónico del Sistema:"
+msgstr "URL de metadatos del servidor OIDC:"
 
 #: src/templates/setup_oidc.html:14 src/templates/setupenv.html:26
 msgid "OIDC Logout URL:"
-msgstr "Eliminar Días:"
+msgstr "URL de cierre de sesión OIDC:"
 
 #: src/templates/setup_oidc.html:19 src/templates/setupenv.html:31
 msgid "Primary OIDC Field:"
-msgstr "ID del cliente OIDC:"
+msgstr "Campo OIDC principal:"
 
 #: src/templates/setup_oidc.html:20
 msgid "Enter the primary OIDC field"
-msgstr "URL de cierre de sesión OIDC:"
+msgstr "Introduzca el campo OIDC primario"
 
 #: src/templates/setup_oidc.html:24 src/templates/setupenv.html:36
 msgid "Secondary OIDC Field:"
-msgstr "Secreto del cliente OIDC:"
+msgstr "Campo OIDC secundario:"
 
 #: src/templates/setup_oidc.html:25
 msgid "Enter the secondary OIDC field"
-msgstr "Introduzca el campo OIDC primario"
+msgstr "Introduzca el campo OIDC secundario"
 
 #: src/templates/setup_oidc.html:29 src/templates/setupenv.html:41
 msgid "Primary DB Field:"
-msgstr "URL de metadatos del servidor OIDC:"
+msgstr "Campo principal de la base de datos:"
 
 #: src/templates/setup_oidc.html:38 src/templates/setupenv.html:46
 msgid "Secondary DB Field:"
-msgstr "URL de cierre de sesión OIDC:"
+msgstr "Campo secundario de la base de datos:"
 
 #: src/templates/setup_oidc.html:47 src/templates/setupenv.html:51
 msgid "Enable Auto Registration:"
-msgstr "Campo OIDC principal:"
+msgstr "Activar registro automático:"
 
 #: src/templates/setup_oidc.html:55
 msgid "Enable Default Login Form:"
-msgstr "Activar"
+msgstr "Activar formulario de inicio de sesión predeterminado:"
 
 #: src/templates/setup_profile.html:2
 msgid "Setup Profile"
