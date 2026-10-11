@@ -82,3 +82,30 @@ def test_mark_all_as_gifted_noop(client, tmp_path):
     resp = client.post("/mark_all_as_gifted")
     assert resp.status_code == 302
     assert all(not i.get("gifted") for i in _ideas(tmp_path))
+
+
+def test_mark_all_button_disabled_when_all_gifted(client, tmp_path):
+    login(client, "bob")
+    ideas = _ideas(tmp_path)
+    for i in ideas:
+        if i["gift_idea_id"] == 1:
+            i["gifted"] = True
+            i["date_gifted"] = "2026-01-01 00:00:00"
+    (tmp_path / "ideas.json").write_text(json.dumps(ideas))
+
+    # all filtered gifts are gifted -> button is disabled
+    resp = client.get("/bought_items")
+    html = resp.get_data(as_text=True)
+    assert 'id="markAllGifted"' in html and "disabled" in html
+
+    # one non-gifted gift remains -> button is enabled
+    ideas = _ideas(tmp_path)
+    for i in ideas:
+        if i["gift_idea_id"] == 1:
+            i["gifted"] = False
+            i.pop("date_gifted", None)
+    (tmp_path / "ideas.json").write_text(json.dumps(ideas))
+
+    resp = client.get("/bought_items")
+    html = resp.get_data(as_text=True)
+    assert 'id="markAllGifted" class="btn-primary"' in html

@@ -1527,8 +1527,11 @@ def bought_items():
     # Sort the bought items by recipient user, then by gift name
     bought_items.sort(key=lambda x: (x['recipient_name'].lower(), x.get('gift_name', '').lower()))
 
+    # Whether any of the filtered gifts is not yet gifted (drives the "Mark all as gifted" button)
+    has_ungifted = any(not item.get('gifted') for item in bought_items)
+
     imgenabled = read_env_variable('IMGENABLED', 'true').lower() == 'true'
-    return render_template('bought_items.html', bought_items=bought_items, recipients=recipients, selected_user=selected_user, imgenabled=imgenabled)
+    return render_template('bought_items.html', bought_items=bought_items, recipients=recipients, selected_user=selected_user, has_ungifted=has_ungifted, imgenabled=imgenabled)
 
 
 @app.route('/mark_all_as_gifted', methods=['POST'])

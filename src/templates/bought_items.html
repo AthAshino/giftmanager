@@ -4,16 +4,16 @@
 {% block page_title %}{{ _('Bought Items') }}{% endblock %}
 
 {% block content %}
-<div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+<div class="mb-6">
     <h1 class="text-xl font-bold text-[rgb(var(--text))] sm:text-2xl">{{ _('Object bought by me:') }}</h1>
-    <div class="flex flex-wrap items-center gap-2">
-        <select id="userFilter" class="input" aria-label="{{ _('Filter by user') }}">
+    <div class="mt-3 flex flex-wrap items-center gap-2">
+        <select id="userFilter" class="input sm:w-auto" aria-label="{{ _('Filter by user') }}">
             <option value="">{{ _('Everyone') }}</option>
             {% for username, full_name in recipients %}
             <option value="{{ username }}" {% if username == selected_user %}selected{% endif %}>{{ full_name }}</option>
             {% endfor %}
         </select>
-        <button type="button" id="markAllGifted" class="btn-primary" data-confirm="{{ _('Are you sure you want to mark all these gifts as gifted?') }}">
+        <button type="button" id="markAllGifted" class="btn-primary" data-confirm="{{ _('Are you sure you want to mark all these gifts as gifted?') }}" {% if not has_ungifted %}disabled{% endif %}>
             {{ icon('gift', 'h-4 w-4') }} {{ _('Mark all as gifted') }}
         </button>
     </div>
