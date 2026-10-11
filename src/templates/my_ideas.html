@@ -25,6 +25,9 @@
             <input type="number" class="priority-input input hidden mr-4 w-12 text-center" value="{{ gift_idea.priority }}" min="1">
             <div class="min-w-0 flex-1">
                 <h2 class="text-lg font-semibold text-[rgb(var(--text))]">{{ gift_idea.gift_name }}</h2>
+                {% if gift_idea.get('gifted') %}
+                <span class="badge mt-1 bg-[rgb(var(--success-soft))] text-[rgb(var(--success))]">{{ icon('gift', 'h-4 w-4') }} {{ _('Gifted') }}</span>
+                {% endif %}
                 {% if gift_idea.get('custom_fields') %}
                 <div class="mt-1 mb-1 flex flex-wrap gap-1">
                     {% for key, value in gift_idea.custom_fields.items() %}
@@ -55,7 +58,7 @@
             {% endif %}
 
             <div class="idea-actions mt-4 flex flex-wrap items-center gap-2 sm:ml-4 sm:mt-0">
-                {% if gift_idea.added_by == session['username'] %}
+                {% if gift_idea.added_by == session['username'] and not gift_idea.get('gifted') %}
                 <button class="delete-idea-button flex items-center justify-center rounded bg-[rgb(var(--danger))] px-3 py-1" data-idea-id="{{ gift_idea.gift_idea_id }}">
                     {{ icon('trash', 'h-5 w-5 text-white') }}
                 </button>
