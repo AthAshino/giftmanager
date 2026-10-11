@@ -37,6 +37,9 @@ COPY src /app
 # Override with the freshly-built Tailwind CSS from the build stage
 COPY --from=frontend-build /src/static/css/app.css /app/static/css/app.css
 
+# Ensure the entrypoint is executable (COPY preserves host permissions)
+RUN chmod +x /app/docker-entrypoint.sh
+
 # Expose the port that the app will run on
 EXPOSE 5000
 
