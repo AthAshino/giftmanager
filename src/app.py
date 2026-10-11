@@ -940,6 +940,12 @@ def add2():
             and not user.get('guest')
         ]
 
+    # All available families (groups) across users, for the visibility selector
+    all_groups = sorted(set(
+        group for user in users
+        for group in user.get('groups', [])
+    ))
+
     if request.method == 'POST':
         # Handle the form submission, process the data, and add the idea
         user = request.form['user']
@@ -948,6 +954,9 @@ def add2():
         link = request.form.get('link', '')
         value = request.form.get('value', None)  # Optional field
         image_path = request.form.get('imagePath', '')  # Get the image path from the form
+
+        # Families allowed to see the idea (empty = visible to everyone)
+        visible_groups = request.form.getlist('visible_groups')
 
         # Retrieve the logged-in user's username
         added_by = session.get('username')
@@ -980,6 +989,7 @@ def add2():
             'bought_by': None,  # Initialize as not bought
             'image_path': image_path,  # Store the image URL here
             'custom_fields': custom_fields,  # Add custom fields
+            'visible_to_groups': visible_groups,  # Families allowed to see the idea
             'last_updated': datetime.now().isoformat()  # Set initial last_updated timestamp
         }
 
@@ -994,7 +1004,7 @@ def add2():
         return redirect(url_for('user_gift_ideas', selected_user_id=user))
     imgenabled = read_env_variable('IMGENABLED', 'true').lower() == 'true'
     # Render the "Add Idea" page with the filtered user list
-    return render_template('add2.html', user_list=user_list, imgenabled=imgenabled)
+    return render_template('add2.html', user_list=user_list, imgenabled=imgenabled, all_groups=all_groups)
 
 
 @app.route('/add_idea/<path:selected_user_id>', methods=['GET', 'POST'])
@@ -1041,6 +1051,9 @@ def add_idea(selected_user_id):
         value = request.form.get('value', None)  # Optional field
         image_path = request.form.get('imagePath', '')  # Get the image path from the form
         
+        # Families allowed to see the idea (empty = visible to everyone)
+        visible_groups = request.form.getlist('visible_groups')
+
         # Retrieve the currently logged-in user
         added_by = session.get('username')
 
@@ -1072,6 +1085,7 @@ def add_idea(selected_user_id):
             'bought_by': None,  # Initialize as not bought
             'image_path': image_path,  # Store the image URL here
             'custom_fields': custom_fields,  # Add custom fields
+            'visible_to_groups': visible_groups,  # Families allowed to see the idea
             'last_updated': datetime.now().isoformat()  # Set initial last_updated timestamp
         }
 
@@ -1085,8 +1099,13 @@ def add_idea(selected_user_id):
         flash(_('Idea "%(name)s" added for user %(user)s by %(added_by)s!') % {'name': name, 'user': user, 'added_by': added_by}, 'success')
         return redirect(url_for('user_gift_ideas', selected_user_id=user))
     imgenabled = read_env_variable('IMGENABLED', 'true').lower() == 'true'
+    # All available families (groups) across users, for the visibility selector
+    all_groups = sorted(set(
+        group for user in users
+        for group in user.get('groups', [])
+    ))
     # Render the "Add Idea" page with the user list, gift ideas, and the selected user as default
-    return render_template('add_idea.html', user_list=user_list, gift_ideas=gift_ideas_data, default_user=selected_user_id, imgenabled=imgenabled)
+    return render_template('add_idea.html', user_list=user_list, gift_ideas=gift_ideas_data, default_user=selected_user_id, imgenabled=imgenabled, all_groups=all_groups)
 
 
 @app.route('/delete_idea/<int:idea_id>', methods=['DELETE'])
@@ -1427,6 +1446,24 @@ def find_idea_by_id(ideas, idea_id):
     return None
 
 
+def idea_visible_to_user(idea, viewer_username, users):
+    """Return True if a viewer is allowed to see an idea.
+
+    An idea without `visible_to_groups` (or with an empty list) is visible to
+    everyone. Otherwise only members of the listed families can see it. The
+    person who added the idea always keeps access.
+    """
+    allowed_groups = idea.get('visible_to_groups') or []
+    if not allowed_groups:
+        return True
+    if idea.get('added_by') == viewer_username:
+        return True
+    viewer = next((user for user in users if user['username'] == viewer_username), None)
+    if not viewer:
+        return False
+    return bool(set(viewer.get('groups', [])) & set(allowed_groups))
+
+
 @app.route('/mark_as_bought/<int:idea_id>', methods=['POST'])
 @login_required
 @guest_allowed
@@ -1645,10 +1682,17 @@ def user_gift_ideas(selected_user_id):
         # Redirect to a different page, e.g., 'my_ideas'
         return redirect(url_for('my_ideas'))
 
-    # Filter the gift ideas for the selected user
+    # Load the gift ideas and users for the selected user
     gift_ideas_data = load_gift_ideas()  # Load the gift ideas from the JSON file
-    user_gift_ideas = [idea for idea in gift_ideas_data if idea['user_id'] == selected_user_id and not idea.get('gifted')]
-    gifted_ideas = [idea for idea in gift_ideas_data if idea['user_id'] == selected_user_id and idea.get('gifted')]
+    users = load_users()
+
+    # Filter the gift ideas for the selected user, honoring family visibility
+    def _for_selected(idea):
+        return (idea['user_id'] == selected_user_id and
+                idea_visible_to_user(idea, connected_user, users))
+
+    user_gift_ideas = [idea for idea in gift_ideas_data if _for_selected(idea) and not idea.get('gifted')]
+    gifted_ideas = [idea for idea in gift_ideas_data if _for_selected(idea) and idea.get('gifted')]
 
     # Sort the gift ideas by priority, with ideas that have no priority appearing at the bottom
     user_gift_ideas.sort(key=lambda x: (x.get('priority', float('inf')), x['gift_idea_id']))
@@ -1662,7 +1706,6 @@ def user_gift_ideas(selected_user_id):
     imgenabled = read_env_variable('IMGENABLED', 'true').lower() == 'true'
     hide_purchaser = read_env_variable('HIDE_PURCHASER', 'user_choice')
 
-    users = load_users()
     connected_user_data = next((user for user in users if user['username'] == connected_user), None)
     connected_groups = set(connected_user_data.get('groups', [])) if connected_user_data else set()
 
@@ -2078,6 +2121,13 @@ def edit_idea(idea_id):
                 
                 # Update custom fields (this will remove any deleted fields)
                 idea['custom_fields'] = custom_fields
+
+                # Update which families can see the idea (empty = visible to everyone)
+                visible_groups = request.form.getlist('visible_groups')
+                if visible_groups:
+                    idea['visible_to_groups'] = visible_groups
+                else:
+                    idea.pop('visible_to_groups', None)
                 
                 # Update last_updated timestamp
                 idea['last_updated'] = datetime.now().isoformat()
@@ -2091,8 +2141,13 @@ def edit_idea(idea_id):
             imgenabled = read_env_variable('IMGENABLED', 'true').lower() == 'true'
             if 'custom_fields' not in idea:
                 idea['custom_fields'] = {}
+            # All available families (groups) across users, for the visibility selector
+            all_groups = sorted(set(
+                group for user in users
+                for group in user.get('groups', [])
+            ))
             # Render the edit idea form with pre-filled data
-            return render_template('edit_idea.html', idea=idea, imgenabled=imgenabled)
+            return render_template('edit_idea.html', idea=idea, imgenabled=imgenabled, all_groups=all_groups)
         else:
             flash(_('You are not authorized to edit this idea.'), 'danger')
     else:
